@@ -15,8 +15,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test --trace off",
-    "db:migrate": "node scripts/db-migrate.mjs",
-    "check": "npm run typecheck && npm run lint && npm run test"
+    "db:migrate": "NODE_USE_ENV_PROXY=1 node --env-file-if-exists=.env.local --no-warnings scripts/db-migrate.mjs",
+    "check": "npm run typecheck && npm run lint && npm run test",
+    "db:test": "NODE_USE_ENV_PROXY=1 node --env-file-if-exists=.env.local --no-warnings scripts/db-test.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",
