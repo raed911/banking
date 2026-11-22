@@ -485,5 +485,162 @@
       "forbidden": "Permission refusée.",
       "already_has_card": "Ce client a déjà une carte pour ce programme."
     }
+  },
+  "admin": {
+    "badge": "Super admin",
+    "backToApp": "Espace commerçant",
+    "nav": {
+      "overview": "Vue d'ensemble",
+      "merchants": "Commerçants",
+      "payments": "Paiements",
+      "plans": "Formules",
+      "logs": "Journaux"
+    },
+    "overview": {
+      "title": "Plateforme VAYRO",
+      "subtitle": "Toute l'activité de la plateforme en un coup d'œil.",
+      "mrr": "Revenu mensuel récurrent (MRR)",
+      "arr": "Revenu annuel (ARR)",
+      "merchants": "Commerçants",
+      "active": "Abonnés actifs",
+      "trialing": "En essai",
+      "expired": "Expirés",
+      "suspended": "Suspendus",
+      "customers": "Clients finaux",
+      "cards": "Cartes actives",
+      "revenueMonth": "Encaissé ce mois",
+      "revenuePeriod": "Encaissé sur 30 jours",
+      "newMerchants": "Nouveaux commerçants (30 j)",
+      "expiring": "Expirent bientôt",
+      "openInvoices": "Factures en attente",
+      "signups": "Inscriptions de commerçants",
+      "signupsDesc": "Nouveaux commerçants par jour",
+      "transactions": "Opérations de fidélité (30 j)"
+    },
+    "merchants": {
+      "title": "Commerçants",
+      "search": "Nom, email, téléphone…",
+      "all": "Tous",
+      "filter": {
+        "active": "Actifs",
+        "trialing": "Essai",
+        "expired": "Expirés",
+        "suspended": "Suspendus"
+      },
+      "cols": {
+        "merchant": "Commerçant",
+        "owner": "Propriétaire",
+        "subscription": "Abonnement",
+        "until": "Jusqu'au",
+        "customers": "Clients",
+        "activity": "Dernière activité"
+      },
+      "empty": "Aucun commerçant.",
+      "none": "—"
+    },
+    "sub": {
+      "trialing": "Essai",
+      "active": "Actif",
+      "past_due": "Paiement en retard",
+      "expired": "Expiré",
+      "canceled": "Annulé",
+      "none": "Aucun"
+    },
+    "period": {
+      "monthly": "Mensuel",
+      "semiannual": "6 mois",
+      "annual": "Annuel"
+    },
+    "merchant": {
+      "back": "Commerçants",
+      "subscription": "Abonnement",
+      "status": "Statut",
+      "plan": "Formule",
+      "until": "Valable jusqu'au",
+      "trialUntil": "Essai jusqu'au",
+      "locations": "Points de vente",
+      "recordPayment": "Enregistrer un paiement",
+      "recordDesc": "Paiement reçu en espèces ou autre. L'abonnement est prolongé automatiquement.",
+      "price": "Formule",
+      "quantity": "Nombre de points de vente",
+      "amount": "Montant reçu (TND)",
+      "method": "Mode de paiement",
+      "reference": "N° de reçu / référence",
+      "notes": "Notes",
+      "invoice": "Facture concernée",
+      "noInvoice": "Nouvelle facture",
+      "methods": {
+        "cash": "Espèces",
+        "bank_transfer": "Virement",
+        "card": "Carte",
+        "cheque": "Chèque",
+        "other": "Autre"
+      },
+      "save": "Enregistrer le paiement",
+      "paymentSaved": "Paiement enregistré. Abonnement actif jusqu'au {date}.",
+      "extendTrial": "Prolonger l'essai",
+      "days": "Jours",
+      "extend": "Prolonger",
+      "trialExtended": "Essai prolongé.",
+      "suspend": "Suspendre le compte",
+      "reactivate": "Réactiver le compte",
+      "suspendReason": "Motif de la suspension",
+      "suspendConfirm": "Suspendre ce commerçant ? Son équipe ne pourra plus scanner ni modifier quoi que ce soit.",
+      "statusChanged": "Statut mis à jour.",
+      "invoices": "Factures",
+      "payments": "Paiements",
+      "team": "Équipe",
+      "noInvoices": "Aucune facture.",
+      "noPayments": "Aucun paiement.",
+      "stats": "Utilisation",
+      "programs": "Programmes",
+      "merchantStatus": {
+        "active": "Actif",
+        "suspended": "Suspendu",
+        "closed": "Fermé"
+      },
+      "invoiceStatus": {
+        "draft": "Brouillon",
+        "open": "En attente",
+        "paid": "Payée",
+        "void": "Annulée"
+      }
+    },
+    "payments": {
+      "title": "Paiements",
+      "subtitle": "Tous les encaissements enregistrés sur la plateforme.",
+      "openInvoices": "Factures en attente de paiement",
+      "received": "Paiements reçus",
+      "empty": "Aucun paiement enregistré.",
+      "date": "Date",
+      "merchant": "Commerçant",
+      "amount": "Montant",
+      "method": "Mode",
+      "reference": "Référence"
+    },
+    "plans": {
+      "title": "Formules & tarifs",
+      "subtitle": "Les prix affichés sur le site et utilisés pour la facturation.",
+      "price": "Prix (TND)",
+      "badge": "Badge",
+      "trialDays": "Jours d'essai",
+      "save": "Enregistrer",
+      "saved": "Tarifs mis à jour."
+    },
+    "logs": {
+      "title": "Journaux",
+      "audit": "Journal d'audit",
+      "system": "Journal système",
+      "empty": "Aucune entrée.",
+      "actor": "Acteur",
+      "action": "Action",
+      "date": "Date"
+    },
+    "errors": {
+      "generic": "Une erreur est survenue.",
+      "forbidden": "Accès refusé.",
+      "invoice_already_paid": "Cette facture est déjà payée.",
+      "validation": "Vérifiez les champs."
+    }
   }
 }

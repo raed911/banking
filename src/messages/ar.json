@@ -485,5 +485,162 @@
       "forbidden": "تم رفض الصلاحية.",
       "already_has_card": "لدى هذا العميل بطاقة لهذا البرنامج بالفعل."
     }
+  },
+  "admin": {
+    "badge": "المدير العام",
+    "backToApp": "مساحة التاجر",
+    "nav": {
+      "overview": "نظرة عامة",
+      "merchants": "التجار",
+      "payments": "المدفوعات",
+      "plans": "الباقات",
+      "logs": "السجلات"
+    },
+    "overview": {
+      "title": "منصة VAYRO",
+      "subtitle": "كل نشاط المنصة في لمحة.",
+      "mrr": "الإيراد الشهري المتكرر (MRR)",
+      "arr": "الإيراد السنوي (ARR)",
+      "merchants": "التجار",
+      "active": "مشتركون نشطون",
+      "trialing": "في التجربة",
+      "expired": "منتهية",
+      "suspended": "موقوفون",
+      "customers": "العملاء النهائيون",
+      "cards": "البطاقات النشطة",
+      "revenueMonth": "المحصّل هذا الشهر",
+      "revenuePeriod": "المحصّل خلال 30 يومًا",
+      "newMerchants": "تجار جدد (30 يومًا)",
+      "expiring": "تنتهي قريبًا",
+      "openInvoices": "فواتير معلّقة",
+      "signups": "تسجيلات التجار",
+      "signupsDesc": "تجار جدد يوميًا",
+      "transactions": "عمليات الولاء (30 يومًا)"
+    },
+    "merchants": {
+      "title": "التجار",
+      "search": "الاسم، البريد، الهاتف…",
+      "all": "الكل",
+      "filter": {
+        "active": "نشط",
+        "trialing": "تجربة",
+        "expired": "منتهٍ",
+        "suspended": "موقوف"
+      },
+      "cols": {
+        "merchant": "التاجر",
+        "owner": "المالك",
+        "subscription": "الاشتراك",
+        "until": "حتى",
+        "customers": "العملاء",
+        "activity": "آخر نشاط"
+      },
+      "empty": "لا يوجد تجار.",
+      "none": "—"
+    },
+    "sub": {
+      "trialing": "تجربة",
+      "active": "نشط",
+      "past_due": "متأخر الدفع",
+      "expired": "منتهٍ",
+      "canceled": "ملغى",
+      "none": "لا يوجد"
+    },
+    "period": {
+      "monthly": "شهري",
+      "semiannual": "6 أشهر",
+      "annual": "سنوي"
+    },
+    "merchant": {
+      "back": "التجار",
+      "subscription": "الاشتراك",
+      "status": "الحالة",
+      "plan": "الباقة",
+      "until": "صالح حتى",
+      "trialUntil": "التجربة حتى",
+      "locations": "نقاط البيع",
+      "recordPayment": "تسجيل دفعة",
+      "recordDesc": "دفعة مستلمة نقدًا أو بطريقة أخرى. يتم تمديد الاشتراك تلقائيًا.",
+      "price": "الباقة",
+      "quantity": "عدد نقاط البيع",
+      "amount": "المبلغ المستلم (دينار)",
+      "method": "طريقة الدفع",
+      "reference": "رقم الوصل / المرجع",
+      "notes": "ملاحظات",
+      "invoice": "الفاتورة المعنية",
+      "noInvoice": "فاتورة جديدة",
+      "methods": {
+        "cash": "نقدًا",
+        "bank_transfer": "تحويل بنكي",
+        "card": "بطاقة",
+        "cheque": "شيك",
+        "other": "أخرى"
+      },
+      "save": "تسجيل الدفعة",
+      "paymentSaved": "تم تسجيل الدفعة. الاشتراك نشط حتى {date}.",
+      "extendTrial": "تمديد التجربة",
+      "days": "أيام",
+      "extend": "تمديد",
+      "trialExtended": "تم تمديد التجربة.",
+      "suspend": "إيقاف الحساب",
+      "reactivate": "إعادة تفعيل الحساب",
+      "suspendReason": "سبب الإيقاف",
+      "suspendConfirm": "إيقاف هذا التاجر؟ لن يتمكن فريقه من المسح أو تعديل أي شيء.",
+      "statusChanged": "تم تحديث الحالة.",
+      "invoices": "الفواتير",
+      "payments": "المدفوعات",
+      "team": "الفريق",
+      "noInvoices": "لا توجد فواتير.",
+      "noPayments": "لا توجد مدفوعات.",
+      "stats": "الاستخدام",
+      "programs": "البرامج",
+      "merchantStatus": {
+        "active": "نشط",
+        "suspended": "موقوف",
+        "closed": "مغلق"
+      },
+      "invoiceStatus": {
+        "draft": "مسودة",
+        "open": "معلّقة",
+        "paid": "مدفوعة",
+        "void": "ملغاة"
+      }
+    },
+    "payments": {
+      "title": "المدفوعات",
+      "subtitle": "كل المدفوعات المسجلة على المنصة.",
+      "openInvoices": "فواتير بانتظار الدفع",
+      "received": "المدفوعات المستلمة",
+      "empty": "لا توجد مدفوعات مسجلة.",
+      "date": "التاريخ",
+      "merchant": "التاجر",
+      "amount": "المبلغ",
+      "method": "الطريقة",
+      "reference": "المرجع"
+    },
+    "plans": {
+      "title": "الباقات والأسعار",
+      "subtitle": "الأسعار المعروضة في الموقع والمستخدمة في الفوترة.",
+      "price": "السعر (دينار)",
+      "badge": "شارة",
+      "trialDays": "أيام التجربة",
+      "save": "حفظ",
+      "saved": "تم تحديث الأسعار."
+    },
+    "logs": {
+      "title": "السجلات",
+      "audit": "سجل التدقيق",
+      "system": "سجل النظام",
+      "empty": "لا توجد إدخالات.",
+      "actor": "المنفّذ",
+      "action": "الإجراء",
+      "date": "التاريخ"
+    },
+    "errors": {
+      "generic": "حدث خطأ.",
+      "forbidden": "تم رفض الوصول.",
+      "invoice_already_paid": "هذه الفاتورة مدفوعة بالفعل.",
+      "validation": "تحقق من الحقول."
+    }
   }
 }

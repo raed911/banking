@@ -485,5 +485,162 @@
       "forbidden": "Permission denied.",
       "already_has_card": "This customer already has a card for this program."
     }
+  },
+  "admin": {
+    "badge": "Super admin",
+    "backToApp": "Merchant workspace",
+    "nav": {
+      "overview": "Overview",
+      "merchants": "Merchants",
+      "payments": "Payments",
+      "plans": "Plans",
+      "logs": "Logs"
+    },
+    "overview": {
+      "title": "VAYRO platform",
+      "subtitle": "All platform activity at a glance.",
+      "mrr": "Monthly recurring revenue (MRR)",
+      "arr": "Annual revenue (ARR)",
+      "merchants": "Merchants",
+      "active": "Active subscribers",
+      "trialing": "On trial",
+      "expired": "Expired",
+      "suspended": "Suspended",
+      "customers": "End customers",
+      "cards": "Active cards",
+      "revenueMonth": "Collected this month",
+      "revenuePeriod": "Collected in 30 days",
+      "newMerchants": "New merchants (30 d)",
+      "expiring": "Expiring soon",
+      "openInvoices": "Open invoices",
+      "signups": "Merchant sign-ups",
+      "signupsDesc": "New merchants per day",
+      "transactions": "Loyalty operations (30 d)"
+    },
+    "merchants": {
+      "title": "Merchants",
+      "search": "Name, email, phone…",
+      "all": "All",
+      "filter": {
+        "active": "Active",
+        "trialing": "Trial",
+        "expired": "Expired",
+        "suspended": "Suspended"
+      },
+      "cols": {
+        "merchant": "Merchant",
+        "owner": "Owner",
+        "subscription": "Subscription",
+        "until": "Until",
+        "customers": "Customers",
+        "activity": "Last activity"
+      },
+      "empty": "No merchants.",
+      "none": "—"
+    },
+    "sub": {
+      "trialing": "Trial",
+      "active": "Active",
+      "past_due": "Past due",
+      "expired": "Expired",
+      "canceled": "Canceled",
+      "none": "None"
+    },
+    "period": {
+      "monthly": "Monthly",
+      "semiannual": "6 months",
+      "annual": "Annual"
+    },
+    "merchant": {
+      "back": "Merchants",
+      "subscription": "Subscription",
+      "status": "Status",
+      "plan": "Plan",
+      "until": "Valid until",
+      "trialUntil": "Trial until",
+      "locations": "Locations",
+      "recordPayment": "Record a payment",
+      "recordDesc": "Payment received in cash or otherwise. The subscription is extended automatically.",
+      "price": "Plan",
+      "quantity": "Number of locations",
+      "amount": "Amount received (TND)",
+      "method": "Payment method",
+      "reference": "Receipt no. / reference",
+      "notes": "Notes",
+      "invoice": "Related invoice",
+      "noInvoice": "New invoice",
+      "methods": {
+        "cash": "Cash",
+        "bank_transfer": "Bank transfer",
+        "card": "Card",
+        "cheque": "Cheque",
+        "other": "Other"
+      },
+      "save": "Record payment",
+      "paymentSaved": "Payment recorded. Subscription active until {date}.",
+      "extendTrial": "Extend trial",
+      "days": "Days",
+      "extend": "Extend",
+      "trialExtended": "Trial extended.",
+      "suspend": "Suspend account",
+      "reactivate": "Reactivate account",
+      "suspendReason": "Suspension reason",
+      "suspendConfirm": "Suspend this merchant? Their team won't be able to scan or change anything.",
+      "statusChanged": "Status updated.",
+      "invoices": "Invoices",
+      "payments": "Payments",
+      "team": "Team",
+      "noInvoices": "No invoices.",
+      "noPayments": "No payments.",
+      "stats": "Usage",
+      "programs": "Programs",
+      "merchantStatus": {
+        "active": "Active",
+        "suspended": "Suspended",
+        "closed": "Closed"
+      },
+      "invoiceStatus": {
+        "draft": "Draft",
+        "open": "Open",
+        "paid": "Paid",
+        "void": "Void"
+      }
+    },
+    "payments": {
+      "title": "Payments",
+      "subtitle": "Every payment recorded on the platform.",
+      "openInvoices": "Invoices awaiting payment",
+      "received": "Payments received",
+      "empty": "No payments recorded.",
+      "date": "Date",
+      "merchant": "Merchant",
+      "amount": "Amount",
+      "method": "Method",
+      "reference": "Reference"
+    },
+    "plans": {
+      "title": "Plans & pricing",
+      "subtitle": "Prices shown on the website and used for billing.",
+      "price": "Price (TND)",
+      "badge": "Badge",
+      "trialDays": "Trial days",
+      "save": "Save",
+      "saved": "Pricing updated."
+    },
+    "logs": {
+      "title": "Logs",
+      "audit": "Audit log",
+      "system": "System log",
+      "empty": "No entries.",
+      "actor": "Actor",
+      "action": "Action",
+      "date": "Date"
+    },
+    "errors": {
+      "generic": "Something went wrong.",
+      "forbidden": "Access denied.",
+      "invoice_already_paid": "This invoice is already paid.",
+      "validation": "Check the fields."
+    }
   }
 }

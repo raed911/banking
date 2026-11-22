@@ -2047,6 +2047,33 @@ export type Database = {
         Args: { p_days: number; p_merchant_id: string }
         Returns: undefined
       }
+      admin_merchants: {
+        Args: {
+          p_limit?: number
+          p_offset?: number
+          p_search?: string
+          p_status?: string
+        }
+        Returns: {
+          cards: number
+          city: string
+          created_at: string
+          current_period_end: string
+          customers: number
+          id: string
+          last_activity: string
+          name: string
+          owner_email: string
+          period: Database["public"]["Enums"]["billing_period"]
+          phone: string
+          quantity: number
+          slug: string
+          status: Database["public"]["Enums"]["merchant_status"]
+          sub_status: Database["public"]["Enums"]["subscription_status"]
+          total_count: number
+          trial_ends_at: string
+        }[]
+      }
       admin_record_payment: {
         Args: {
           p_amount_millimes: number
@@ -2121,6 +2148,7 @@ export type Database = {
         Returns: Json
       }
       my_permissions: { Args: { mid: string }; Returns: string[] }
+      platform_overview: { Args: { p_days?: number }; Returns: Json }
       redeem_coupon: {
         Args: {
           p_card_id: string

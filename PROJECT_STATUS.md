@@ -16,7 +16,7 @@ _Last updated: 2026-11-22_
 | 6 Engagement | Not started | — |
 | 7 Apple / Google Wallet | Not started | — |
 | 8 Subscriptions & billing | Not started | — |
-| 9 Super Admin | Not started | — |
+| 9 Super Admin | 🟡 Core done: platform KPIs (MRR/ARR, merchants by state, customers, cards, revenue), merchant directory + detail, cash payment recording (extends subscription, invoice + receipt), trial extension, suspension/reactivation, payments & open invoices, plan pricing editor, audit/system logs. Pending: MFA enforcement, platform wallet integrations page | E2E: non-admin blocked; admin records payment → subscription active |
 | 10 Analytics | Not started | — |
 | 11 Hardening & launch | Not started | — |
 
