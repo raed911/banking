@@ -1214,7 +1214,11 @@
       "now": "الآن",
       "nearby": "بالقرب منك",
       "androidBody": "بطاقة الولاء في متناول يدك.",
-      "androidNote": "نص Android يكتبه Google."
+      "androidNote": "نص Android يكتبه Google.",
+      "mapsLink": "الصق رابط Google Maps",
+      "mapsLinkHint": "في تطبيق Google Maps: ابحث عن محلك ← مشاركة ← نسخ الرابط، ثم الصقه هنا.",
+      "mapsLinkBtn": "تحديد",
+      "mapsLinkError": "الرابط غير معروف. انسخه من «مشاركة» في Google Maps."
     },
     "campaign": {
       "new": "حملة جديدة",

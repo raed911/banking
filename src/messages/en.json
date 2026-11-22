@@ -1214,7 +1214,11 @@
       "now": "now",
       "nearby": "Nearby",
       "androidBody": "Your loyalty card is close at hand.",
-      "androidNote": "Android text is written by Google."
+      "androidNote": "Android text is written by Google.",
+      "mapsLink": "Paste a Google Maps link",
+      "mapsLinkHint": "In the Google Maps app: find your shop → Share → Copy link, then paste it here.",
+      "mapsLinkBtn": "Place",
+      "mapsLinkError": "Link not recognized. Copy it from “Share” in Google Maps."
     },
     "campaign": {
       "new": "New campaign",

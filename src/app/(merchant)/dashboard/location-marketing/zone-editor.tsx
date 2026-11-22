@@ -3,8 +3,8 @@ import { ActionForm } from "@/components/forms/action-form";
 import dynamic from "next/dynamic";
 import { useActionState, useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Crosshair, MapPin, Search } from "lucide-react";
-import { saveZone } from "@/features/geo/actions";
+import { Crosshair, Link2, MapPin, Search } from "lucide-react";
+import { resolveMapsLink, saveZone } from "@/features/geo/actions";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
@@ -32,6 +32,16 @@ export function ZoneEditor({ zone, merchantName, canEdit }: { zone: Zone; mercha
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState(false);
   const [zoomKey, setZoomKey] = useState(0);
+  const [link, setLink] = useState("");
+  const [linkBusy, setLinkBusy] = useState(false);
+  const [linkError, setLinkError] = useState(false);
+  async function placeFromLink() {
+    if (!link.trim()) return;
+    setLinkBusy(true); setLinkError(false);
+    const r = await resolveMapsLink(link).catch(() => null);
+    setLinkBusy(false);
+    if (r) { move(r.lat, r.lng); setZoomKey((k) => k + 1); setLink(""); } else setLinkError(true);
+  }
   const [state, action] = useActionState(saveZone.bind(null, zone.id), null);
   const move = useCallback((lat: number, lng: number) => { setPos({ lat, lng }); setPlaced(true); }, []);
 
@@ -73,6 +83,13 @@ export function ZoneEditor({ zone, merchantName, canEdit }: { zone: Zone; mercha
               <Button type="button" variant="ghost" size="icon" onClick={locate} aria-label={t("myPosition")} title={t("myPosition")}><Crosshair /></Button>
             </div>
             {searchError && <p className="text-xs text-danger-700">{t("noResult")}</p>}
+            <div className="rounded-xl border border-dashed border-border-strong p-3">
+              <div className="flex gap-2">
+                <Input value={link} onChange={(e) => setLink(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); placeFromLink(); } }} placeholder={t("mapsLink")} leading={<Link2 />} dir="ltr" />
+                <Button type="button" variant="secondary" onClick={placeFromLink} loading={linkBusy}>{t("mapsLinkBtn")}</Button>
+              </div>
+              <p className={linkError ? "mt-2 text-xs text-danger-700" : "mt-2 text-xs text-fg-muted"}>{linkError ? t("mapsLinkError") : t("mapsLinkHint")}</p>
+            </div>
             <div className="relative z-0 h-[340px] overflow-hidden rounded-2xl border border-border">{GOOGLE_KEY ? <GoogleGeoMap apiKey={GOOGLE_KEY} lat={pos.lat} lng={pos.lng} radius={radius} enabled={enabled} onMove={move} zoomKey={zoomKey} /> : <GeoMap lat={pos.lat} lng={pos.lng} radius={radius} enabled={enabled} onMove={move} zoomKey={zoomKey} />}</div>
             <p className="text-xs text-fg-muted">{t("dragHint")}</p>
             <div className="grid grid-cols-2 gap-3">

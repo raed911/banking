@@ -69,3 +69,27 @@ export async function deleteLocationCampaign(campaignId: string) {
   await supabase.from("location_campaigns").delete().eq("id", z.uuid().parse(campaignId));
   revalidatePath("/dashboard/location-marketing");
 }
+
+/** Resolves a Google Maps share link (short or full) to coordinates. Only Google hosts are fetched (no SSRF). */
+export async function resolveMapsLink(input: string): Promise<{ lat: number; lng: number } | null> {
+  await requireMerchant("locations.manage");
+  const { coordsFromMapsUrl, GOOGLE_MAPS_HOSTS, SHORT_MAPS_HOSTS } = await import("@/lib/maps-link");
+  const text = input.trim().slice(0, 2000);
+  const direct = coordsFromMapsUrl(text);
+  if (direct) return direct;
+  let url: URL;
+  try { url = new URL(text.match(/https?:\/\/\S+/)?.[0] ?? text); } catch { return null; }
+  for (let hop = 0; hop < 5; hop++) {
+    if (url.protocol !== "https:" || !(SHORT_MAPS_HOSTS.includes(url.hostname) || GOOGLE_MAPS_HOSTS.test(url.hostname))) return null;
+    const res = await fetch(url, { redirect: "manual", headers: { "User-Agent": "Mozilla/5.0 (VAYRO location setup)" } }).catch(() => null);
+    const loc = res?.headers.get("location");
+    if (!loc) {
+      const body = res ? (await res.text()).slice(0, 200_000) : "";
+      return coordsFromMapsUrl(body.match(/https:\/\/www\.google\.[a-z.]+\/maps\/[^"'\s]+/)?.[0] ?? "") ?? coordsFromMapsUrl(url.toString());
+    }
+    url = new URL(loc, url);
+    const found = coordsFromMapsUrl(url.toString());
+    if (found) return found;
+  }
+  return null;
+}

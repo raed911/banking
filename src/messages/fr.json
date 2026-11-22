@@ -1214,7 +1214,11 @@
       "now": "maintenant",
       "nearby": "À proximité",
       "androidBody": "Votre carte de fidélité est à portée de main.",
-      "androidNote": "Le texte Android est rédigé par Google."
+      "androidNote": "Le texte Android est rédigé par Google.",
+      "mapsLink": "Coller un lien Google Maps",
+      "mapsLinkHint": "Dans l'app Google Maps : trouvez votre boutique → Partager → Copier le lien, puis collez-le ici.",
+      "mapsLinkBtn": "Placer",
+      "mapsLinkError": "Lien non reconnu. Copiez le lien depuis « Partager » dans Google Maps."
     },
     "campaign": {
       "new": "Nouvelle campagne",

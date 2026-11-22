@@ -9,8 +9,11 @@ test("merchant configures a proximity zone and a location campaign", async ({ pa
   try {
     await page.goto("/dashboard/location-marketing");
     await expect(page.locator(".leaflet-container")).toBeVisible();
-    await page.locator("input[id^=lat-]").fill("36.806500");
-    await page.locator("input[id^=lng-]").fill("10.181500");
+    // place the shop by pasting a Google Maps link
+    await page.getByPlaceholder(/lien google maps|google maps link/i).fill("https://www.google.com/maps/place/Shop/@36.84,10.17,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!8m2!3d36.842155!4d10.176912");
+    await page.getByRole("button", { name: /^(placer|place)$/i }).click();
+    await expect(page.locator("input[id^=lat-]")).toHaveValue("36.842155");
+    await expect(page.locator("input[id^=lng-]")).toHaveValue("10.176912");
     await page.locator("input[id^=m-]").fill("☕ Votre café offert vous attend !");
     await page.getByRole("switch").click();
     await page.getByRole("button", { name: /enregistrer la zone|save zone/i }).click();
