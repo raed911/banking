@@ -20,8 +20,11 @@ _Last updated: 2026-11-22_
 | 10 Analytics | Not started | — |
 | 11 Hardening & launch | Not started | — |
 
+## Live site
+- https://vayro-app.vercel.app (auto-deploys on every push to the development branch). E2E suite passes against production.
+
 ## Credentials status
-See `docs/SERVICES_AND_CREDENTIALS.md`. Configured: **Supabase** — URL + publishable key in `.env.local` (git-ignored); management access token stored as an encrypted environment network secret (never in code). Connection and SQL execution verified 2026-11-22.
+See `docs/SERVICES_AND_CREDENTIALS.md`. Configured: **Supabase**, **Vercel** (token as environment network secret) — URL + publishable key in `.env.local` (git-ignored); management access token stored as an encrypted environment network secret (never in code). Connection and SQL execution verified 2026-11-22.
 
 ## Open decisions
 - ✅ Payments: Tunisia, TND, cash collected manually and recorded by the super admin. Plans: 99 TND/month, 499 TND/6 months, 999 TND/year (per point of sale). Brand references in `docs/brand/`.
@@ -36,6 +39,6 @@ See `docs/SERVICES_AND_CREDENTIALS.md`. Configured: **Supabase** — URL + publi
 ## Known limitations / to do
 - **Email delivery**: Supabase's built-in mailer only sends a few emails per hour. Real sign-ups need Resend (custom SMTP) + a domain before launch.
 - **Super admin bootstrap**: the first platform admin is granted by SQL once the owner's account exists.
-- **Secrets durability**: `VAYRO_ENCRYPTION_KEY` currently lives only in the sandbox `.env.local`. It must be copied to Vercel at deploy time (Phase 11) before any integration secret is stored.
+- **Secrets durability**: `VAYRO_ENCRYPTION_KEY`, `QR_SIGNING_SECRET`, `CRON_SECRET` are stored as encrypted Vercel env vars (source of truth). Never rotate the encryption key without re-encrypting stored integration secrets.
 - Supabase advisor warns that SECURITY DEFINER functions are callable by signed-in users: intentional, each one performs its own permission check (covered by `supabase/tests`).
 - Logo is an interim SVG mark; replace with the official VAYRO logo file when available.

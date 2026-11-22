@@ -6,7 +6,7 @@ This file only tracks **which** services are needed and their status.
 | # | Service | Purpose | Cost | Needed for phase | Status |
 |---|---|---|---|---|---|
 | 1 | **Supabase** (supabase.com) | Database, Auth, Storage | Free tier to start; Pro $25/mo before launch (backups, no pausing) | 1 | ✅ Connected & verified (project `vayro`, eu-central-1, Postgres 17) |
-| 2 | **Vercel** (vercel.com) | Hosting, cron, preview deploys | Free (Hobby) for dev; Pro $20/mo for commercial use | 11 (earlier for previews) | Not yet |
+| 2 | **Vercel** (vercel.com) | Hosting, cron, preview deploys | Free (Hobby) for dev; **Pro $20/mo required for commercial use at launch** | 11 | ✅ Connected — project `vayro`, live at https://vayro-app.vercel.app, production branch = development branch, env vars set via API |
 | 3 | **Resend** (resend.com) | Transactional email, invites, campaigns | Free 3k emails/mo | 5–6 | Not yet |
 | 4 | **Domain name** (any registrar) | vayro.xxx website + email sender domain | ~$10–40/yr | 6 / 11 | Not yet |
 | 5 | **Google Wallet API** (pay.google.com/business/console + Google Cloud) | Issuer ID, service account email, private key | Free; publishing to all users needs Google approval | 7 | Not yet |
