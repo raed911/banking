@@ -50,9 +50,10 @@ function Shell({ icon, title, desc, state, scope, provider, children }: { icon: 
 
 export function GoogleWalletForm({ state, scope }: { state: IntegrationState; scope: Scope }) {
   const t = useTranslations("integ");
-  const [res, action] = useActionState(saveIntegration.bind(null, scope, "google_wallet"), null);
   const [email, setEmail] = useState(state?.config.serviceAccountEmail ?? "");
   const [key, setKey] = useState("");
+  // never keep a saved secret on screen: clear the field as soon as the server confirms it is stored
+  const [res, action] = useActionState(async (p: Awaited<ReturnType<typeof saveIntegration>>, fd: FormData) => { const r = await saveIntegration(scope, "google_wallet", p, fd); if (r?.ok) setKey(""); return r; }, null);
   const fileRef = useRef<HTMLInputElement>(null);
   async function readJson(file?: File) {
     if (!file) return;
@@ -72,7 +73,7 @@ export function GoogleWalletForm({ state, scope }: { state: IntegrationState; sc
         </div>
         <Field label={t("google.email")} htmlFor="g-email" hint={t("google.emailHint")}><Input id="g-email" name="serviceAccountEmail" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} dir="ltr" /></Field>
         <Field label={t("google.key")} htmlFor="g-key" hint={state?.hints.privateKey ? `${t("secretSaved", { hint: state.hints.privateKey })} · ${t("keepSecret")}` : t("google.keyHint")}>
-          <Textarea id="g-key" name="privateKey" value={key} onChange={(e) => setKey(e.target.value)} required={!state?.hints.privateKey} placeholder="-----BEGIN PRIVATE KEY-----" className="min-h-28 font-mono text-xs" dir="ltr" spellCheck={false} />
+          <Textarea id="g-key" name="privateKey" value={key} onChange={(e) => setKey(e.target.value)} required={!state?.hints.privateKey} placeholder="-----BEGIN PRIVATE KEY-----" className="min-h-28 font-mono text-xs [-webkit-text-security:disc]" dir="ltr" spellCheck={false} autoComplete="off" />
         </Field>
         <div className="flex justify-end"><SubmitButton>{t("save")}</SubmitButton></div>
       </ActionForm>
@@ -110,7 +111,7 @@ export function AppleWalletForm({ state, scope }: { state: IntegrationState; sco
             <Button type="button" size="sm" variant="secondary" onClick={() => fileRef.current?.click()}>{t("apple.file")}</Button>
           </div>
         </Field>
-        <Field label={t("apple.key")} htmlFor="a-key" hint={t("apple.keyHint")}><Textarea id="a-key" name="privateKey" placeholder="-----BEGIN PRIVATE KEY-----" className="min-h-20 font-mono text-xs" dir="ltr" spellCheck={false} /></Field>
+        <Field label={t("apple.key")} htmlFor="a-key" hint={t("apple.keyHint")}><Textarea id="a-key" name="privateKey" placeholder="-----BEGIN PRIVATE KEY-----" className="min-h-20 font-mono text-xs [-webkit-text-security:disc]" dir="ltr" spellCheck={false} autoComplete="off" /></Field>
         <Field label={t("apple.password")} htmlFor="a-pass-word" hint={state ? t("keepSecret") : undefined}><PasswordInput id="a-pass-word" name="password" autoComplete="new-password" /></Field>
         <div className="flex justify-end"><SubmitButton>{t("save")}</SubmitButton></div>
       </ActionForm>
