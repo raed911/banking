@@ -1278,5 +1278,43 @@
         }
       ]
     }
+  },
+  "account": {
+    "title": "Mon compte",
+    "back": "Retour",
+    "profile": "Profil",
+    "fullName": "Nom complet",
+    "phone": "Téléphone",
+    "language": "Langue",
+    "save": "Enregistrer",
+    "saved": "Enregistré.",
+    "password": "Mot de passe",
+    "newPassword": "Nouveau mot de passe",
+    "passwordHint": "8 caractères minimum, avec des lettres et des chiffres.",
+    "changePassword": "Changer le mot de passe",
+    "passwordChanged": "Mot de passe modifié.",
+    "security": "Vérification en deux étapes",
+    "securityDesc": "Protégez votre compte avec un code à 6 chiffres généré par une application (Google Authenticator, Microsoft Authenticator, 1Password…).",
+    "adminRequired": "La vérification en deux étapes est obligatoire pour accéder à l'espace Super admin.",
+    "enabled": "Activée",
+    "disabled": "Désactivée",
+    "enable": "Activer",
+    "remove": "Retirer",
+    "removeConfirm": "Retirer cette méthode de vérification ?",
+    "step1": "1. Scannez ce QR code avec votre application d'authentification.",
+    "manual": "Ou saisissez cette clé :",
+    "step2": "2. Entrez le code à 6 chiffres affiché.",
+    "code": "Code",
+    "verify": "Vérifier et activer",
+    "activated": "Vérification en deux étapes activée.",
+    "challengeTitle": "Vérification en deux étapes",
+    "challengeDesc": "Entrez le code à 6 chiffres de votre application d'authentification.",
+    "continue": "Continuer",
+    "errors": {
+      "invalid_code": "Code incorrect ou expiré. Réessayez.",
+      "weak_password": "Mot de passe trop faible.",
+      "reauth": "Pour des raisons de sécurité, reconnectez-vous puis réessayez.",
+      "generic": "Une erreur est survenue."
+    }
   }
 }

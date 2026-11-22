@@ -2,7 +2,7 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { Globe, LogOut, MoreHorizontal } from "lucide-react";
+import { Globe, LogOut, MoreHorizontal, UserCog } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { signOut } from "@/features/auth/actions";
@@ -33,6 +33,7 @@ export function UserMenu({ user, tone = "dark" }: { user: { name: string; email:
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={() => router.push("/account")}><UserCog />{t("account")}</DropdownMenuItem>
         <DropdownMenuItem danger onSelect={() => start(() => signOut())}><LogOut />{t("signOut")}</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -7,8 +7,10 @@ import { PageHeader } from "@/components/ui/page-header";
 import { EmptyState } from "@/components/ui/states";
 import { markMessageHandled } from "@/features/admin/actions";
 import { createClient } from "@/lib/supabase/server";
+import { requirePlatformAdmin } from "@/lib/auth/session";
 
 export default async function AdminMessages() {
+  await requirePlatformAdmin();
   const t = await getTranslations("admin.messages");
   const format = await getFormatter();
   const supabase = await createClient();

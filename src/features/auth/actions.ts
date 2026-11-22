@@ -38,7 +38,10 @@ export async function signIn(_: ActionState, form: FormData): Promise<ActionStat
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword(parsed.data);
   if (error) return { error: mapAuthError(error.code) };
-  redirect(safeNext(form.get("next")));
+  const next = safeNext(form.get("next"));
+  const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+  if (aal?.nextLevel === "aal2" && aal.currentLevel !== "aal2") redirect(`/account/mfa?next=${encodeURIComponent(next)}`);
+  redirect(next);
 }
 
 export async function signUp(_: ActionState, form: FormData): Promise<ActionState> {

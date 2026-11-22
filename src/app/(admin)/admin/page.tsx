@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { PageHeader } from "@/components/ui/page-header";
 import { StatCard } from "@/components/ui/stat-card";
 import { createClient } from "@/lib/supabase/server";
+import { requirePlatformAdmin } from "@/lib/auth/session";
 import { formatNumber, formatTND } from "@/lib/utils";
 
 type Overview = {
@@ -15,6 +16,7 @@ type Overview = {
 };
 
 export default async function AdminOverview() {
+  await requirePlatformAdmin();
   const t = await getTranslations("admin.overview");
   const supabase = await createClient();
   const { data } = await supabase.rpc("platform_overview", { p_days: 30 });

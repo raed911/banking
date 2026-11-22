@@ -1278,5 +1278,43 @@
         }
       ]
     }
+  },
+  "account": {
+    "title": "My account",
+    "back": "Back",
+    "profile": "Profile",
+    "fullName": "Full name",
+    "phone": "Phone",
+    "language": "Language",
+    "save": "Save",
+    "saved": "Saved.",
+    "password": "Password",
+    "newPassword": "New password",
+    "passwordHint": "At least 8 characters, with letters and numbers.",
+    "changePassword": "Change password",
+    "passwordChanged": "Password changed.",
+    "security": "Two-step verification",
+    "securityDesc": "Protect your account with a 6-digit code from an authenticator app (Google Authenticator, Microsoft Authenticator, 1Password…).",
+    "adminRequired": "Two-step verification is required to access the Super admin area.",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "enable": "Enable",
+    "remove": "Remove",
+    "removeConfirm": "Remove this verification method?",
+    "step1": "1. Scan this QR code with your authenticator app.",
+    "manual": "Or enter this key:",
+    "step2": "2. Enter the 6-digit code shown.",
+    "code": "Code",
+    "verify": "Verify and enable",
+    "activated": "Two-step verification enabled.",
+    "challengeTitle": "Two-step verification",
+    "challengeDesc": "Enter the 6-digit code from your authenticator app.",
+    "continue": "Continue",
+    "errors": {
+      "invalid_code": "Incorrect or expired code. Try again.",
+      "weak_password": "Password too weak.",
+      "reauth": "For security, sign in again and retry.",
+      "generic": "Something went wrong."
+    }
   }
 }

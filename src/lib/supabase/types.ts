@@ -2280,6 +2280,7 @@ export type Database = {
       invitation_preview: { Args: { p_token_hash: string }; Returns: Json }
       is_merchant_member: { Args: { mid: string }; Returns: boolean }
       is_platform_admin: { Args: never; Returns: boolean }
+      is_platform_admin_account: { Args: never; Returns: boolean }
       location_campaign_stats: {
         Args: { p_campaign_id: string }
         Returns: Json

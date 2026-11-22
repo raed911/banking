@@ -16,11 +16,18 @@ export async function requireUser(next?: string) {
   return user;
 }
 
+/** True for platform-admin accounts (UI routing). Real powers additionally require an MFA (AAL2) session. */
 export const isPlatformAdmin = cache(async () => {
   const supabase = await createClient();
-  const { data } = await supabase.rpc("is_platform_admin");
+  const { data } = await supabase.rpc("is_platform_admin_account");
   return data === true;
 });
+
+export async function getAal() {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+  return { current: data?.currentLevel ?? "aal1", next: data?.nextLevel ?? "aal1" };
+}
 
 export type Membership = {
   merchant: { id: string; name: string; slug: string; logo_path: string | null; status: string; brand_color: string; timezone: string; locale: string; onboarding_completed_at: string | null };
@@ -63,5 +70,7 @@ export async function requireMerchant(perm?: Permission) {
 export async function requirePlatformAdmin() {
   const user = await requireUser("/admin");
   if (!(await isPlatformAdmin())) redirect("/dashboard");
+  const aal = await getAal();
+  if (aal.current !== "aal2") redirect(aal.next === "aal2" ? "/account/mfa?next=/admin" : "/account?require=mfa");
   return user;
 }

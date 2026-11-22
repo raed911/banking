@@ -157,7 +157,11 @@ begin
 
   -- ── super admin records a cash payment
   perform set_config('role', 'authenticated', true);
-  perform set_config('request.jwt.claims', json_build_object('sub', uadmin, 'role', 'authenticated')::text, true);
+  -- admin without MFA has no powers
+  perform set_config('request.jwt.claims', json_build_object('sub', uadmin, 'role', 'authenticated', 'aal', 'aal1')::text, true);
+  assert not public.is_platform_admin(), 'FAIL: admin powers without MFA';
+  assert (select count(*) from public.merchants where id in (m1, m2)) = 0, 'FAIL: aal1 admin reads all merchants';
+  perform set_config('request.jwt.claims', json_build_object('sub', uadmin, 'role', 'authenticated', 'aal', 'aal2')::text, true);
   assert (select count(*) from public.merchants where id in (m1, m2)) = 2, 'FAIL: admin cannot read all merchants';
   select id into price from public.plan_prices where period = 'semiannual';
   r := public.admin_record_payment(m1, price, 1, 499000, 'cash', 'REC-001');

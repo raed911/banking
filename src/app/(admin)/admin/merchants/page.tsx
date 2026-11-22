@@ -8,11 +8,13 @@ import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/ui/page-header";
 import { SUB_TONE } from "@/lib/admin-format";
 import { createClient } from "@/lib/supabase/server";
+import { requirePlatformAdmin } from "@/lib/auth/session";
 import { cn } from "@/lib/utils";
 
 const FILTERS = ["active", "trialing", "expired", "suspended"] as const;
 
 export default async function AdminMerchants({ searchParams }: { searchParams: Promise<{ q?: string; status?: string }> }) {
+  await requirePlatformAdmin();
   const t = await getTranslations("admin");
   const format = await getFormatter();
   const sp = await searchParams;

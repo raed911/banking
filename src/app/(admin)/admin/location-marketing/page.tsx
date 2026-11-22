@@ -6,8 +6,10 @@ import { Card } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/page-header";
 import { EmptyState } from "@/components/ui/states";
 import { createClient } from "@/lib/supabase/server";
+import { requirePlatformAdmin } from "@/lib/auth/session";
 
 export default async function AdminLocationMarketing() {
+  await requirePlatformAdmin();
   const t = await getTranslations("admin.geo");
   const format = await getFormatter();
   const supabase = await createClient();
