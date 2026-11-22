@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { Gift, Lock, MapPin, Phone, Sparkles } from "lucide-react";
@@ -30,6 +31,9 @@ export default async function CardPage({ params, searchParams }: { params: Promi
   const ready = rewards.filter((r) => r.cost <= card.balance);
   const bg = design?.background_color ?? "#101828";
   const wallets = await walletAvailability(card.merchant_id);
+  // Google Wallet isn't available on iOS: don't offer a button that can't work there.
+  const isIos = /iPhone|iPad|iPod/i.test((await headers()).get("user-agent") ?? "");
+  const showGoogle = wallets.google && !isIos;
 
   return (
     <main className="relative mx-auto max-w-md px-4 pb-12">
@@ -70,7 +74,7 @@ export default async function CardPage({ params, searchParams }: { params: Promi
       )}
 
       {walletError && <p className="mt-4 rounded-2xl bg-danger-50 p-4 text-sm text-danger-700">{t("walletError")}</p>}
-      {active && wallets.google ? (
+      {active && showGoogle ? (
         <section className="mt-4 space-y-3">
           {/* Route handler redirect (not a page) — plain anchor on purpose */}
           <a href={`/api/wallet/google/${token}`} className="flex h-14 items-center justify-center gap-3 rounded-2xl bg-black text-[15px] font-medium text-white shadow-lg transition active:scale-[0.98]" rel="nofollow">
