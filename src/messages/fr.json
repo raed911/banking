@@ -494,7 +494,8 @@
       "merchants": "Commerçants",
       "payments": "Paiements",
       "plans": "Formules",
-      "logs": "Journaux"
+      "logs": "Journaux",
+      "messages": "Messages"
     },
     "overview": {
       "title": "Plateforme VAYRO",
@@ -641,6 +642,12 @@
       "forbidden": "Accès refusé.",
       "invoice_already_paid": "Cette facture est déjà payée.",
       "validation": "Vérifiez les champs."
+    },
+    "messages": {
+      "title": "Messages de contact",
+      "empty": "Aucun message.",
+      "handled": "Traité",
+      "markHandled": "Marquer comme traité"
     }
   },
   "billing": {
@@ -928,5 +935,227 @@
     "empty": "Aucune notification.",
     "markAll": "Tout marquer comme lu",
     "new": "Nouveau"
+  },
+  "site": {
+    "nav": {
+      "features": "Fonctionnalités",
+      "pricing": "Tarifs",
+      "about": "À propos",
+      "contact": "Contact",
+      "login": "Connexion",
+      "start": "Créer mon espace",
+      "dashboard": "Mon espace"
+    },
+    "hero": {
+      "eyebrow": "Fidélité digitale · Tunisie",
+      "title1": "La carte de fidélité",
+      "title2": "qui vit dans le téléphone",
+      "title3": "de vos clients.",
+      "subtitle": "Tampons, points et récompenses dans Apple Wallet et Google Wallet. Sans application à installer, sans carton à perdre.",
+      "cta": "Essai gratuit 14 jours",
+      "secondary": "Voir les tarifs",
+      "note": "Sans carte bancaire · Prêt en 5 minutes"
+    },
+    "stats": [
+      {
+        "v": "20 s",
+        "l": "pour inscrire un client"
+      },
+      {
+        "v": "0",
+        "l": "application à installer"
+      },
+      {
+        "v": "QR + NFC",
+        "l": "en caisse"
+      },
+      {
+        "v": "3",
+        "l": "langues : FR · AR · EN"
+      }
+    ],
+    "industries": {
+      "title": "Pensé pour les commerces de quartier",
+      "list": [
+        "Cafés",
+        "Boulangeries",
+        "Restaurants",
+        "Salons de beauté",
+        "Boutiques",
+        "Salles de sport",
+        "Épiceries"
+      ]
+    },
+    "how": {
+      "title": "Comment ça marche",
+      "subtitle": "Trois étapes. Aucune compétence technique.",
+      "steps": [
+        {
+          "t": "Créez votre carte",
+          "d": "Choisissez tampons, points ou visites. Ajoutez votre logo et vos couleurs : la carte se dessine en direct."
+        },
+        {
+          "t": "Vos clients scannent",
+          "d": "Un QR code en caisse. Le client s'inscrit en 20 secondes et sa carte s'ouvre aussitôt sur son téléphone."
+        },
+        {
+          "t": "Vous tamponnez, ils reviennent",
+          "d": "Votre équipe scanne avec n'importe quel téléphone. La carte se met à jour instantanément."
+        }
+      ]
+    },
+    "features": {
+      "title": "Tout ce qu'il faut pour faire revenir vos clients",
+      "subtitle": "Une plateforme complète, simple pour vous et votre équipe.",
+      "items": [
+        {
+          "t": "Cartes Apple & Google Wallet",
+          "d": "Une vraie carte dans le portefeuille du téléphone, mise à jour à chaque passage."
+        },
+        {
+          "t": "Tampons, points ou visites",
+          "d": "Plusieurs programmes en parallèle, avec récompenses et bonus de bienvenue."
+        },
+        {
+          "t": "Scanner pour votre équipe",
+          "d": "Caméra du téléphone, saisie du code ou du numéro. Aucun matériel à acheter."
+        },
+        {
+          "t": "Anti-fraude intégré",
+          "d": "QR code qui change toutes les 90 secondes, délais entre passages, limites quotidiennes, alertes."
+        },
+        {
+          "t": "Coupons et campagnes",
+          "d": "Codes promo à valider en caisse et messages ciblés pour relancer vos clients."
+        },
+        {
+          "t": "Statistiques claires",
+          "d": "Passages, taux de retour, heures d'affluence, meilleurs clients, par point de vente."
+        },
+        {
+          "t": "Équipe et permissions",
+          "d": "Invitez vos caissiers et managers. Chacun ne voit que ce dont il a besoin."
+        },
+        {
+          "t": "Plusieurs points de vente",
+          "d": "Une seule plateforme pour toutes vos boutiques, avec le détail par magasin."
+        },
+        {
+          "t": "Français, arabe, anglais",
+          "d": "L'interface et les cartes s'adaptent à la langue de vos clients."
+        }
+      ]
+    },
+    "security": {
+      "title": "Sérieux comme une banque. Simple comme un tampon.",
+      "d": "Chaque tampon est inscrit dans un registre infalsifiable. Les données de chaque commerce sont strictement isolées. Les paiements sont tracés et les actions sensibles journalisées.",
+      "points": [
+        "Données isolées par commerce",
+        "Registre des transactions inaltérable",
+        "QR code signé et à usage limité",
+        "Hébergement sécurisé en Europe"
+      ]
+    },
+    "pricing": {
+      "script": "Nos tarifs",
+      "title": "Un prix simple, par point de vente",
+      "subtitle": "Toutes les fonctionnalités incluses. 14 jours d'essai gratuit.",
+      "perMonth": "/ mois",
+      "per6": "/ 6 mois",
+      "perYear": "/ an",
+      "cta": "Créer mon espace",
+      "from": "À partir d'un point de vente",
+      "features": [
+        "QR code + NFC inclus",
+        "Carte dans Apple & Google Wallet",
+        "Zéro appli à installer",
+        "Clients et équipe illimités",
+        "Statistiques et coupons",
+        "Support rapide, toujours"
+      ],
+      "cash": "Paiement en espèces auprès de notre équipe, sans engagement."
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "items": [
+        {
+          "q": "Mes clients doivent-ils installer une application ?",
+          "a": "Non. Ils scannent un QR code, remplissent leur prénom et téléphone, et la carte s'ouvre dans leur navigateur. Ils peuvent l'ajouter à Apple Wallet ou Google Wallet."
+        },
+        {
+          "q": "Ai-je besoin d'un matériel spécial ?",
+          "a": "Non. N'importe quel smartphone avec une caméra suffit pour scanner les cartes de vos clients."
+        },
+        {
+          "q": "Comment éviter la triche ?",
+          "a": "Le QR code change toutes les 90 secondes, seuls vos employés connectés peuvent tamponner, et des limites (délai entre passages, maximum par jour) bloquent les abus. Toute anomalie est signalée."
+        },
+        {
+          "q": "Comment payer l'abonnement ?",
+          "a": "Choisissez votre formule dans votre espace : une facture est générée, vous réglez en espèces auprès de notre équipe et votre abonnement est activé immédiatement."
+        },
+        {
+          "q": "Puis-je arrêter quand je veux ?",
+          "a": "Oui. Il n'y a aucun engagement : à la fin de la période payée, l'abonnement s'arrête simplement si vous ne le renouvelez pas."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Prêt à faire revenir vos clients ?",
+      "subtitle": "Créez votre carte en 5 minutes. Gratuit pendant 14 jours.",
+      "button": "Commencer gratuitement"
+    },
+    "footer": {
+      "tagline": "La fidélité digitale pour les commerces tunisiens.",
+      "product": "Produit",
+      "company": "Entreprise",
+      "legal": "Légal",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Confidentialité",
+      "rights": "Tous droits réservés."
+    },
+    "about": {
+      "title": "Nous aidons les commerces de quartier à fidéliser comme les grandes marques.",
+      "p1": "Les grandes enseignes ont des applications, des équipes marketing et des budgets. Les cafés, boulangeries et salons de beauté ont des cartes en carton qui se perdent.",
+      "p2": "VAYRO donne à chaque commerce une carte de fidélité moderne, dans le téléphone de ses clients, en quelques minutes et pour le prix d'un café par jour.",
+      "valuesTitle": "Nos principes",
+      "values": [
+        {
+          "t": "Simplicité",
+          "d": "Si votre caissier ne comprend pas en 30 secondes, c'est à nous de simplifier."
+        },
+        {
+          "t": "Honnêteté",
+          "d": "Un prix clair, sans engagement, sans frais cachés."
+        },
+        {
+          "t": "Sécurité",
+          "d": "Les données de vos clients sont protégées et n'appartiennent qu'à vous."
+        }
+      ]
+    },
+    "contact": {
+      "title": "Parlons de votre commerce",
+      "subtitle": "Une question, une démo, un devis pour plusieurs boutiques ? Écrivez-nous, nous répondons rapidement.",
+      "name": "Nom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "business": "Commerce",
+      "message": "Message",
+      "send": "Envoyer",
+      "sent": "Merci ! Votre message a bien été envoyé. Nous vous répondons très vite.",
+      "error": "Impossible d'envoyer le message. Réessayez.",
+      "rate": "Trop de messages envoyés. Réessayez plus tard."
+    },
+    "meta": {
+      "home": "VAYRO — Cartes de fidélité digitales dans Apple & Google Wallet",
+      "homeDesc": "Créez votre carte de fidélité digitale en 5 minutes : tampons, points, récompenses, QR code et NFC. Sans application. Essai gratuit 14 jours.",
+      "features": "Fonctionnalités",
+      "pricing": "Tarifs",
+      "about": "À propos",
+      "contact": "Contact",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité"
+    }
   }
 }

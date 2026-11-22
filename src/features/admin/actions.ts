@@ -66,3 +66,10 @@ export async function updatePrices(_: ActionState, form: FormData): Promise<Acti
   revalidatePath("/admin/plans");
   return { ok: true };
 }
+
+export async function markMessageHandled(id: string) {
+  await requirePlatformAdmin();
+  const supabase = await createClient();
+  await supabase.from("contact_messages").update({ handled_at: new Date().toISOString() }).eq("id", uuid.parse(id));
+  revalidatePath("/admin/messages");
+}

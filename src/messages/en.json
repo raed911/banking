@@ -494,7 +494,8 @@
       "merchants": "Merchants",
       "payments": "Payments",
       "plans": "Plans",
-      "logs": "Logs"
+      "logs": "Logs",
+      "messages": "Messages"
     },
     "overview": {
       "title": "VAYRO platform",
@@ -641,6 +642,12 @@
       "forbidden": "Access denied.",
       "invoice_already_paid": "This invoice is already paid.",
       "validation": "Check the fields."
+    },
+    "messages": {
+      "title": "Contact messages",
+      "empty": "No messages.",
+      "handled": "Handled",
+      "markHandled": "Mark as handled"
     }
   },
   "billing": {
@@ -928,5 +935,227 @@
     "empty": "No notifications.",
     "markAll": "Mark all as read",
     "new": "New"
+  },
+  "site": {
+    "nav": {
+      "features": "Features",
+      "pricing": "Pricing",
+      "about": "About",
+      "contact": "Contact",
+      "login": "Sign in",
+      "start": "Create my workspace",
+      "dashboard": "My workspace"
+    },
+    "hero": {
+      "eyebrow": "Digital loyalty · Tunisia",
+      "title1": "The loyalty card",
+      "title2": "that lives in your",
+      "title3": "customers' phones.",
+      "subtitle": "Stamps, points and rewards in Apple Wallet and Google Wallet. No app to install, no paper card to lose.",
+      "cta": "Free 14-day trial",
+      "secondary": "See pricing",
+      "note": "No credit card · Ready in 5 minutes"
+    },
+    "stats": [
+      {
+        "v": "20 s",
+        "l": "to sign up a customer"
+      },
+      {
+        "v": "0",
+        "l": "apps to install"
+      },
+      {
+        "v": "QR + NFC",
+        "l": "at the counter"
+      },
+      {
+        "v": "3",
+        "l": "languages: FR · AR · EN"
+      }
+    ],
+    "industries": {
+      "title": "Built for neighborhood businesses",
+      "list": [
+        "Cafés",
+        "Bakeries",
+        "Restaurants",
+        "Beauty salons",
+        "Shops",
+        "Gyms",
+        "Groceries"
+      ]
+    },
+    "how": {
+      "title": "How it works",
+      "subtitle": "Three steps. No technical skills.",
+      "steps": [
+        {
+          "t": "Create your card",
+          "d": "Pick stamps, points or visits. Add your logo and colors: the card is designed live."
+        },
+        {
+          "t": "Customers scan",
+          "d": "A QR code at the counter. Customers sign up in 20 seconds and the card opens on their phone."
+        },
+        {
+          "t": "You stamp, they return",
+          "d": "Your team scans with any phone. The card updates instantly."
+        }
+      ]
+    },
+    "features": {
+      "title": "Everything you need to bring customers back",
+      "subtitle": "A complete platform, simple for you and your team.",
+      "items": [
+        {
+          "t": "Apple & Google Wallet cards",
+          "d": "A real card in the phone's wallet, updated on every visit."
+        },
+        {
+          "t": "Stamps, points or visits",
+          "d": "Several programs side by side, with rewards and welcome bonuses."
+        },
+        {
+          "t": "Scanner for your team",
+          "d": "Phone camera, card code or phone number. No hardware to buy."
+        },
+        {
+          "t": "Built-in anti-fraud",
+          "d": "QR code that changes every 90 seconds, cooldowns, daily limits, alerts."
+        },
+        {
+          "t": "Coupons and campaigns",
+          "d": "Promo codes validated at the counter and targeted messages to re-engage customers."
+        },
+        {
+          "t": "Clear analytics",
+          "d": "Visits, return rate, peak hours, top customers, per location."
+        },
+        {
+          "t": "Team and permissions",
+          "d": "Invite cashiers and managers. Everyone sees only what they need."
+        },
+        {
+          "t": "Multiple locations",
+          "d": "One platform for all your shops, with per-store details."
+        },
+        {
+          "t": "French, Arabic, English",
+          "d": "The interface and cards adapt to your customers' language."
+        }
+      ]
+    },
+    "security": {
+      "title": "Serious like a bank. Simple like a stamp.",
+      "d": "Every stamp is written to a tamper-proof ledger. Each business's data is strictly isolated. Payments are tracked and sensitive actions logged.",
+      "points": [
+        "Data isolated per business",
+        "Immutable transaction ledger",
+        "Signed, short-lived QR codes",
+        "Secure hosting in Europe"
+      ]
+    },
+    "pricing": {
+      "script": "Pricing",
+      "title": "One simple price per location",
+      "subtitle": "Every feature included. 14-day free trial.",
+      "perMonth": "/ month",
+      "per6": "/ 6 months",
+      "perYear": "/ year",
+      "cta": "Create my workspace",
+      "from": "Starting from one location",
+      "features": [
+        "QR code + NFC included",
+        "Card in Apple & Google Wallet",
+        "No app to install",
+        "Unlimited customers and team",
+        "Analytics and coupons",
+        "Fast support, always"
+      ],
+      "cash": "Pay in cash to our team, no commitment."
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "q": "Do my customers need to install an app?",
+          "a": "No. They scan a QR code, enter their first name and phone, and the card opens in their browser. They can add it to Apple Wallet or Google Wallet."
+        },
+        {
+          "q": "Do I need special hardware?",
+          "a": "No. Any smartphone with a camera is enough to scan your customers' cards."
+        },
+        {
+          "q": "How do you prevent cheating?",
+          "a": "The QR code changes every 90 seconds, only your signed-in staff can stamp, and limits (time between visits, daily maximum) block abuse. Anomalies are flagged."
+        },
+        {
+          "q": "How do I pay?",
+          "a": "Pick your plan in your workspace: an invoice is generated, you pay our team in cash and your subscription is activated immediately."
+        },
+        {
+          "q": "Can I stop anytime?",
+          "a": "Yes. No commitment: at the end of the paid period, the subscription simply stops if you don't renew."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to bring your customers back?",
+      "subtitle": "Create your card in 5 minutes. Free for 14 days.",
+      "button": "Start for free"
+    },
+    "footer": {
+      "tagline": "Digital loyalty for Tunisian businesses.",
+      "product": "Product",
+      "company": "Company",
+      "legal": "Legal",
+      "terms": "Terms of service",
+      "privacy": "Privacy",
+      "rights": "All rights reserved."
+    },
+    "about": {
+      "title": "We help neighborhood businesses build loyalty like the big brands.",
+      "p1": "Big chains have apps, marketing teams and budgets. Cafés, bakeries and beauty salons have paper cards that get lost.",
+      "p2": "VAYRO gives every business a modern loyalty card, in its customers' phones, in minutes and for the price of a coffee a day.",
+      "valuesTitle": "Our principles",
+      "values": [
+        {
+          "t": "Simplicity",
+          "d": "If your cashier doesn't get it in 30 seconds, it's on us to simplify."
+        },
+        {
+          "t": "Honesty",
+          "d": "A clear price, no commitment, no hidden fees."
+        },
+        {
+          "t": "Security",
+          "d": "Your customers' data is protected and belongs to you only."
+        }
+      ]
+    },
+    "contact": {
+      "title": "Let's talk about your business",
+      "subtitle": "A question, a demo, a quote for several shops? Write to us, we answer quickly.",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "business": "Business",
+      "message": "Message",
+      "send": "Send",
+      "sent": "Thank you! Your message was sent. We'll get back to you very soon.",
+      "error": "Could not send the message. Please try again.",
+      "rate": "Too many messages sent. Try again later."
+    },
+    "meta": {
+      "home": "VAYRO — Digital loyalty cards in Apple & Google Wallet",
+      "homeDesc": "Create your digital loyalty card in 5 minutes: stamps, points, rewards, QR code and NFC. No app. Free 14-day trial.",
+      "features": "Features",
+      "pricing": "Pricing",
+      "about": "About",
+      "contact": "Contact",
+      "terms": "Terms of service",
+      "privacy": "Privacy policy"
+    }
   }
 }

@@ -346,6 +346,42 @@ export type Database = {
           },
         ]
       }
+      contact_messages: {
+        Row: {
+          business: string | null
+          created_at: string
+          email: string
+          handled_at: string | null
+          id: string
+          locale: string | null
+          message: string
+          name: string
+          phone: string | null
+        }
+        Insert: {
+          business?: string | null
+          created_at?: string
+          email: string
+          handled_at?: string | null
+          id?: string
+          locale?: string | null
+          message: string
+          name: string
+          phone?: string | null
+        }
+        Update: {
+          business?: string | null
+          created_at?: string
+          email?: string
+          handled_at?: string | null
+          id?: string
+          locale?: string | null
+          message?: string
+          name?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
       coupon_redemptions: {
         Row: {
           card_id: string | null
