@@ -56,6 +56,7 @@ test("card announcement reaches every customer on their card page", async ({ pag
     await page.locator("#cp-seg").selectOption("all");
     await page.locator("#cp-body").fill("-20% sur le cappuccino, {prenom} ☕");
     await page.getByRole("button", { name: /programmer l'envoi|schedule sending/i }).click();
+    await expect(page.locator("main").getByText("Promo café")).toBeVisible({ timeout: 15_000 });
     await expect(async () => { await page.reload(); await expect(page.locator("main").getByText(/^(Envoyée|Sent)$/).first()).toBeVisible({ timeout: 1000 }); }).toPass({ timeout: 30_000 });
 
     await customer.reload();
