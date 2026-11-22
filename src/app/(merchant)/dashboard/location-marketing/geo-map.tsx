@@ -24,7 +24,7 @@ export default function GeoMap({ lat, lng, radius, enabled, onMove, zoomKey }: {
   const handlers = useMemo(() => ({ dragend: (e: L.LeafletEvent) => { const p = (e.target as L.Marker).getLatLng(); onMove(p.lat, p.lng); } }), [onMove]);
   return (
     <MapContainer center={[lat, lng]} zoom={17} scrollWheelZoom={false} className="size-full" attributionControl>
-      <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>' maxZoom={20} />
+      <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' maxZoom={19} />
       <Recenter lat={lat} lng={lng} zoom={zoomKey ? 17 : undefined} />
       <ClickToMove onMove={onMove} />
       <Circle center={[lat, lng]} radius={radius} pathOptions={{ color: enabled ? "#6f9a1b" : "#98a2b3", weight: 2, fillColor: enabled ? "#C6F36B" : "#c3cad6", fillOpacity: 0.28, dashArray: enabled ? undefined : "6 6" }} />

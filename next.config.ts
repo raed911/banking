@@ -10,7 +10,7 @@ const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' data: blob: https://${supabaseHost} https://*.basemaps.cartocdn.com`,
+  `img-src 'self' data: blob: https://${supabaseHost} https://tile.openstreetmap.org`,
   "font-src 'self' data:",
   `connect-src 'self' https://${supabaseHost} wss://${supabaseHost} https://nominatim.openstreetmap.org`,
   "worker-src 'self' blob:",

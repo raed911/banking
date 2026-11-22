@@ -235,5 +235,5 @@ Implementation:
   Apple passes (+ APNs push) and PATCHes Google objects. Builders: `src/lib/wallet/relevance.ts` (unit-tested).
 - Analytics are measured honestly from first-party data: in-store visits at targeted locations during the
   window vs. the previous window of equal length, distinct customers, linked coupon redemptions.
-- Map: Leaflet + CARTO Voyager tiles (OSM data) and Nominatim search on explicit user action. For high
+- Map: Leaflet + OpenStreetMap standard tiles (CARTO now requires an API key) and Nominatim search on explicit user action. For high
   volume, switch to a keyed provider (MapTiler/Mapbox) — only the tile URL changes.
