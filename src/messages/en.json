@@ -642,5 +642,180 @@
       "invoice_already_paid": "This invoice is already paid.",
       "validation": "Check the fields."
     }
+  },
+  "billing": {
+    "title": "Billing",
+    "subtitle": "Your plan, invoices and payments.",
+    "current": "Current plan",
+    "status": {
+      "trialing": "Free trial",
+      "active": "Active",
+      "past_due": "Past due",
+      "expired": "Expired",
+      "canceled": "Canceled"
+    },
+    "until": "Valid until {date}",
+    "trialUntil": "Trial until {date}",
+    "locations": "{count, plural, one {# location} other {# locations}}",
+    "choose": "Choose a plan",
+    "chooseDesc": "Price per location. Paid in cash to the VAYRO team.",
+    "perMonth": "/ month",
+    "per6": "/ 6 months",
+    "perYear": "/ year",
+    "quantity": "Locations",
+    "total": "Total",
+    "request": "Request invoice",
+    "popular": "Popular",
+    "features": [
+      "QR code + NFC included",
+      "Card in Apple & Google Wallet",
+      "No app to install",
+      "Unlimited team and customers"
+    ],
+    "pending": "Pending invoice",
+    "pendingDesc": "Pay this invoice to the VAYRO team. Your subscription is activated as soon as payment is received.",
+    "invoiceNo": "Invoice no.",
+    "amount": "Amount",
+    "due": "Due before {date}",
+    "instructions": "How to pay",
+    "invoices": "Invoice history",
+    "noInvoices": "No invoices yet.",
+    "invoiceStatus": {
+      "draft": "Draft",
+      "open": "Open",
+      "paid": "Paid",
+      "void": "Void"
+    },
+    "requested": "Invoice created. Pay it to activate your subscription.",
+    "error": "Could not create the invoice."
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Your business information.",
+    "business": "Business",
+    "legal": "Legal information",
+    "branding": "Branding",
+    "name": "Business name",
+    "legalName": "Legal name",
+    "taxId": "Tax ID",
+    "email": "Contact email",
+    "phone": "Phone",
+    "website": "Website",
+    "address": "Address",
+    "city": "City",
+    "locale": "Default customer language",
+    "brandColor": "Brand color",
+    "logo": "Logo",
+    "logoHint": "Square PNG or JPG, 2 MB max.",
+    "upload": "Upload",
+    "save": "Save",
+    "saved": "Settings saved.",
+    "error": "Could not save.",
+    "invalid_phone": "Invalid number.",
+    "locations": {
+      "title": "Locations",
+      "subtitle": "Your shops. The number of active locations depends on your plan.",
+      "add": "Add location",
+      "edit": "Edit",
+      "name": "Name",
+      "address": "Address",
+      "city": "City",
+      "phone": "Phone",
+      "active": "Active",
+      "inactive": "Inactive",
+      "save": "Save",
+      "delete": "Delete",
+      "deleteConfirm": "Delete this location?",
+      "limit": "Limit reached: add locations to your plan in Billing.",
+      "error": "Something went wrong.",
+      "usage": "{used} / {max} active locations"
+    }
+  },
+  "coupons": {
+    "title": "Coupons",
+    "subtitle": "Promo codes validated at the counter with the scanner.",
+    "add": "New coupon",
+    "edit": "Edit coupon",
+    "empty": "No coupons. Create a code for your campaigns or social media.",
+    "name": "Name",
+    "code": "Code",
+    "codeHint": "Uppercase letters, digits and dashes (e.g. RAMADAN20).",
+    "kind": "Type",
+    "value": "Value",
+    "kinds": {
+      "percent": "Percentage",
+      "fixed": "Fixed amount (TND)",
+      "free_item": "Free item",
+      "custom": "Other"
+    },
+    "startsAt": "Starts",
+    "endsAt": "Ends",
+    "max": "Max uses (total)",
+    "perCustomer": "Per customer",
+    "terms": "Terms",
+    "status": "Status",
+    "statuses": {
+      "draft": "Draft",
+      "active": "Active",
+      "paused": "Paused",
+      "expired": "Expired",
+      "archived": "Archived"
+    },
+    "used": "{count} used",
+    "unlimited": "unlimited",
+    "save": "Save",
+    "delete": "Delete",
+    "errors": {
+      "duplicate": "This code already exists.",
+      "generic": "Something went wrong.",
+      "validation": "Check the fields."
+    }
+  },
+  "tx": {
+    "title": "Transactions",
+    "subtitle": "Every stamp, point and reward, in real time.",
+    "all": "All",
+    "fraud": "Fraud alerts",
+    "empty": "No transactions in this period.",
+    "cols": {
+      "date": "Date",
+      "customer": "Customer",
+      "program": "Program",
+      "type": "Type",
+      "amount": "Amount",
+      "by": "By"
+    },
+    "fraudEmpty": "No alerts. All good ✨",
+    "review": "Mark as reviewed",
+    "reviewed": "Reviewed",
+    "rules": {
+      "cooldown": "Visits too close together",
+      "daily_limit": "Daily limit exceeded",
+      "max_per_transaction": "Abnormal amount",
+      "employee_velocity": "Unusual employee activity",
+      "coupon_reuse": "Coupon reuse"
+    },
+    "severity": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "sources": {
+      "scanner": "Scanner",
+      "dashboard": "Dashboard",
+      "enrollment": "Sign-up",
+      "api": "API",
+      "system": "System",
+      "nfc": "NFC"
+    }
+  },
+  "rewardsPage": {
+    "title": "Rewards",
+    "subtitle": "All rewards across your programs and how often they're used.",
+    "empty": "No rewards. Add some from a program.",
+    "redeemed": "{count, plural, =0 {never used} one {# redemption} other {# redemptions}}",
+    "manage": "Manage",
+    "recent": "Latest rewards given",
+    "noRecent": "No reward redeemed yet."
   }
 }

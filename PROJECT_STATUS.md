@@ -10,12 +10,12 @@ _Last updated: 2026-11-22_
 | 0 Foundation & design system | ✅ Done | typecheck, lint, build, unit tests, visual check desktop/mobile |
 | 1 Database & Auth | ✅ Done (invitation acceptance moves to Phase 5, workspace switcher to Phase 3) | 8 migrations applied; SQL security suite (isolation, escalation, ledger, billing) passes; E2E login → onboarding → dashboard passes on desktop + mobile; FR/AR(RTL)/EN checked |
 | 2 Public website | Not started | — |
-| 3 Merchant core | 🟡 Partial: dashboard shell + Overview, Programs (+ card designer, rewards, sign-up links), Customers + profiles done. Locations & Settings pages pending | E2E: programs flow; visual check desktop/mobile |
-| 4 Loyalty engine | 🟡 Core done: ledger, stamps/points/visits, sign-up page, customer card page with signed rotating QR, staff scanner (camera + manual), rewards redemption, coupon redemption, anti-fraud. Pending: coupons management UI, transactions page, fraud review UI | SQL suite + E2E full loop (sign-up → scan → stamps → reward) + QR token unit tests |
+| 3 Merchant core | ✅ Overview, Programs (+ card designer, rewards, sign-up links), Customers + profiles, Rewards, Locations (plan-limited), Settings (profile, logo, brand color) | E2E: programs flow + merchant pages smoke test |
+| 4 Loyalty engine | 🟡 Core done: ledger, stamps/points/visits, sign-up page, customer card page with signed rotating QR, staff scanner (camera + manual), rewards redemption, coupon redemption, anti-fraud. Coupons management, Transactions ledger and fraud-alert review now done | SQL suite + E2E full loop (sign-up → scan → stamps → reward) + QR token unit tests |
 | 5 Team & permissions | Not started | — |
 | 6 Engagement | Not started | — |
 | 7 Apple / Google Wallet | Not started | — |
-| 8 Subscriptions & billing | Not started | — |
+| 8 Subscriptions & billing | 🟡 Cash flow done: plans/prices, trials, merchant Billing page (choose period + locations → invoice with payment instructions), admin payment recording, renewals, daily expiry job, plan limits (locations). Online gateway not connected (not needed for cash) | E2E: invoice request; admin payment; SQL suite |
 | 9 Super Admin | 🟡 Core done: platform KPIs (MRR/ARR, merchants by state, customers, cards, revenue), merchant directory + detail, cash payment recording (extends subscription, invoice + receipt), trial extension, suspension/reactivation, payments & open invoices, plan pricing editor, audit/system logs. Pending: MFA enforcement, platform wallet integrations page | E2E: non-admin blocked; admin records payment → subscription active |
 | 10 Analytics | Not started | — |
 | 11 Hardening & launch | Not started | — |

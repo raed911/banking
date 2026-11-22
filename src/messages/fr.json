@@ -642,5 +642,180 @@
       "invoice_already_paid": "Cette facture est déjà payée.",
       "validation": "Vérifiez les champs."
     }
+  },
+  "billing": {
+    "title": "Facturation",
+    "subtitle": "Votre formule, vos factures et vos paiements.",
+    "current": "Formule actuelle",
+    "status": {
+      "trialing": "Essai gratuit",
+      "active": "Actif",
+      "past_due": "Paiement en retard",
+      "expired": "Expiré",
+      "canceled": "Annulé"
+    },
+    "until": "Valable jusqu'au {date}",
+    "trialUntil": "Essai jusqu'au {date}",
+    "locations": "{count, plural, one {# point de vente} other {# points de vente}}",
+    "choose": "Choisir une formule",
+    "chooseDesc": "Tarif par point de vente. Paiement en espèces auprès de l'équipe VAYRO.",
+    "perMonth": "/ mois",
+    "per6": "/ 6 mois",
+    "perYear": "/ an",
+    "quantity": "Points de vente",
+    "total": "Total",
+    "request": "Demander la facture",
+    "popular": "Populaire",
+    "features": [
+      "QR code + NFC inclus",
+      "Carte dans Apple & Google Wallet",
+      "Zéro appli à installer",
+      "Équipe et clients illimités"
+    ],
+    "pending": "Facture en attente",
+    "pendingDesc": "Réglez cette facture auprès de l'équipe VAYRO. Votre abonnement sera activé dès réception du paiement.",
+    "invoiceNo": "Facture n°",
+    "amount": "Montant",
+    "due": "À régler avant le {date}",
+    "instructions": "Comment payer",
+    "invoices": "Historique des factures",
+    "noInvoices": "Aucune facture pour l'instant.",
+    "invoiceStatus": {
+      "draft": "Brouillon",
+      "open": "En attente",
+      "paid": "Payée",
+      "void": "Annulée"
+    },
+    "requested": "Facture créée. Réglez-la pour activer votre abonnement.",
+    "error": "Impossible de créer la facture."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Les informations de votre commerce.",
+    "business": "Commerce",
+    "legal": "Informations légales",
+    "branding": "Identité visuelle",
+    "name": "Nom du commerce",
+    "legalName": "Raison sociale",
+    "taxId": "Matricule fiscal",
+    "email": "Email de contact",
+    "phone": "Téléphone",
+    "website": "Site web",
+    "address": "Adresse",
+    "city": "Ville",
+    "locale": "Langue par défaut des clients",
+    "brandColor": "Couleur de marque",
+    "logo": "Logo",
+    "logoHint": "PNG ou JPG carré, 2 Mo max.",
+    "upload": "Importer",
+    "save": "Enregistrer",
+    "saved": "Paramètres enregistrés.",
+    "error": "Impossible d'enregistrer.",
+    "invalid_phone": "Numéro invalide.",
+    "locations": {
+      "title": "Points de vente",
+      "subtitle": "Vos boutiques. Le nombre de points de vente actifs dépend de votre formule.",
+      "add": "Ajouter un point de vente",
+      "edit": "Modifier",
+      "name": "Nom",
+      "address": "Adresse",
+      "city": "Ville",
+      "phone": "Téléphone",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "save": "Enregistrer",
+      "delete": "Supprimer",
+      "deleteConfirm": "Supprimer ce point de vente ?",
+      "limit": "Limite atteinte : ajoutez des points de vente à votre formule dans Facturation.",
+      "error": "Une erreur est survenue.",
+      "usage": "{used} / {max} points de vente actifs"
+    }
+  },
+  "coupons": {
+    "title": "Coupons",
+    "subtitle": "Codes promo à valider en caisse avec le scanner.",
+    "add": "Nouveau coupon",
+    "edit": "Modifier le coupon",
+    "empty": "Aucun coupon. Créez un code pour vos campagnes ou réseaux sociaux.",
+    "name": "Nom",
+    "code": "Code",
+    "codeHint": "Lettres majuscules, chiffres et tirets (ex. RAMADAN20).",
+    "kind": "Type",
+    "value": "Valeur",
+    "kinds": {
+      "percent": "Pourcentage",
+      "fixed": "Montant fixe (TND)",
+      "free_item": "Produit offert",
+      "custom": "Autre"
+    },
+    "startsAt": "Début",
+    "endsAt": "Fin",
+    "max": "Utilisations max (total)",
+    "perCustomer": "Par client",
+    "terms": "Conditions",
+    "status": "Statut",
+    "statuses": {
+      "draft": "Brouillon",
+      "active": "Actif",
+      "paused": "En pause",
+      "expired": "Expiré",
+      "archived": "Archivé"
+    },
+    "used": "{count} utilisés",
+    "unlimited": "illimité",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "errors": {
+      "duplicate": "Ce code existe déjà.",
+      "generic": "Une erreur est survenue.",
+      "validation": "Vérifiez les champs."
+    }
+  },
+  "tx": {
+    "title": "Transactions",
+    "subtitle": "Chaque tampon, point et récompense, en temps réel.",
+    "all": "Tout",
+    "fraud": "Alertes anti-fraude",
+    "empty": "Aucune transaction sur cette période.",
+    "cols": {
+      "date": "Date",
+      "customer": "Client",
+      "program": "Programme",
+      "type": "Type",
+      "amount": "Montant",
+      "by": "Par"
+    },
+    "fraudEmpty": "Aucune alerte. Tout est en ordre ✨",
+    "review": "Marquer comme vérifiée",
+    "reviewed": "Vérifiée",
+    "rules": {
+      "cooldown": "Passage trop rapproché",
+      "daily_limit": "Limite quotidienne dépassée",
+      "max_per_transaction": "Montant anormal",
+      "employee_velocity": "Activité employé inhabituelle",
+      "coupon_reuse": "Réutilisation de coupon"
+    },
+    "severity": {
+      "low": "Faible",
+      "medium": "Moyenne",
+      "high": "Élevée"
+    },
+    "sources": {
+      "scanner": "Scanner",
+      "dashboard": "Tableau de bord",
+      "enrollment": "Inscription",
+      "api": "API",
+      "system": "Système",
+      "nfc": "NFC"
+    }
+  },
+  "rewardsPage": {
+    "title": "Récompenses",
+    "subtitle": "Toutes les récompenses de vos programmes et leurs utilisations.",
+    "empty": "Aucune récompense. Ajoutez-en depuis un programme.",
+    "redeemed": "{count, plural, =0 {jamais utilisée} one {# utilisation} other {# utilisations}}",
+    "manage": "Gérer",
+    "recent": "Dernières récompenses offertes",
+    "noRecent": "Aucune récompense utilisée pour l'instant."
   }
 }
