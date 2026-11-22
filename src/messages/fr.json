@@ -355,7 +355,8 @@
         "visits": "passages"
       },
       "appleSoon": "L'ajout à Apple Wallet arrive bientôt. En attendant, ajoutez cette page à votre écran d'accueil.",
-      "walletError": "Impossible d'ajouter la carte pour le moment. Réessayez dans quelques minutes."
+      "walletError": "Impossible d'ajouter la carte pour le moment. Réessayez dans quelques minutes.",
+      "offer": "Offre spéciale"
     }
   },
   "scan": {
@@ -1332,7 +1333,8 @@
     "channels": {
       "email": "Email",
       "wallet": "Message Wallet",
-      "sms": "SMS"
+      "sms": "SMS",
+      "card": "Annonce dans la carte"
     },
     "channelPending": "Pas encore connecté",
     "channelPendingDesc": "La campagne sera envoyée automatiquement dès que ce canal sera connecté (email : domaine + Resend ; Wallet : Apple/Google Wallet).",
@@ -1383,7 +1385,9 @@
       "generic": "Une erreur est survenue.",
       "validation": "Vérifiez les champs.",
       "subscription_inactive": "Abonnement inactif : impossible de programmer."
-    }
+    },
+    "cardDesc": "Visible par tous les destinataires sur leur carte",
+    "walletDesc": "Envoie une notification sur les cartes Google Wallet (Android). Google limite le nombre de notifications par carte."
   },
   "integ": {
     "title": "Intégrations",

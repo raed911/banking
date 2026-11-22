@@ -355,7 +355,8 @@
         "visits": "visits"
       },
       "appleSoon": "Apple Wallet is coming soon. Meanwhile, add this page to your home screen.",
-      "walletError": "Couldn't add the card right now. Please try again in a few minutes."
+      "walletError": "Couldn't add the card right now. Please try again in a few minutes.",
+      "offer": "Special offer"
     }
   },
   "scan": {
@@ -1332,7 +1333,8 @@
     "channels": {
       "email": "Email",
       "wallet": "Wallet message",
-      "sms": "SMS"
+      "sms": "SMS",
+      "card": "Card announcement"
     },
     "channelPending": "Not connected yet",
     "channelPendingDesc": "The campaign will be sent automatically as soon as this channel is connected (email: domain + Resend; Wallet: Apple/Google Wallet).",
@@ -1383,7 +1385,9 @@
       "generic": "Something went wrong.",
       "validation": "Check the fields.",
       "subscription_inactive": "Subscription inactive: cannot schedule."
-    }
+    },
+    "cardDesc": "Shown to every recipient on their card",
+    "walletDesc": "Sends a notification to Google Wallet cards (Android). Google limits notifications per card."
   },
   "integ": {
     "title": "Integrations",

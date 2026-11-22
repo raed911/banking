@@ -1,5 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
+import { processCampaign } from "@/lib/jobs";
 import { z } from "zod";
 import { requireMerchant } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
@@ -22,7 +24,7 @@ function segmentFrom(form: FormData): Segment | null {
   return p.data;
 }
 
-export async function audienceCount(segment: Segment, channel: "email" | "wallet") {
+export async function audienceCount(segment: Segment, channel: "email" | "wallet" | "card") {
   const { merchantId } = await requireMerchant("campaigns.manage");
   const supabase = await createClient();
   const { data } = await supabase.rpc("campaign_audience_count", { p_merchant_id: merchantId, p_segment: segmentSchema.parse(segment), p_channel: channel });
@@ -33,7 +35,7 @@ export async function saveCampaign(campaignId: string | null, _: ActionState, fo
   const { merchantId, user } = await requireMerchant("campaigns.manage");
   const segment = segmentFrom(form);
   const parsed = z.object({
-    name: z.string().trim().min(2).max(120), channel: z.enum(["email", "wallet"]), subject: z.string().trim().max(150).optional().or(z.literal("")),
+    name: z.string().trim().min(2).max(120), channel: z.enum(["email", "wallet", "card"]), subject: z.string().trim().max(150).optional().or(z.literal("")),
     body: z.string().trim().min(3).max(1000), coupon_id: z.uuid().optional().or(z.literal("")), send_at: z.string().optional().or(z.literal("")),
   }).safeParse(Object.fromEntries(form));
   if (!parsed.success || !segment) return { error: "validation" };
@@ -53,6 +55,7 @@ export async function saveCampaign(campaignId: string | null, _: ActionState, fo
   if (form.get("intent") === "schedule") {
     const { data, error } = await supabase.rpc("schedule_campaign", { p_campaign_id: id!, p_send_at: row.scheduled_at ?? undefined });
     if (error) return { error: error.message.includes("subscription_inactive") ? "subscription_inactive" : "generic" };
+    if (!row.scheduled_at || new Date(row.scheduled_at) <= new Date()) { const cid = id!; after(() => processCampaign(cid).then(() => undefined).catch(() => undefined)); } // send now, worker is the fallback
     revalidatePath("/dashboard/campaigns");
     return { ok: true, data: { recipients: (data as { recipients: number }).recipients } };
   }

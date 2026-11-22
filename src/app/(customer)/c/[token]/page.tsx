@@ -8,6 +8,7 @@ import { LiveQr } from "@/components/loyalty/live-qr";
 import { getPublicCard } from "@/lib/loyalty/public-card";
 import { publicAssetUrl } from "@/lib/storage";
 import { walletAvailability } from "@/lib/integrations";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { cn } from "@/lib/utils";
 
 export async function generateMetadata({ params }: { params: Promise<{ token: string }> }) {
@@ -30,7 +31,8 @@ export default async function CardPage({ params, searchParams }: { params: Promi
   const next = rewards.find((r) => r.cost > card.balance);
   const ready = rewards.filter((r) => r.cost <= card.balance);
   const bg = design?.background_color ?? "#101828";
-  const wallets = await walletAvailability(card.merchant_id);
+  const [wallets, { data: announcement }] = await Promise.all([walletAvailability(card.merchant_id), createAdminClient().rpc("card_announcement", { p_card_id: card.id })]);
+  const ann = announcement as { body: string; coupon: string | null; coupon_name: string | null } | null;
   // Google Wallet isn't available on iOS: don't offer a button that can't work there.
   const isIos = /iPhone|iPad|iPod/i.test((await headers()).get("user-agent") ?? "");
   const showGoogle = wallets.google && !isIos;
@@ -50,6 +52,17 @@ export default async function CardPage({ params, searchParams }: { params: Promi
           stampIcon={design?.stamp_icon} logoUrl={publicAssetUrl(design?.logo_path ?? merchant.logo_path)} stripUrl={publicAssetUrl(design?.strip_path)}
           qr={active ? <LiveQr token={token} /> : <Lock className="size-8 text-ink-300" />} />
       </div>
+
+      {active && ann?.body && (
+        <section className="relative mt-6 overflow-hidden rounded-3xl bg-lime-300 p-5 text-ink-900 shadow-lg">
+          <div className="bg-grid-ink absolute inset-0 opacity-60" />
+          <div className="relative">
+            <div className="text-xs font-bold uppercase tracking-[0.14em]">{t("offer")}</div>
+            <p className="mt-1 text-lg font-semibold leading-snug">{ann.body.replaceAll("{prenom}", card.customer?.first_name ?? "").replaceAll("{commerce}", merchant.name)}</p>
+            {ann.coupon && <p className="mt-3 inline-block rounded-xl bg-ink-900 px-3 py-1.5 font-mono text-sm font-bold tracking-wider text-lime-300" dir="ltr">{ann.coupon}</p>}
+          </div>
+        </section>
+      )}
 
       {!active ? (
         <p className="relative mt-6 rounded-2xl bg-warning-50 p-4 text-center text-sm font-medium text-warning-700">{t("unavailable")}</p>

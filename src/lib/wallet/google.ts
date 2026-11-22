@@ -74,3 +74,15 @@ export function saveToWalletUrl(creds: GoogleCreds, objectId: string, origins: s
   const jwt = signJwtRS256({ iss: creds.serviceAccountEmail, aud: "google", typ: "savetowallet", origins, iat: Math.floor(Date.now() / 1000), payload: { loyaltyObjects: [{ id: objectId }] } }, normalizePrivateKey(creds.privateKey));
   return `https://pay.google.com/gp/v/save/${jwt}`;
 }
+
+/** Adds a message to a loyalty object; TEXT_AND_NOTIFY also pushes a notification (Google rate-limits these per pass). */
+export async function addObjectMessage(creds: GoogleCreds, objectId: string, message: { id: string; header: string; body: string; notify: boolean; start: Date; end: Date }) {
+  const r = await call<{ error?: { message?: string } }>(creds, "POST", `/loyaltyObject/${encodeURIComponent(objectId)}/addMessage`, {
+    message: {
+      id: message.id, header: message.header.slice(0, 60), body: message.body.slice(0, 500),
+      messageType: message.notify ? "TEXT_AND_NOTIFY" : "TEXT",
+      displayInterval: { start: { date: message.start.toISOString() }, end: { date: message.end.toISOString() } },
+    },
+  });
+  if (r.status >= 300) throw new Error(`google_message_${r.status}: ${r.data.error?.message ?? ""}`.slice(0, 300));
+}

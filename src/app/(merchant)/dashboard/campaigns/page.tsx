@@ -22,7 +22,7 @@ export default async function CampaignsPage() {
     <div className="space-y-6">
       <PageHeader title={t("title")} description={t("subtitle")} />
       <CampaignsManager campaigns={(campaigns ?? []) as unknown as CampaignRow[]} programs={programs ?? []} coupons={coupons ?? []} tags={tags}
-        connected={{ email: ok("resend"), wallet: ok("apple_wallet") || ok("google_wallet") }} />
+        connected={{ email: ok("resend"), wallet: ok("apple_wallet") || ok("google_wallet"), card: true }} />
     </div>
   );
 }

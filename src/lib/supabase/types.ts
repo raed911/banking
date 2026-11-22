@@ -2243,6 +2243,7 @@ export type Database = {
         }
         Returns: Json
       }
+      card_announcement: { Args: { p_card_id: string }; Returns: Json }
       check_rate_limit: {
         Args: { p_key: string; p_max: number; p_window_seconds: number }
         Returns: boolean
@@ -2374,7 +2375,7 @@ export type Database = {
     }
     Enums: {
       billing_period: "monthly" | "semiannual" | "annual"
-      campaign_channel: "email" | "wallet" | "sms"
+      campaign_channel: "email" | "wallet" | "sms" | "card"
       campaign_status:
         | "draft"
         | "scheduled"
@@ -2536,7 +2537,7 @@ export const Constants = {
   public: {
     Enums: {
       billing_period: ["monthly", "semiannual", "annual"],
-      campaign_channel: ["email", "wallet", "sms"],
+      campaign_channel: ["email", "wallet", "sms", "card"],
       campaign_status: [
         "draft",
         "scheduled",

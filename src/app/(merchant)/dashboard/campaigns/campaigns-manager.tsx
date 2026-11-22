@@ -15,14 +15,14 @@ import { SubmitButton } from "@/components/forms/submit-button";
 import { FormAlert } from "@/components/forms/form-alert";
 import { cn } from "@/lib/utils";
 
-export type CampaignRow = { id: string; name: string; channel: "email" | "wallet"; status: "draft" | "scheduled" | "sending" | "sent" | "canceled" | "failed"; segment: Segment; subject: string | null; content: { body?: string }; coupon_id: string | null; scheduled_at: string | null; stats: { targeted?: number; sent?: number; failed?: number }; created_at: string };
+export type CampaignRow = { id: string; name: string; channel: "email" | "wallet" | "card"; status: "draft" | "scheduled" | "sending" | "sent" | "canceled" | "failed"; segment: Segment; subject: string | null; content: { body?: string }; coupon_id: string | null; scheduled_at: string | null; stats: { targeted?: number; sent?: number; failed?: number }; created_at: string };
 type Opt = { id: string; name: string };
 const TONE = { draft: "neutral", scheduled: "info", sending: "warning", sent: "success", canceled: "neutral", failed: "danger" } as const;
 const sel = "h-10 w-full rounded-lg border border-border-strong bg-surface px-3 text-sm";
 
-function CampaignForm({ c, programs, coupons, tags, connected, onDone }: { c: CampaignRow | null; programs: Opt[]; coupons: Opt[]; tags: string[]; connected: { email: boolean; wallet: boolean }; onDone: () => void }) {
+function CampaignForm({ c, programs, coupons, tags, connected, onDone }: { c: CampaignRow | null; programs: Opt[]; coupons: Opt[]; tags: string[]; connected: { email: boolean; wallet: boolean; card: boolean }; onDone: () => void }) {
   const t = useTranslations("camp");
-  const [channel, setChannel] = useState<"email" | "wallet">(c?.channel ?? "email");
+  const [channel, setChannel] = useState<"email" | "wallet" | "card">(c?.channel ?? "card");
   const [segment, setSegment] = useState<Segment>(c?.segment ?? { type: "inactive", days: 30 });
   const [later, setLater] = useState(!!c?.scheduled_at);
   const [aud, setAud] = useState<{ eligible: number; segment_total: number; without_consent: number } | null>(null);
@@ -39,15 +39,16 @@ function CampaignForm({ c, programs, coupons, tags, connected, onDone }: { c: Ca
       <Field label={t("name")} htmlFor="cp-name"><Input id="cp-name" name="name" required maxLength={120} defaultValue={c?.name} placeholder={t("namePlaceholder")} /></Field>
       <fieldset><legend className="mb-2 text-[13px] font-medium">{t("channel")}</legend>
         <input type="hidden" name="channel" value={channel} />
-        <div className="grid grid-cols-2 gap-2">
-          {(["email", "wallet"] as const).map((ch) => (
+        <div className="grid grid-cols-3 gap-2">
+          {(["card", "wallet", "email"] as const).map((ch) => (
             <button type="button" key={ch} onClick={() => setChannel(ch)} className={cn("flex items-center gap-3 rounded-xl border p-3 text-start text-sm", channel === ch ? "border-ink-900 bg-ink-900 text-white" : "border-border-strong")}>
-              {ch === "email" ? <Mail className="size-4" /> : <Wallet className="size-4" />}<span className="flex-1 font-medium">{t(`channels.${ch}`)}</span>
+              {ch === "email" ? <Mail className="size-4" /> : ch === "wallet" ? <Wallet className="size-4" /> : <Megaphone className="size-4" />}<span className="flex-1 text-xs font-medium sm:text-sm">{t(`channels.${ch}`)}</span>
               {!connected[ch] && <Clock className="size-3.5 text-warning-500" />}
             </button>
           ))}
         </div>
-        {!connected[channel] && <p className="mt-2 rounded-lg bg-warning-50 p-2.5 text-xs text-warning-700">{t("channelPending")} — {t("channelPendingDesc")}</p>}
+        {!connected[channel] ? <p className="mt-2 rounded-lg bg-warning-50 p-2.5 text-xs text-warning-700">{t("channelPending")} — {t("channelPendingDesc")}</p>
+          : <p className="mt-2 text-xs text-fg-muted">{channel === "card" ? t("cardDesc") : channel === "wallet" ? t("walletDesc") : ""}</p>}
       </fieldset>
       <div className="grid grid-cols-[1fr_auto] gap-3">
         <Field label={t("segment")} htmlFor="cp-seg"><select id="cp-seg" name="segment_type" className={sel} value={segment.type} onChange={(e) => setSegment({ type: e.target.value as Segment["type"], days: 30 })}>{(["all", "inactive", "active", "new", "birthday_month", "tag", "program"] as const).map((s) => <option key={s} value={s}>{t(`segments.${s}`)}</option>)}</select></Field>
@@ -70,7 +71,7 @@ function CampaignForm({ c, programs, coupons, tags, connected, onDone }: { c: Ca
   );
 }
 
-export function CampaignsManager({ campaigns, programs, coupons, tags, connected }: { campaigns: CampaignRow[]; programs: Opt[]; coupons: Opt[]; tags: string[]; connected: { email: boolean; wallet: boolean } }) {
+export function CampaignsManager({ campaigns, programs, coupons, tags, connected }: { campaigns: CampaignRow[]; programs: Opt[]; coupons: Opt[]; tags: string[]; connected: { email: boolean; wallet: boolean; card: boolean } }) {
   const t = useTranslations("camp");
   const format = useFormatter();
   const [editing, setEditing] = useState<CampaignRow | "new" | null>(null);
@@ -82,7 +83,7 @@ export function CampaignsManager({ campaigns, programs, coupons, tags, connected
         <div className="space-y-3">
           {campaigns.map((c) => (
             <Card key={c.id} className="flex flex-wrap items-center gap-4 p-5">
-              <span className="grid size-11 place-items-center rounded-xl bg-ink-900 text-lime-300">{c.channel === "email" ? <Mail className="size-5" /> : <Wallet className="size-5" />}</span>
+              <span className="grid size-11 place-items-center rounded-xl bg-ink-900 text-lime-300">{c.channel === "email" ? <Mail className="size-5" /> : c.channel === "wallet" ? <Wallet className="size-5" /> : <Megaphone className="size-5" />}</span>
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2"><span className="truncate font-semibold">{c.name}</span><Badge tone={TONE[c.status]} dot>{t(`statuses.${c.status}`)}</Badge>{c.status === "scheduled" && !connected[c.channel] && <Badge tone="warning">{t("awaiting")}</Badge>}</div>
                 <div className="mt-0.5 text-xs text-fg-muted">{t(`segments.${c.segment.type}`).replace("…", c.segment.days ? ` ${c.segment.days} j` : "")}{c.scheduled_at ? ` · ${format.dateTime(new Date(c.scheduled_at), { dateStyle: "medium", timeStyle: "short" })}` : ""}</div>
