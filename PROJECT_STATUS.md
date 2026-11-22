@@ -47,4 +47,4 @@ See `docs/SERVICES_AND_CREDENTIALS.md`. Configured: **Supabase**, **Vercel** (to
 - **Super admin bootstrap**: the first platform admin is granted by SQL once the owner's account exists. The admin must enable 2-step verification (Mon compte) before using the admin area.
 - **Secrets durability**: `VAYRO_ENCRYPTION_KEY`, `QR_SIGNING_SECRET`, `CRON_SECRET` are stored as encrypted Vercel env vars (source of truth). Never rotate the encryption key without re-encrypting stored integration secrets.
 - Supabase advisor warns that SECURITY DEFINER functions are callable by signed-in users: intentional, each one performs its own permission check (covered by `supabase/tests`).
-- Logo is an interim SVG mark; replace with the official VAYRO logo file when available.
+- ✅ Official VAYRO logo in place (vector mark, favicon, Apple touch icon; source in docs/brand/).
