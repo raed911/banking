@@ -1,0 +1,67 @@
+import "server-only";
+import { cache } from "react";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { can, type Permission } from "@/lib/permissions";
+
+export const getUser = cache(async () => {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getUser();
+  return data.user;
+});
+
+export async function requireUser(next?: string) {
+  const user = await getUser();
+  if (!user) redirect(`/login${next ? `?next=${encodeURIComponent(next)}` : ""}`);
+  return user;
+}
+
+export const isPlatformAdmin = cache(async () => {
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("is_platform_admin");
+  return data === true;
+});
+
+export type Membership = {
+  merchant: { id: string; name: string; slug: string; logo_path: string | null; status: string; brand_color: string; timezone: string; locale: string; onboarding_completed_at: string | null };
+  role: { id: string; key: string; name: string; permissions: string[] };
+};
+
+export const getMemberships = cache(async (): Promise<Membership[]> => {
+  const user = await getUser();
+  if (!user) return [];
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("merchant_members")
+    .select("merchant:merchants!inner(id, name, slug, logo_path, status, brand_color, timezone, locale, onboarding_completed_at), role:roles!inner(id, key, name, permissions)")
+    .eq("user_id", user.id)
+    .eq("status", "active")
+    .order("created_at");
+  return (data ?? []) as unknown as Membership[];
+});
+
+/** Active merchant = profile.last_merchant_id if still a member, else the first membership. */
+export const getActiveMembership = cache(async (): Promise<Membership | null> => {
+  const user = await getUser();
+  if (!user) return null;
+  const memberships = await getMemberships();
+  if (memberships.length === 0) return null;
+  const supabase = await createClient();
+  const { data: profile } = await supabase.from("profiles").select("last_merchant_id").eq("id", user.id).single();
+  return memberships.find((m) => m.merchant.id === profile?.last_merchant_id) ?? memberships[0]!;
+});
+
+/** For merchant dashboard pages: signed in, has a merchant, optionally a permission. */
+export async function requireMerchant(perm?: Permission) {
+  const user = await requireUser("/dashboard");
+  const membership = await getActiveMembership();
+  if (!membership) redirect("/onboarding");
+  if (perm && !can(membership.role.permissions, perm)) redirect("/dashboard?denied=1");
+  return { user, membership, merchantId: membership.merchant.id, permissions: membership.role.permissions };
+}
+
+export async function requirePlatformAdmin() {
+  const user = await requireUser("/admin");
+  if (!(await isPlatformAdmin())) redirect("/dashboard");
+  return user;
+}

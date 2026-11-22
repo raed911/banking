@@ -9,7 +9,7 @@ export default defineConfig({
   use: { baseURL: process.env.E2E_BASE_URL ?? "http://localhost:3100", trace: "off" },
   webServer: process.env.E2E_BASE_URL
     ? undefined
-    : { command: "npm run start -- -p 3100", port: 3100, reuseExistingServer: true, timeout: 120_000 },
+    : { command: "NODE_USE_ENV_PROXY=1 npm run start -- -p 3100", port: 3100, reuseExistingServer: true, timeout: 120_000 },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"], launchOptions: { executablePath } } },
     { name: "mobile", use: { ...devices["Pixel 7"], launchOptions: { executablePath } } },

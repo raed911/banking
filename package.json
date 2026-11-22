@@ -14,10 +14,11 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test --trace off",
+    "test:e2e": "NODE_USE_ENV_PROXY=1 node --env-file-if-exists=.env.local node_modules/.bin/playwright test --trace off",
     "db:migrate": "NODE_USE_ENV_PROXY=1 node --env-file-if-exists=.env.local --no-warnings scripts/db-migrate.mjs",
     "check": "npm run typecheck && npm run lint && npm run test",
-    "db:test": "NODE_USE_ENV_PROXY=1 node --env-file-if-exists=.env.local --no-warnings scripts/db-test.mjs"
+    "db:test": "NODE_USE_ENV_PROXY=1 node --env-file-if-exists=.env.local --no-warnings scripts/db-test.mjs",
+    "db:types": "curl -sS \"https://api.supabase.com/v1/projects/${SUPABASE_PROJECT_REF:-tosdplimvzlzcooxxezx}/types/typescript?included_schemas=public\" | node -e \"let s='';process.stdin.on('data',d=>s+=d).on('end',()=>process.stdout.write(JSON.parse(s).types))\" > src/lib/supabase/types.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",
