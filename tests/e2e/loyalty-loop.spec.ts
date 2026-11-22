@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { deleteUserAndMerchants, signInWithBusiness } from "./helpers";
+import { admin, deleteUserAndMerchants, signInWithBusiness } from "./helpers";
 
 test("full loop: program → customer sign-up → scan → stamps → reward", async ({ page, browser }) => {
   test.setTimeout(90_000);
@@ -23,8 +23,12 @@ test("full loop: program → customer sign-up → scan → stamps → reward", a
     await customer.locator("#first_name").fill("Sami");
     const phone = `2${String(Date.now()).slice(-7)}`;
     await customer.locator("#phone").fill(phone);
+    await customer.locator("#birthday").selectOption("15");
+    await customer.getByLabel("Mois").selectOption("3");
     await customer.locator("form button[type=submit]").click();
     await customer.waitForURL(/\/c\/[A-Za-z0-9_-]{24,}/);
+    const { data: saved } = await admin().from("customers").select("birthday").eq("phone", `+216${phone}`).single();
+    expect(saved?.birthday).toBe("2000-03-15");
     await expect(customer.locator("main svg").first()).toBeVisible();
     const qr = await customer.evaluate((u) => fetch(u).then((r) => r.json()), new URL(customer.url()).pathname.replace(/^\/c\/([^/]+).*/, "/api/card/$1/qr"));
     expect(qr.token).toMatch(/^VY1\./);

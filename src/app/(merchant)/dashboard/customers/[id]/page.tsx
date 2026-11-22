@@ -89,7 +89,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
           <CardHeader><CardTitle>{t("profile.details")}</CardTitle></CardHeader>
           <CardContent>
             <dl className="space-y-3 text-sm">
-              {[[t("form.phone"), c.phone], [t("form.email"), c.email], [t("form.birthday"), c.birthday && format.dateTime(new Date(c.birthday), { dateStyle: "long" })], [t("profile.visits"), String(c.total_visits)], [t("cols.lastVisit"), c.last_visit_at ? format.relativeTime(new Date(c.last_visit_at)) : t("never")]].map(([k, v]) => (
+              {[[t("form.phone"), c.phone], [t("form.email"), c.email], [t("form.birthday"), c.birthday && format.dateTime(new Date(`${c.birthday}T12:00:00`), { day: "numeric", month: "long" })], [t("profile.visits"), String(c.total_visits)], [t("cols.lastVisit"), c.last_visit_at ? format.relativeTime(new Date(c.last_visit_at)) : t("never")]].map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-4"><dt className="text-fg-muted">{k}</dt><dd className="truncate text-end font-medium" dir="auto">{v || "—"}</dd></div>
               ))}
             </dl>

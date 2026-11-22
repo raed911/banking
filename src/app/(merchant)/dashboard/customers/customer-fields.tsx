@@ -2,6 +2,7 @@
 import { useTranslations } from "next-intl";
 import { Field } from "@/components/ui/field";
 import { Input, Textarea } from "@/components/ui/input";
+import { BirthdayInput } from "@/components/forms/birthday-input";
 
 export type CustomerValues = { first_name: string; last_name: string | null; phone: string | null; email: string | null; birthday: string | null; notes: string | null; tags: string[]; marketing_consent: boolean };
 
@@ -18,7 +19,7 @@ export function CustomerFields({ c, programs }: { c?: CustomerValues; programs?:
         <Field label={t("email")} htmlFor="c-email"><Input id="c-email" name="email" type="email" dir="ltr" defaultValue={c?.email ?? ""} /></Field>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Field label={t("birthday")} htmlFor="birthday"><Input id="birthday" name="birthday" type="date" defaultValue={c?.birthday ?? ""} /></Field>
+        <Field label={t("birthday")} htmlFor="birthday"><BirthdayInput id="birthday" defaultValue={c?.birthday} /></Field>
         {programs ? (
           <Field label={t("program")} htmlFor="program_id">
             <select id="program_id" name="program_id" defaultValue={programs[0]?.id ?? ""} className="h-10 w-full rounded-lg border border-border-strong bg-surface px-3 text-sm">
