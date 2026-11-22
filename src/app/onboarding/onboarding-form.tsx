@@ -32,7 +32,7 @@ export function OnboardingForm() {
             <form action={action} className="space-y-6">
               <FormAlert>{state?.error && state.error !== "generic" ? t(`errors.${state.error}` as "errors.generic") : state?.error ? t("errors.generic") : null}</FormAlert>
               <Field label={t("businessName")} htmlFor="name">
-                <Input id="name" name="name" required minLength={2} maxLength={80} placeholder={t("businessNamePlaceholder")} value={name} onChange={(e) => setName(e.target.value)} className="h-12 text-base" />
+                <Input id="name" name="name" required minLength={2} maxLength={80} placeholder={t("businessNamePlaceholder")} onChange={(e) => setName(e.target.value)} className="h-12 text-base" />
               </Field>
               <fieldset>
                 <legend className="mb-2 text-[13px] font-medium">{t("industry")}</legend>

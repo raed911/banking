@@ -89,5 +89,85 @@
       "invalid_phone": "Numéro invalide. Utilisez le format +216…",
       "generic": "Impossible de créer votre espace. Réessayez."
     }
+  },
+  "dash": {
+    "nav": {
+      "overview": "Vue d'ensemble",
+      "programs": "Programmes",
+      "customers": "Clients",
+      "rewards": "Récompenses",
+      "coupons": "Coupons",
+      "campaigns": "Campagnes",
+      "notifications": "Notifications",
+      "analytics": "Statistiques",
+      "transactions": "Transactions",
+      "employees": "Équipe",
+      "roles": "Rôles & permissions",
+      "locations": "Points de vente",
+      "integrations": "Intégrations",
+      "billing": "Facturation",
+      "settings": "Paramètres",
+      "scanner": "Scanner",
+      "admin": "Super admin",
+      "groupLoyalty": "Fidélité",
+      "groupGrowth": "Croissance",
+      "groupBusiness": "Entreprise",
+      "menu": "Menu",
+      "more": "Plus"
+    },
+    "user": {
+      "account": "Mon compte",
+      "switch": "Changer d'espace",
+      "newWorkspace": "Nouvel espace",
+      "signOut": "Se déconnecter",
+      "language": "Langue"
+    },
+    "trial": {
+      "trialing": "Essai gratuit : {days, plural, =0 {dernier jour} one {# jour restant} other {# jours restants}}",
+      "expired": "Votre abonnement a expiré. Le scan et les inscriptions sont suspendus.",
+      "pastDue": "Paiement en attente. Réglez votre abonnement pour éviter l'interruption.",
+      "suspended": "Ce compte est suspendu. Contactez l'équipe VAYRO.",
+      "cta": "Choisir une formule"
+    },
+    "overview": {
+      "greeting": "Bonjour {name}",
+      "subtitle": "Voici ce qui se passe dans {merchant}.",
+      "period": "{days} derniers jours",
+      "customers": "Clients",
+      "newCustomers": "nouveaux",
+      "visits": "Passages",
+      "earned": "Tampons & points distribués",
+      "rewards": "Récompenses offertes",
+      "returnRate": "Taux de retour",
+      "vsPrevious": "vs période précédente",
+      "activity": "Activité",
+      "activityDesc": "Tampons et points distribués par jour",
+      "earnedSeries": "Distribués",
+      "redeemedSeries": "Utilisés",
+      "walletPasses": "Cartes dans un wallet",
+      "activeCards": "Cartes actives",
+      "setupTitle": "Lancez votre programme",
+      "setupDesc": "4 étapes pour accueillir vos premiers clients.",
+      "stepProgram": "Créer un programme de fidélité",
+      "stepDesign": "Personnaliser votre carte",
+      "stepLink": "Partager votre lien d'inscription",
+      "stepTeam": "Inviter votre équipe",
+      "done": "Terminé",
+      "start": "Commencer",
+      "quick": "Actions rapides",
+      "quickScan": "Scanner une carte",
+      "quickCustomer": "Ajouter un client",
+      "quickProgram": "Nouveau programme",
+      "quickCampaign": "Nouvelle campagne",
+      "fraudAlert": "{count, plural, one {# alerte} other {# alertes}} anti-fraude à vérifier",
+      "review": "Voir",
+      "emptyChart": "Pas encore d'activité. Vos premiers passages apparaîtront ici.",
+      "periodShort": "{days} j"
+    },
+    "soon": {
+      "title": "Bientôt disponible",
+      "desc": "Ce module est en cours de construction et arrive très bientôt dans votre espace."
+    },
+    "denied": "Vous n'avez pas la permission d'accéder à cette page."
   }
 }

@@ -89,5 +89,85 @@
       "invalid_phone": "Invalid number. Use the +216… format",
       "generic": "Could not create your workspace. Please retry."
     }
+  },
+  "dash": {
+    "nav": {
+      "overview": "Overview",
+      "programs": "Programs",
+      "customers": "Customers",
+      "rewards": "Rewards",
+      "coupons": "Coupons",
+      "campaigns": "Campaigns",
+      "notifications": "Notifications",
+      "analytics": "Analytics",
+      "transactions": "Transactions",
+      "employees": "Team",
+      "roles": "Roles & permissions",
+      "locations": "Locations",
+      "integrations": "Integrations",
+      "billing": "Billing",
+      "settings": "Settings",
+      "scanner": "Scanner",
+      "admin": "Super admin",
+      "groupLoyalty": "Loyalty",
+      "groupGrowth": "Growth",
+      "groupBusiness": "Business",
+      "menu": "Menu",
+      "more": "More"
+    },
+    "user": {
+      "account": "My account",
+      "switch": "Switch workspace",
+      "newWorkspace": "New workspace",
+      "signOut": "Sign out",
+      "language": "Language"
+    },
+    "trial": {
+      "trialing": "Free trial: {days, plural, =0 {last day} one {# day left} other {# days left}}",
+      "expired": "Your subscription has expired. Scanning and sign-ups are paused.",
+      "pastDue": "Payment pending. Settle your subscription to avoid interruption.",
+      "suspended": "This account is suspended. Contact the VAYRO team.",
+      "cta": "Choose a plan"
+    },
+    "overview": {
+      "greeting": "Hello {name}",
+      "subtitle": "Here's what's happening at {merchant}.",
+      "period": "Last {days} days",
+      "customers": "Customers",
+      "newCustomers": "new",
+      "visits": "Visits",
+      "earned": "Stamps & points given",
+      "rewards": "Rewards redeemed",
+      "returnRate": "Return rate",
+      "vsPrevious": "vs previous period",
+      "activity": "Activity",
+      "activityDesc": "Stamps and points given per day",
+      "earnedSeries": "Given",
+      "redeemedSeries": "Redeemed",
+      "walletPasses": "Cards in a wallet",
+      "activeCards": "Active cards",
+      "setupTitle": "Launch your program",
+      "setupDesc": "4 steps to welcome your first customers.",
+      "stepProgram": "Create a loyalty program",
+      "stepDesign": "Customize your card",
+      "stepLink": "Share your sign-up link",
+      "stepTeam": "Invite your team",
+      "done": "Done",
+      "start": "Start",
+      "quick": "Quick actions",
+      "quickScan": "Scan a card",
+      "quickCustomer": "Add a customer",
+      "quickProgram": "New program",
+      "quickCampaign": "New campaign",
+      "fraudAlert": "{count, plural, one {# fraud alert} other {# fraud alerts}} to review",
+      "review": "Review",
+      "emptyChart": "No activity yet. Your first visits will show up here.",
+      "periodShort": "{days}d"
+    },
+    "soon": {
+      "title": "Coming soon",
+      "desc": "This module is being built and will arrive in your workspace very soon."
+    },
+    "denied": "You don't have permission to access this page."
   }
 }

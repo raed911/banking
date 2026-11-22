@@ -89,5 +89,85 @@
       "invalid_phone": "رقم غير صالح. استخدم الصيغة ‎+216…",
       "generic": "تعذّر إنشاء مساحتك. حاول مرة أخرى."
     }
+  },
+  "dash": {
+    "nav": {
+      "overview": "نظرة عامة",
+      "programs": "البرامج",
+      "customers": "العملاء",
+      "rewards": "المكافآت",
+      "coupons": "القسائم",
+      "campaigns": "الحملات",
+      "notifications": "الإشعارات",
+      "analytics": "الإحصائيات",
+      "transactions": "المعاملات",
+      "employees": "الفريق",
+      "roles": "الأدوار والصلاحيات",
+      "locations": "نقاط البيع",
+      "integrations": "التكاملات",
+      "billing": "الفوترة",
+      "settings": "الإعدادات",
+      "scanner": "الماسح",
+      "admin": "المدير العام",
+      "groupLoyalty": "الولاء",
+      "groupGrowth": "النمو",
+      "groupBusiness": "المؤسسة",
+      "menu": "القائمة",
+      "more": "المزيد"
+    },
+    "user": {
+      "account": "حسابي",
+      "switch": "تبديل المساحة",
+      "newWorkspace": "مساحة جديدة",
+      "signOut": "تسجيل الخروج",
+      "language": "اللغة"
+    },
+    "trial": {
+      "trialing": "التجربة المجانية: {days, plural, =0 {اليوم الأخير} one {يوم واحد متبقٍ} two {يومان متبقيان} few {# أيام متبقية} many {# يومًا متبقيًا} other {# يوم متبقٍ}}",
+      "expired": "انتهى اشتراكك. المسح والتسجيلات متوقفة.",
+      "pastDue": "الدفع معلّق. سدّد اشتراكك لتجنّب الانقطاع.",
+      "suspended": "هذا الحساب موقوف. تواصل مع فريق VAYRO.",
+      "cta": "اختر باقة"
+    },
+    "overview": {
+      "greeting": "مرحبًا {name}",
+      "subtitle": "إليك ما يحدث في {merchant}.",
+      "period": "آخر {days} يومًا",
+      "customers": "العملاء",
+      "newCustomers": "جدد",
+      "visits": "الزيارات",
+      "earned": "الأختام والنقاط الممنوحة",
+      "rewards": "المكافآت المستخدمة",
+      "returnRate": "نسبة العودة",
+      "vsPrevious": "مقارنة بالفترة السابقة",
+      "activity": "النشاط",
+      "activityDesc": "الأختام والنقاط الممنوحة يوميًا",
+      "earnedSeries": "ممنوحة",
+      "redeemedSeries": "مستخدمة",
+      "walletPasses": "بطاقات في المحفظة",
+      "activeCards": "البطاقات النشطة",
+      "setupTitle": "أطلق برنامجك",
+      "setupDesc": "4 خطوات لاستقبال أول عملائك.",
+      "stepProgram": "إنشاء برنامج ولاء",
+      "stepDesign": "تخصيص بطاقتك",
+      "stepLink": "مشاركة رابط التسجيل",
+      "stepTeam": "دعوة فريقك",
+      "done": "تم",
+      "start": "ابدأ",
+      "quick": "إجراءات سريعة",
+      "quickScan": "مسح بطاقة",
+      "quickCustomer": "إضافة عميل",
+      "quickProgram": "برنامج جديد",
+      "quickCampaign": "حملة جديدة",
+      "fraudAlert": "{count, plural, one {تنبيه احتيال واحد} two {تنبيهان} few {# تنبيهات} many {# تنبيهًا} other {# تنبيه}} للمراجعة",
+      "review": "عرض",
+      "emptyChart": "لا يوجد نشاط بعد. ستظهر أولى الزيارات هنا.",
+      "periodShort": "{days} يوم"
+    },
+    "soon": {
+      "title": "قريبًا",
+      "desc": "هذه الوحدة قيد الإنشاء وستتوفر في مساحتك قريبًا جدًا."
+    },
+    "denied": "ليست لديك صلاحية الوصول إلى هذه الصفحة."
   }
 }

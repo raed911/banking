@@ -2116,6 +2116,10 @@ export type Database = {
       is_merchant_member: { Args: { mid: string }; Returns: boolean }
       is_platform_admin: { Args: never; Returns: boolean }
       merchant_is_entitled: { Args: { p_merchant: string }; Returns: boolean }
+      merchant_overview: {
+        Args: { p_days?: number; p_merchant_id: string }
+        Returns: Json
+      }
       my_permissions: { Args: { mid: string }; Returns: string[] }
       redeem_coupon: {
         Args: {
@@ -2337,4 +2341,3 @@ export const Constants = {
     },
   },
 } as const
-
