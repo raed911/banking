@@ -2,13 +2,13 @@
 
 _Last updated: 2026-11-22_
 
-## Current phase: Planning complete → waiting on Supabase project (Phase 1 prerequisite)
+## Current phase: Supabase connected → starting Phase 0 + 1
 
 | Phase | Status | Tested |
 |---|---|---|
 | Planning: architecture, DB design, roadmap, services list | ✅ Done (`docs/`) | n/a |
 | 0 Foundation & design system | ⏳ Next | — |
-| 1 Database & Auth | ⛔ Blocked: needs Supabase project | — |
+| 1 Database & Auth | ⏳ Ready to start (Supabase connected) | — |
 | 2 Public website | Not started | — |
 | 3 Merchant core | Not started | — |
 | 4 Loyalty engine | Not started | — |
@@ -21,7 +21,7 @@ _Last updated: 2026-11-22_
 | 11 Hardening & launch | Not started | — |
 
 ## Credentials status
-See `docs/SERVICES_AND_CREDENTIALS.md`. Configured: **none yet**.
+See `docs/SERVICES_AND_CREDENTIALS.md`. Configured: **Supabase** — URL + publishable key in `.env.local` (git-ignored); management access token stored as an encrypted environment network secret (never in code). Connection and SQL execution verified 2026-11-22.
 
 ## Open decisions
 - Payment provider: depends on the country where the business is registered.
