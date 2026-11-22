@@ -26,9 +26,8 @@ test("full loop: program → customer sign-up → scan → stamps → reward", a
     await customer.locator("form button[type=submit]").click();
     await customer.waitForURL(/\/c\/[A-Za-z0-9_-]{24,}/);
     await expect(customer.locator("main svg").first()).toBeVisible();
-    const qrResponse = await customer.request.get(customer.url().replace(/\/c\/([^?]+).*/, "/api/card/$1/qr"));
-    expect(qrResponse.ok()).toBeTruthy();
-    expect((await qrResponse.json()).token).toMatch(/^VY1\./);
+    const qr = await customer.evaluate((u) => fetch(u).then((r) => r.json()), new URL(customer.url()).pathname.replace(/^\/c\/([^/]+).*/, "/api/card/$1/qr"));
+    expect(qr.token).toMatch(/^VY1\./);
 
     // same phone cannot enrol twice (and never gets the card link back)
     const again = await customerCtx.newPage();
