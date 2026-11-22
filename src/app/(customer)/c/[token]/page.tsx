@@ -97,7 +97,7 @@ export default async function CardPage({ params, searchParams }: { params: Promi
           {!wallets.apple && <p className="text-center text-xs text-fg-muted">{t("appleSoon")}</p>}
         </section>
       ) : (
-        <section className="mt-4 rounded-3xl border border-border bg-surface p-5 text-sm text-fg-muted">{t("walletSoon")}</section>
+        <section className="mt-4 rounded-3xl border border-border bg-surface p-5 text-sm text-fg-muted">{wallets.google && isIos ? t("appleSoon") : t("walletSoon")}</section>
       )}
 
       {rewards.length > 0 && (
