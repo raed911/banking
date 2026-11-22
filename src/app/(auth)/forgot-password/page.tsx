@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import Link from "next/link";
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
@@ -17,14 +18,14 @@ export default function ForgotPasswordPage() {
       <Link href="/login" className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-fg-muted hover:text-fg"><ArrowLeft className="size-4 rtl:rotate-180" />{t("backToLogin")}</Link>
       <h1 className="text-3xl font-semibold tracking-[-0.03em]">{t("forgotTitle")}</h1>
       <p className="mt-2 text-fg-muted">{t("forgotSubtitle")}</p>
-      <form action={action} className="mt-8 space-y-4">
+      <ActionForm action={action} className="mt-8 space-y-4">
         <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
         <FormAlert tone="success">{state?.ok ? t("resetSent") : null}</FormAlert>
         <Field label={t("email")} htmlFor="email">
           <Input id="email" name="email" type="email" autoComplete="email" required leading={<Mail />} />
         </Field>
         <SubmitButton size="lg" className="w-full">{t("sendLink")}</SubmitButton>
-      </form>
+      </ActionForm>
     </div>
   );
 }

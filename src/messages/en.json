@@ -497,7 +497,8 @@
       "plans": "Plans",
       "logs": "Logs",
       "messages": "Messages",
-      "geo": "Location marketing"
+      "geo": "Location marketing",
+      "integrations": "Integrations"
     },
     "overview": {
       "title": "VAYRO platform",
@@ -1380,6 +1381,72 @@
       "generic": "Something went wrong.",
       "validation": "Check the fields.",
       "subscription_inactive": "Subscription inactive: cannot schedule."
+    }
+  },
+  "integ": {
+    "title": "Integrations",
+    "subtitle": "Connect Apple Wallet and Google Wallet. Keys are encrypted and never shown again.",
+    "platformTitle": "Platform integrations",
+    "platformSubtitle": "VAYRO credentials used by default for every merchant.",
+    "merchantNote": "By default your cards use VAYRO's Apple and Google accounts. Only enter your own credentials if you want cards published under your own account.",
+    "status": {
+      "not_configured": "Not configured",
+      "configured": "Configured — not verified",
+      "verified": "Connected",
+      "error": "Error"
+    },
+    "google": {
+      "title": "Google Wallet",
+      "desc": "Android loyalty cards through the Google Wallet API.",
+      "issuerId": "Issuer ID",
+      "issuerHint": "Google Pay & Wallet Console → Google Wallet API → Issuer ID (19-digit number).",
+      "email": "Service Account Email",
+      "emailHint": "Ends with .iam.gserviceaccount.com",
+      "key": "Private Key",
+      "keyHint": "The \"private_key\" from the service account JSON file.",
+      "json": "Import JSON file",
+      "jsonHint": "Fills the email and key automatically. The file is read in your browser."
+    },
+    "apple": {
+      "title": "Apple Wallet",
+      "desc": "iPhone loyalty cards signed with your Pass Type ID certificate.",
+      "teamId": "Team ID",
+      "teamHint": "10 characters, on developer.apple.com → Membership.",
+      "passType": "Pass Type Identifier",
+      "passTypeHint": "E.g. pass.app.vayro.loyalty",
+      "cert": "Certificate",
+      "certHint": ".p12 file (recommended) or .pem certificate.",
+      "key": "Private Key",
+      "keyHint": "Only if the certificate is a .pem.",
+      "password": "Certificate password",
+      "file": "Choose a file"
+    },
+    "secretSaved": "Saved {hint}",
+    "keepSecret": "Leave empty to keep the current value.",
+    "save": "Save",
+    "saved": "Credentials saved and encrypted.",
+    "test": "Test connection",
+    "testing": "Testing…",
+    "verifiedAt": "Verified {date}",
+    "remove": "Delete",
+    "removeConfirm": "Delete these credentials?",
+    "expires": "Certificate valid until {date}",
+    "errors": {
+      "generic": "Something went wrong.",
+      "validation": "Check the fields.",
+      "service_account_not_authorized": "The service account has no access to this issuer: add its email in Google Pay & Wallet Console → Users.",
+      "issuer_not_found": "Issuer ID not found.",
+      "google_auth_failed": "Google rejected the authentication: check the email and private key.",
+      "invalid_private_key": "Invalid private key.",
+      "certificate_unreadable": "Unreadable certificate (format or password).",
+      "wrong_password": "Wrong certificate password.",
+      "private_key_missing": "Private key missing.",
+      "key_does_not_match_certificate": "The private key doesn't match the certificate.",
+      "certificate_expired": "Certificate expired.",
+      "not_a_pass_type_certificate": "This isn't a Pass Type ID certificate.",
+      "pass_type_id_mismatch": "Pass Type Identifier doesn't match the certificate.",
+      "team_id_mismatch": "Team ID doesn't match the certificate.",
+      "not_configured": "Save the credentials first."
     }
   }
 }

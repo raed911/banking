@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useState, useTransition } from "react";
 import { useFormatter, useTranslations } from "next-intl";
 import { Ban, CalendarPlus, CheckCircle2 } from "lucide-react";
@@ -25,7 +26,7 @@ export function PaymentForm({ merchantId, prices, quantity, openInvoices }: { me
     <Card className="border-ink-900/10 shadow-md">
       <CardHeader><div><CardTitle>{t("merchant.recordPayment")}</CardTitle><CardDescription>{t("merchant.recordDesc")}</CardDescription></div></CardHeader>
       <CardContent>
-        <form action={action} className="space-y-4" key={state?.ok ? String(state.data?.payment_id) : "form"}>
+        <ActionForm action={action} className="space-y-4" key={state?.ok ? String(state.data?.payment_id) : "form"}>
           <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
           <FormAlert tone="success">{state?.ok ? t("merchant.paymentSaved", { date: format.dateTime(new Date(String(state.data?.current_period_end)), { dateStyle: "long" }) }) : null}</FormAlert>
           {openInvoices.length > 0 && (
@@ -55,7 +56,7 @@ export function PaymentForm({ merchantId, prices, quantity, openInvoices }: { me
           <Field label={t("merchant.reference")} htmlFor="reference"><Input id="reference" name="reference" maxLength={80} /></Field>
           <Field label={t("merchant.notes")} htmlFor="notes"><Input id="notes" name="notes" maxLength={500} /></Field>
           <SubmitButton variant="accent" size="lg" className="w-full"><CheckCircle2 />{t("merchant.save")}</SubmitButton>
-        </form>
+        </ActionForm>
       </CardContent>
     </Card>
   );

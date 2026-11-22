@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Ban, Copy, ExternalLink, MoreHorizontal, Pencil, Plus, SlidersHorizontal, Trash2, Undo2 } from "lucide-react";
@@ -95,11 +96,11 @@ export function EditCustomer({ customer }: { customer: CustomerValues & { id: st
       <Button variant="secondary" onClick={() => setOpen(true)}><Pencil />{t("profile.edit")}</Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent title={`${customer.first_name} ${customer.last_name ?? ""}`}>
-          <form action={action} className="space-y-5">
+          <ActionForm action={action} className="space-y-5">
             <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
             <CustomerFields c={customer} />
             <div className="flex justify-end"><SubmitButton>{t("form.save")}</SubmitButton></div>
-          </form>
+          </ActionForm>
         </DialogContent>
       </Dialog>
     </>

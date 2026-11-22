@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import dynamic from "next/dynamic";
 import { useActionState, useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -48,7 +49,7 @@ export function ZoneEditor({ zone, merchantName, canEdit }: { zone: Zone; mercha
 
   return (
     <Card className="overflow-hidden">
-      <form action={action}>
+      <ActionForm action={action}>
         <input type="hidden" name="latitude" value={placed ? pos.lat.toFixed(6) : ""} />
         <input type="hidden" name="longitude" value={placed ? pos.lng.toFixed(6) : ""} />
         <input type="hidden" name="geo_radius_m" value={radius} />
@@ -84,7 +85,7 @@ export function ZoneEditor({ zone, merchantName, canEdit }: { zone: Zone; mercha
             {canEdit && <SubmitButton className="w-full">{t("save")}</SubmitButton>}
           </div>
         </div>
-      </form>
+      </ActionForm>
     </Card>
   );
 }

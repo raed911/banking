@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ImagePlus } from "lucide-react";
@@ -34,7 +35,7 @@ export function SettingsForm({ merchantId, m }: { merchantId: string; m: M }) {
     <Field label={label} htmlFor={name}><Input id={name} name={name} type={type} defaultValue={(m[name] as string) ?? ""} {...extra} /></Field>
   );
   return (
-    <form action={action} className="space-y-6">
+    <ActionForm action={action} className="space-y-6">
       <input type="hidden" name="logo_path" value={logo ?? ""} />
       <input type="hidden" name="brand_color" value={color} />
       <FormAlert>{state?.error ? t(state.error as "error") : null}</FormAlert>
@@ -73,6 +74,6 @@ export function SettingsForm({ merchantId, m }: { merchantId: string; m: M }) {
         <CardContent className="grid gap-4 sm:grid-cols-2">{f("legal_name", t("legalName"))}{f("tax_id", t("taxId"))}</CardContent>
       </Card>
       <div className="flex justify-end"><SubmitButton size="lg">{t("save")}</SubmitButton></div>
-    </form>
+    </ActionForm>
   );
 }

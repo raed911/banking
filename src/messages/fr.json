@@ -497,7 +497,8 @@
       "plans": "Formules",
       "logs": "Journaux",
       "messages": "Messages",
-      "geo": "Proximité"
+      "geo": "Proximité",
+      "integrations": "Intégrations"
     },
     "overview": {
       "title": "Plateforme VAYRO",
@@ -1380,6 +1381,72 @@
       "generic": "Une erreur est survenue.",
       "validation": "Vérifiez les champs.",
       "subscription_inactive": "Abonnement inactif : impossible de programmer."
+    }
+  },
+  "integ": {
+    "title": "Intégrations",
+    "subtitle": "Connectez Apple Wallet et Google Wallet. Les clés sont chiffrées et ne sont jamais réaffichées.",
+    "platformTitle": "Intégrations de la plateforme",
+    "platformSubtitle": "Identifiants VAYRO utilisés par défaut pour tous les commerçants.",
+    "merchantNote": "Par défaut, vos cartes utilisent les comptes Apple et Google de VAYRO. Renseignez vos propres identifiants uniquement si vous voulez publier les cartes sous votre propre compte.",
+    "status": {
+      "not_configured": "Non configuré",
+      "configured": "Configuré — non vérifié",
+      "verified": "Connecté",
+      "error": "Erreur"
+    },
+    "google": {
+      "title": "Google Wallet",
+      "desc": "Cartes de fidélité Android via l'API Google Wallet.",
+      "issuerId": "Issuer ID",
+      "issuerHint": "Google Pay & Wallet Console → Google Wallet API → Issuer ID (nombre à 19 chiffres).",
+      "email": "Service Account Email",
+      "emailHint": "Se termine par .iam.gserviceaccount.com",
+      "key": "Private Key",
+      "keyHint": "Clé « private_key » du fichier JSON du compte de service.",
+      "json": "Importer le fichier JSON",
+      "jsonHint": "Remplit automatiquement l'email et la clé. Le fichier est lu dans votre navigateur."
+    },
+    "apple": {
+      "title": "Apple Wallet",
+      "desc": "Cartes de fidélité iPhone signées avec votre certificat Pass Type ID.",
+      "teamId": "Team ID",
+      "teamHint": "10 caractères, visible sur developer.apple.com → Membership.",
+      "passType": "Pass Type Identifier",
+      "passTypeHint": "Ex. pass.app.vayro.loyalty",
+      "cert": "Certificat",
+      "certHint": "Fichier .p12 (recommandé) ou certificat .pem.",
+      "key": "Private Key",
+      "keyHint": "Uniquement si le certificat est au format .pem.",
+      "password": "Mot de passe du certificat",
+      "file": "Choisir un fichier"
+    },
+    "secretSaved": "Enregistrée {hint}",
+    "keepSecret": "Laisser vide pour conserver la valeur actuelle.",
+    "save": "Enregistrer",
+    "saved": "Identifiants enregistrés et chiffrés.",
+    "test": "Tester la connexion",
+    "testing": "Test…",
+    "verifiedAt": "Vérifié {date}",
+    "remove": "Supprimer",
+    "removeConfirm": "Supprimer ces identifiants ?",
+    "expires": "Certificat valide jusqu'au {date}",
+    "errors": {
+      "generic": "Une erreur est survenue.",
+      "validation": "Vérifiez les champs.",
+      "service_account_not_authorized": "Le compte de service n'a pas accès à cet émetteur : ajoutez son email dans Google Pay & Wallet Console → Utilisateurs.",
+      "issuer_not_found": "Issuer ID introuvable.",
+      "google_auth_failed": "Authentification Google refusée : vérifiez l'email et la clé privée.",
+      "invalid_private_key": "Clé privée invalide.",
+      "certificate_unreadable": "Certificat illisible (format ou mot de passe).",
+      "wrong_password": "Mot de passe du certificat incorrect.",
+      "private_key_missing": "Clé privée manquante.",
+      "key_does_not_match_certificate": "La clé privée ne correspond pas au certificat.",
+      "certificate_expired": "Certificat expiré.",
+      "not_a_pass_type_certificate": "Ce n'est pas un certificat Pass Type ID.",
+      "pass_type_id_mismatch": "Le Pass Type Identifier ne correspond pas au certificat.",
+      "team_id_mismatch": "Le Team ID ne correspond pas au certificat.",
+      "not_configured": "Enregistrez d'abord les identifiants."
     }
   }
 }

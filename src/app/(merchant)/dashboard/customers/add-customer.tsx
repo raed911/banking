@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useState } from "react";
 import { useTranslations } from "next-intl";
 import { UserPlus } from "lucide-react";
@@ -18,11 +19,11 @@ export function AddCustomer({ programs, defaultOpen }: { programs: { id: string;
       <Button onClick={() => setOpen(true)}><UserPlus />{t("add")}</Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent title={t("add")}>
-          <form action={action} className="space-y-5">
+          <ActionForm action={action} className="space-y-5">
             <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
             <CustomerFields programs={programs} />
             <div className="flex justify-end"><SubmitButton>{t("form.create")}</SubmitButton></div>
-          </form>
+          </ActionForm>
         </DialogContent>
       </Dialog>
     </>

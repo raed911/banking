@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { enroll } from "@/features/enrollment/actions";
@@ -11,7 +12,7 @@ export function JoinForm({ code, merchant, requirePhone, requireEmail, collectBi
   const t = useTranslations("public.join");
   const [state, action] = useActionState(enroll.bind(null, code), null);
   return (
-    <form action={action} className="mt-5 space-y-4">
+    <ActionForm action={action} className="mt-5 space-y-4">
       <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
       <div className="grid grid-cols-2 gap-3">
         <Field label={t("firstName")} htmlFor="first_name"><Input id="first_name" name="first_name" autoComplete="given-name" required maxLength={60} className="h-12 text-base" /></Field>
@@ -28,6 +29,6 @@ export function JoinForm({ code, merchant, requirePhone, requireEmail, collectBi
       <label className="flex items-start gap-3 text-sm text-fg-muted"><input type="checkbox" name="consent" className="mt-0.5 size-4 accent-ink-900" />{t("consent", { merchant })}</label>
       <SubmitButton size="xl" variant="accent" className="w-full">{t("submit")}</SubmitButton>
       <p className="text-center text-xs text-fg-subtle">{t("privacy", { merchant })}</p>
-    </form>
+    </ActionForm>
   );
 }

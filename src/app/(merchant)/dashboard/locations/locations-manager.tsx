@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import Link from "next/link";
 import { useActionState, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
@@ -19,7 +20,7 @@ function LocationForm({ loc, onDone }: { loc: Loc | null; onDone: () => void }) 
   const t = useTranslations("settings.locations");
   const [state, action] = useActionState(async (p: Awaited<ReturnType<typeof saveLocation>>, fd: FormData) => { const r = await saveLocation(loc?.id ?? null, p, fd); if (r?.ok) onDone(); return r; }, null);
   return (
-    <form action={action} className="space-y-4">
+    <ActionForm action={action} className="space-y-4">
       <FormAlert>{state?.error === "limit" ? <>{t("limit")} <Link href="/dashboard/billing" className="underline">→</Link></> : state?.error ? t("error") : null}</FormAlert>
       <Field label={t("name")} htmlFor="l-name"><Input id="l-name" name="name" required maxLength={80} defaultValue={loc?.name} /></Field>
       <Field label={t("address")} htmlFor="l-address"><Input id="l-address" name="address" maxLength={200} defaultValue={loc?.address ?? ""} /></Field>
@@ -29,7 +30,7 @@ function LocationForm({ loc, onDone }: { loc: Loc | null; onDone: () => void }) 
       </div>
       <label className="flex items-center justify-between rounded-xl border border-border p-3 text-sm font-medium">{t("active")}<Switch name="is_active" defaultChecked={loc?.is_active ?? true} /></label>
       <div className="flex justify-end"><SubmitButton>{t("save")}</SubmitButton></div>
-    </form>
+    </ActionForm>
   );
 }
 

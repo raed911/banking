@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { AlertTriangle, ImagePlus, Trash2 } from "lucide-react";
@@ -56,7 +57,7 @@ export function CardDesigner({ programId, merchantId, merchantName, program, des
   }
 
   return (
-    <form action={action} className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_400px]">
+    <ActionForm action={action} className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_400px]">
       {Object.entries(d).map(([k, v]) => <input key={k} type="hidden" name={k} value={v ?? ""} />)}
       <div className="space-y-6">
         <FormAlert>{state?.error ? tf(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
@@ -143,6 +144,6 @@ export function CardDesigner({ programId, merchantId, merchantName, program, des
             stampIcon={d.stamp_icon} logoUrl={publicAssetUrl(d.logo_path)} stripUrl={publicAssetUrl(d.strip_path)} serial="VY7K-29QM" />
         </div>
       </div>
-    </form>
+    </ActionForm>
   );
 }

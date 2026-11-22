@@ -39,3 +39,12 @@ test.describe("authentication & onboarding", () => {
     }
   });
 });
+
+test("a failed login keeps the typed email (forms don't reset on error)", async ({ page }) => {
+  await page.goto("/login");
+  await page.locator("#email").fill("keep-me@test.vayro.app");
+  await page.locator("#password").fill("wrong-password-1");
+  await page.locator("button[type=submit]").click();
+  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(page.locator("#email")).toHaveValue("keep-me@test.vayro.app");
+});

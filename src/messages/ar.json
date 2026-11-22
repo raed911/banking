@@ -497,7 +497,8 @@
       "plans": "الباقات",
       "logs": "السجلات",
       "messages": "الرسائل",
-      "geo": "التسويق بالموقع"
+      "geo": "التسويق بالموقع",
+      "integrations": "التكاملات"
     },
     "overview": {
       "title": "منصة VAYRO",
@@ -1380,6 +1381,72 @@
       "generic": "حدث خطأ.",
       "validation": "تحقق من الحقول.",
       "subscription_inactive": "الاشتراك غير نشط: لا يمكن الجدولة."
+    }
+  },
+  "integ": {
+    "title": "التكاملات",
+    "subtitle": "اربط Apple Wallet و Google Wallet. تُشفَّر المفاتيح ولا تُعرض مرة أخرى.",
+    "platformTitle": "تكاملات المنصة",
+    "platformSubtitle": "بيانات VAYRO المستخدمة افتراضيًا لكل التجار.",
+    "merchantNote": "افتراضيًا تستخدم بطاقاتك حسابات Apple و Google الخاصة بـ VAYRO. أدخل بياناتك الخاصة فقط إذا أردت نشر البطاقات باسم حسابك.",
+    "status": {
+      "not_configured": "غير مُعدّ",
+      "configured": "مُعدّ — غير متحقق",
+      "verified": "متصل",
+      "error": "خطأ"
+    },
+    "google": {
+      "title": "Google Wallet",
+      "desc": "بطاقات ولاء أندرويد عبر واجهة Google Wallet.",
+      "issuerId": "Issuer ID",
+      "issuerHint": "Google Pay & Wallet Console ← Google Wallet API ← Issuer ID (رقم من 19 خانة).",
+      "email": "Service Account Email",
+      "emailHint": "ينتهي بـ ‎.iam.gserviceaccount.com",
+      "key": "Private Key",
+      "keyHint": "قيمة «private_key» من ملف JSON لحساب الخدمة.",
+      "json": "استيراد ملف JSON",
+      "jsonHint": "يملأ البريد والمفتاح تلقائيًا. يُقرأ الملف داخل متصفحك."
+    },
+    "apple": {
+      "title": "Apple Wallet",
+      "desc": "بطاقات ولاء آيفون موقّعة بشهادة Pass Type ID.",
+      "teamId": "Team ID",
+      "teamHint": "10 أحرف، تجده في developer.apple.com ← Membership.",
+      "passType": "Pass Type Identifier",
+      "passTypeHint": "مثال pass.app.vayro.loyalty",
+      "cert": "الشهادة",
+      "certHint": "ملف ‎.p12 (موصى به) أو شهادة ‎.pem.",
+      "key": "Private Key",
+      "keyHint": "فقط إذا كانت الشهادة بصيغة ‎.pem.",
+      "password": "كلمة مرور الشهادة",
+      "file": "اختر ملفًا"
+    },
+    "secretSaved": "محفوظ {hint}",
+    "keepSecret": "اتركه فارغًا للإبقاء على القيمة الحالية.",
+    "save": "حفظ",
+    "saved": "تم حفظ البيانات وتشفيرها.",
+    "test": "اختبار الاتصال",
+    "testing": "جارٍ الاختبار…",
+    "verifiedAt": "تم التحقق {date}",
+    "remove": "حذف",
+    "removeConfirm": "حذف هذه البيانات؟",
+    "expires": "الشهادة صالحة حتى {date}",
+    "errors": {
+      "generic": "حدث خطأ.",
+      "validation": "تحقق من الحقول.",
+      "service_account_not_authorized": "حساب الخدمة لا يملك صلاحية على هذا المُصدِر: أضف بريده في Google Pay & Wallet Console ← Users.",
+      "issuer_not_found": "Issuer ID غير موجود.",
+      "google_auth_failed": "رفض Google المصادقة: تحقق من البريد والمفتاح الخاص.",
+      "invalid_private_key": "مفتاح خاص غير صالح.",
+      "certificate_unreadable": "شهادة غير مقروءة (الصيغة أو كلمة المرور).",
+      "wrong_password": "كلمة مرور الشهادة خاطئة.",
+      "private_key_missing": "المفتاح الخاص مفقود.",
+      "key_does_not_match_certificate": "المفتاح الخاص لا يطابق الشهادة.",
+      "certificate_expired": "الشهادة منتهية.",
+      "not_a_pass_type_certificate": "هذه ليست شهادة Pass Type ID.",
+      "pass_type_id_mismatch": "Pass Type Identifier لا يطابق الشهادة.",
+      "team_id_mismatch": "Team ID لا يطابق الشهادة.",
+      "not_configured": "احفظ البيانات أولًا."
     }
   }
 }

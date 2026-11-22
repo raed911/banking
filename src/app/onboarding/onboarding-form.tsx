@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Coffee, Croissant, Dumbbell, MoreHorizontal, Scissors, ShoppingBag, ShoppingBasket, UtensilsCrossed } from "lucide-react";
@@ -29,7 +30,7 @@ export function OnboardingForm() {
         <p className="mt-2 max-w-lg text-fg-muted">{t("subtitle")}</p>
         <Card className="mt-8">
           <CardContent>
-            <form action={action} className="space-y-6">
+            <ActionForm action={action} className="space-y-6">
               <FormAlert>{state?.error && state.error !== "generic" ? t(`errors.${state.error}` as "errors.generic") : state?.error ? t("errors.generic") : null}</FormAlert>
               <Field label={t("businessName")} htmlFor="name">
                 <Input id="name" name="name" required minLength={2} maxLength={80} placeholder={t("businessNamePlaceholder")} onChange={(e) => setName(e.target.value)} className="h-12 text-base" />
@@ -60,7 +61,7 @@ export function OnboardingForm() {
                 <p className="text-sm text-fg-muted">{t("trialNote")}</p>
                 <SubmitButton size="lg" variant="accent">{t("submit")}</SubmitButton>
               </div>
-            </form>
+            </ActionForm>
           </CardContent>
         </Card>
       </div>

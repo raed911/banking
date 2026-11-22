@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useState, useTransition } from "react";
 import { useFormatter, useTranslations } from "next-intl";
 import { Pencil, Plus, Ticket, Trash2 } from "lucide-react";
@@ -22,7 +23,7 @@ function CouponForm({ c, onDone }: { c: Coupon | null; onDone: () => void }) {
   const [kind, setKind] = useState(c?.kind ?? "percent");
   const [state, action] = useActionState(async (p: Awaited<ReturnType<typeof saveCoupon>>, fd: FormData) => { const r = await saveCoupon(c?.id ?? null, p, fd); if (r?.ok) onDone(); return r; }, null);
   return (
-    <form action={action} className="space-y-4">
+    <ActionForm action={action} className="space-y-4">
       <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
       <div className="grid grid-cols-2 gap-3">
         <Field label={t("name")} htmlFor="c-name"><Input id="c-name" name="name" required maxLength={80} defaultValue={c?.name} /></Field>
@@ -43,7 +44,7 @@ function CouponForm({ c, onDone }: { c: Coupon | null; onDone: () => void }) {
       </div>
       <Field label={t("terms")} htmlFor="c-terms"><Textarea id="c-terms" name="terms" maxLength={500} defaultValue={c?.terms ?? ""} className="min-h-16" /></Field>
       <div className="flex justify-end"><SubmitButton>{t("save")}</SubmitButton></div>
-    </form>
+    </ActionForm>
   );
 }
 

@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Check, Minus, Plus } from "lucide-react";
@@ -17,7 +18,7 @@ export function PlanPicker({ prices, quantity }: { prices: Price[]; quantity: nu
   const price = prices.find((p) => p.id === selected);
   const suffix = (m: number) => (m === 1 ? t("perMonth") : m === 6 ? t("per6") : t("perYear"));
   return (
-    <form action={action} className="space-y-4">
+    <ActionForm action={action} className="space-y-4">
       <div><h2 className="text-lg font-semibold tracking-[-0.02em]">{t("choose")}</h2><p className="text-sm text-fg-muted">{t("chooseDesc")}</p></div>
       <FormAlert>{state?.error ? t("error") : null}</FormAlert>
       <FormAlert tone="success">{state?.ok ? t("requested") : null}</FormAlert>
@@ -53,6 +54,6 @@ export function PlanPicker({ prices, quantity }: { prices: Price[]; quantity: nu
           <SubmitButton variant="accent" size="lg">{t("request")}</SubmitButton>
         </div>
       </div>
-    </form>
+    </ActionForm>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -38,7 +39,7 @@ export function ProgramForm({ merchantName, program }: { merchantName: string; p
           <h1 className="text-2xl font-semibold tracking-[-0.03em] sm:text-[28px]">{t("new")}</h1>
         </div>
       )}
-      <form action={formAction} className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+      <ActionForm action={formAction} className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
         <input type="hidden" name="type" value={type} />
         <div className="space-y-6">
           <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
@@ -102,7 +103,7 @@ export function ProgramForm({ merchantName, program }: { merchantName: string; p
             <WalletCard merchantName={merchantName} programName={name || t("form.namePlaceholder")} type={type} stampsRequired={Math.min(stamps, 20)} balance={type === "points" ? 250 : Math.ceil(stamps / 2)} rewardTitle={reward || null} customerName="Leila B." />
           </div>
         </div>
-      </form>
+      </ActionForm>
     </div>
   );
 }

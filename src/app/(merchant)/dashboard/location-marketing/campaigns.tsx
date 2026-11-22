@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useState, useTransition } from "react";
 import { useFormatter, useTranslations } from "next-intl";
 import { CalendarClock, MapPin, Pause, Pencil, Play, Plus, Radar, Square, Trash2, TrendingDown, TrendingUp } from "lucide-react";
@@ -30,7 +31,7 @@ function CampaignForm({ c, locations, programs, coupons, onDone }: { c: Campaign
     for (const n of ["starts_at", "ends_at"]) { const el = f.elements.namedItem(`${n}_local`) as HTMLInputElement; (f.elements.namedItem(n) as HTMLInputElement).value = new Date(el.value).toISOString(); }
   };
   return (
-    <form action={action} onSubmit={toIso} className="space-y-4">
+    <ActionForm action={action} onSubmit={toIso} className="space-y-4">
       <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
       <Field label={t("name")} htmlFor="lc-name"><Input id="lc-name" name="name" required maxLength={80} defaultValue={c?.name} placeholder={t("namePlaceholder")} /></Field>
       <Field label={t("message")} htmlFor="lc-msg" hint={`${message.length}/120`}><Input id="lc-msg" name="message" required minLength={3} maxLength={120} value={message} onChange={(e) => setMessage(e.target.value)} /></Field>
@@ -47,7 +48,7 @@ function CampaignForm({ c, locations, programs, coupons, onDone }: { c: Campaign
       </fieldset>}
       <Field label={t("coupon")} htmlFor="lc-coupon"><select id="lc-coupon" name="coupon_id" defaultValue={c?.coupon_id ?? ""} className="h-10 w-full rounded-lg border border-border-strong bg-surface px-3 text-sm"><option value="">{t("noCoupon")}</option>{coupons.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}</select></Field>
       <div className="flex justify-end gap-2"><SubmitButton name="intent" value="draft" variant="secondary">{t("saveDraft")}</SubmitButton><SubmitButton name="intent" value="schedule" variant="accent"><CalendarClock />{t("schedule")}</SubmitButton></div>
-    </form>
+    </ActionForm>
   );
 }
 

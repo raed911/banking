@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useEffect, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Gift, Pencil, Plus, Trash2 } from "lucide-react";
@@ -21,7 +22,7 @@ function RewardForm({ programId, reward, unit, onDone }: { programId: string; re
   const [state, action] = useActionState(saveReward.bind(null, programId, reward?.id ?? null), null);
   useEffect(() => { if (state?.ok) onDone(); }, [state, onDone]);
   return (
-    <form action={action} className="space-y-4">
+    <ActionForm action={action} className="space-y-4">
       <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
       <Field label={t("rewards.name")} htmlFor="r-name"><Input id="r-name" name="name" required minLength={2} maxLength={80} defaultValue={reward?.name} placeholder={t("form.rewardPlaceholder")} /></Field>
       <Field label={t("form.description")} htmlFor="r-desc"><Input id="r-desc" name="description" maxLength={240} defaultValue={reward?.description ?? ""} /></Field>
@@ -31,7 +32,7 @@ function RewardForm({ programId, reward, unit, onDone }: { programId: string; re
       </div>
       <label className="flex items-center justify-between rounded-xl border border-border p-3 text-sm font-medium">{t("rewards.active")}<Switch name="is_active" defaultChecked={reward?.is_active ?? true} /></label>
       <div className="flex justify-end"><SubmitButton>{t("form.save")}</SubmitButton></div>
-    </form>
+    </ActionForm>
   );
 }
 

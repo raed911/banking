@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import Link from "next/link";
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
@@ -18,7 +19,7 @@ export function LoginForm({ next, initialError }: { next?: string; initialError?
     <div className="animate-fade-up">
       <h1 className="text-3xl font-semibold tracking-[-0.03em]">{t("loginTitle")}</h1>
       <p className="mt-2 text-fg-muted">{t("loginSubtitle")}</p>
-      <form action={action} className="mt-8 space-y-4">
+      <ActionForm action={action} className="mt-8 space-y-4">
         <input type="hidden" name="next" value={next ?? ""} />
         <FormAlert>{error ? t(`errors.${error}` as "errors.generic") : null}</FormAlert>
         <Field label={t("email")} htmlFor="email">
@@ -31,7 +32,7 @@ export function LoginForm({ next, initialError }: { next?: string; initialError?
           <Link href="/forgot-password" className="text-sm font-medium text-fg-muted transition hover:text-fg">{t("forgot")}</Link>
         </div>
         <SubmitButton size="lg" className="w-full">{t("signIn")}</SubmitButton>
-      </form>
+      </ActionForm>
       <p className="mt-8 text-center text-sm text-fg-muted">
         {t("noAccount")} <Link href="/register" className="font-semibold text-fg underline-offset-4 hover:underline">{t("createOne")}</Link>
       </p>

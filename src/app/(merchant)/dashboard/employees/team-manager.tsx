@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Copy, Mail, MoreHorizontal, UserPlus, X } from "lucide-react";
@@ -81,12 +82,12 @@ export function TeamManager({ me, team, roles, invites }: { me: string; team: Me
               <Button className="w-full" onClick={() => navigator.clipboard.writeText(link).then(() => toast.success(t("copied")))}><Copy />{t("copy")}</Button>
             </div>
           ) : (
-            <form action={action} className="space-y-4">
+            <ActionForm action={action} className="space-y-4">
               <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
               <Field label={t("email")} htmlFor="inv-email"><Input id="inv-email" name="email" type="email" required dir="ltr" /></Field>
               <Field label={t("role")} htmlFor="inv-role"><select id="inv-role" name="role_id" className={sel} defaultValue={assignable.find((r) => r.key === "cashier")?.id}>{assignable.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}</select></Field>
               <div className="flex justify-end"><SubmitButton>{t("send")}</SubmitButton></div>
-            </form>
+            </ActionForm>
           )}
         </DialogContent>
       </Dialog>

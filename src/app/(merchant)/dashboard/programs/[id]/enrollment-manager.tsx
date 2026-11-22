@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useEffect, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import QRCode from "qrcode";
@@ -29,7 +30,7 @@ function NewLinkForm({ programId, onDone }: { programId: string; onDone: () => v
   const [state, action] = useActionState(createLink.bind(null, programId), null);
   useEffect(() => { if (state?.ok) onDone(); }, [state, onDone]);
   return (
-    <form action={action} className="space-y-4">
+    <ActionForm action={action} className="space-y-4">
       <Field label={t("enroll.linkName")} htmlFor="l-name"><Input id="l-name" name="name" required maxLength={60} placeholder={t("enroll.linkNamePlaceholder")} /></Field>
       {(["require_phone", "require_email", "collect_birthday"] as const).map((k) => (
         <label key={k} className="flex items-center justify-between rounded-xl border border-border p-3 text-sm font-medium">
@@ -38,7 +39,7 @@ function NewLinkForm({ programId, onDone }: { programId: string; onDone: () => v
         </label>
       ))}
       <div className="flex justify-end"><SubmitButton>{t("enroll.create")}</SubmitButton></div>
-    </form>
+    </ActionForm>
   );
 }
 

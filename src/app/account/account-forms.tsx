@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -17,7 +18,7 @@ export function ProfileForm({ profile }: { profile: { full_name: string; phone: 
   const t = useTranslations("account");
   const [state, action] = useActionState(saveProfile, null);
   return (
-    <form action={action} className="space-y-4">
+    <ActionForm action={action} className="space-y-4">
       <FormAlert>{state?.error ? t("errors.generic") : null}</FormAlert>
       <FormAlert tone="success">{state?.ok ? t("saved") : null}</FormAlert>
       <div className="grid gap-4 sm:grid-cols-2">
@@ -26,7 +27,7 @@ export function ProfileForm({ profile }: { profile: { full_name: string; phone: 
         <Field label={t("language")} htmlFor="acc-locale"><select id="acc-locale" name="locale" defaultValue={profile.locale} className="h-10 w-full rounded-lg border border-border-strong bg-surface px-3 text-sm"><option value="fr">Français</option><option value="ar">العربية</option><option value="en">English</option></select></Field>
       </div>
       <div className="flex justify-end"><SubmitButton>{t("save")}</SubmitButton></div>
-    </form>
+    </ActionForm>
   );
 }
 
@@ -34,12 +35,12 @@ export function PasswordForm() {
   const t = useTranslations("account");
   const [state, action] = useActionState(changePassword, null);
   return (
-    <form action={action} className="space-y-4">
+    <ActionForm action={action} className="space-y-4">
       <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
       <FormAlert tone="success">{state?.ok ? t("passwordChanged") : null}</FormAlert>
       <Field label={t("newPassword")} htmlFor="new-password" hint={t("passwordHint")}><PasswordInput id="new-password" name="password" autoComplete="new-password" required minLength={8} /></Field>
       <div className="flex justify-end"><SubmitButton variant="secondary">{t("changePassword")}</SubmitButton></div>
-    </form>
+    </ActionForm>
   );
 }
 

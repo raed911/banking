@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Lock, Plus, ShieldCheck, Trash2 } from "lucide-react";
@@ -37,7 +38,7 @@ export function RolesEditor({ roles, usage }: { roles: Role[]; usage: Record<str
       <Card>
         <CardContent>
           {owner ? <p className="flex items-center gap-2 text-sm text-fg-muted"><Lock className="size-4" />{t("owner")}</p> : (
-            <form action={action} key={selectedId} className="space-y-6">
+            <ActionForm action={action} key={selectedId} className="space-y-6">
               <FormAlert>{state?.error ? t("error") : null}</FormAlert>
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label={t("name")} htmlFor="r-name"><Input id="r-name" name="name" required minLength={2} maxLength={40} defaultValue={role?.name} /></Field>
@@ -59,7 +60,7 @@ export function RolesEditor({ roles, usage }: { roles: Role[]; usage: Record<str
                 {role && !role.is_system ? <Button type="button" variant="ghost" disabled={pending || (usage[role.id] ?? 0) > 0} title={(usage[role.id] ?? 0) > 0 ? t("inUse") : undefined} onClick={() => confirm(t("deleteConfirm")) && start(async () => { await deleteRole(role.id); setSelectedId("new"); })}><Trash2 />{t("delete")}</Button> : <span>{role?.is_system && <Badge>{t("system")}</Badge>}</span>}
                 <SubmitButton>{t("save")}</SubmitButton>
               </div>
-            </form>
+            </ActionForm>
           )}
         </CardContent>
       </Card>

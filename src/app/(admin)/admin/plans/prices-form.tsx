@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { updatePrices } from "@/features/admin/actions";
@@ -17,7 +18,7 @@ export function PricesForm({ plan }: { plan: Plan }) {
     <Card>
       <CardHeader><div><CardTitle>{plan.name}</CardTitle><CardDescription>{plan.description}</CardDescription></div></CardHeader>
       <CardContent>
-        <form action={action} className="space-y-5">
+        <ActionForm action={action} className="space-y-5">
           <input type="hidden" name="plan_id" value={plan.id} />
           <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
           <FormAlert tone="success">{state?.ok ? t("plans.saved") : null}</FormAlert>
@@ -34,7 +35,7 @@ export function PricesForm({ plan }: { plan: Plan }) {
             <Field label={t("plans.trialDays")} htmlFor="trial_days" className="w-40"><Input id="trial_days" name="trial_days" type="number" min={0} max={90} defaultValue={plan.trial_days} /></Field>
             <SubmitButton>{t("plans.save")}</SubmitButton>
           </div>
-        </form>
+        </ActionForm>
       </CardContent>
     </Card>
   );

@@ -1,4 +1,5 @@
 "use client";
+import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useEffect, useState, useTransition } from "react";
 import { useFormatter, useTranslations } from "next-intl";
 import { Ban, Clock, Mail, Megaphone, Pencil, Plus, Send, Trash2, Users, Wallet } from "lucide-react";
@@ -33,7 +34,7 @@ function CampaignForm({ c, programs, coupons, tags, connected, onDone }: { c: Ca
   }, [segment, channel]);
   const needsDays = ["inactive", "active", "new"].includes(segment.type);
   return (
-    <form action={action} className="space-y-4">
+    <ActionForm action={action} className="space-y-4">
       <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
       <Field label={t("name")} htmlFor="cp-name"><Input id="cp-name" name="name" required maxLength={120} defaultValue={c?.name} placeholder={t("namePlaceholder")} /></Field>
       <fieldset><legend className="mb-2 text-[13px] font-medium">{t("channel")}</legend>
@@ -65,7 +66,7 @@ function CampaignForm({ c, programs, coupons, tags, connected, onDone }: { c: Ca
         </Field>
       </div>
       <div className="flex justify-end gap-2"><SubmitButton name="intent" value="draft" variant="secondary">{t("saveDraft")}</SubmitButton><SubmitButton name="intent" value="schedule" variant="accent"><Send />{t("schedule")}</SubmitButton></div>
-    </form>
+    </ActionForm>
   );
 }
 
