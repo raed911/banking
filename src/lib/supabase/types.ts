@@ -140,6 +140,69 @@ export type Database = {
           },
         ]
       }
+      automations: {
+        Row: {
+          channel: Database["public"]["Enums"]["campaign_channel"]
+          cooldown_days: number
+          coupon_id: string | null
+          created_at: string
+          enabled: boolean
+          id: string
+          inactive_days: number
+          kind: string
+          last_run_at: string | null
+          merchant_id: string
+          message: string
+          total_sent: number
+          updated_at: string
+        }
+        Insert: {
+          channel?: Database["public"]["Enums"]["campaign_channel"]
+          cooldown_days?: number
+          coupon_id?: string | null
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          inactive_days?: number
+          kind: string
+          last_run_at?: string | null
+          merchant_id: string
+          message: string
+          total_sent?: number
+          updated_at?: string
+        }
+        Update: {
+          channel?: Database["public"]["Enums"]["campaign_channel"]
+          cooldown_days?: number
+          coupon_id?: string | null
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          inactive_days?: number
+          kind?: string
+          last_run_at?: string | null
+          merchant_id?: string
+          message?: string
+          total_sent?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automations_coupon_id_fkey"
+            columns: ["coupon_id"]
+            isOneToOne: false
+            referencedRelation: "coupons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "automations_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       campaign_deliveries: {
         Row: {
           campaign_id: string
@@ -197,6 +260,7 @@ export type Database = {
       }
       campaigns: {
         Row: {
+          automation_id: string | null
           channel: Database["public"]["Enums"]["campaign_channel"]
           content: Json
           coupon_id: string | null
@@ -215,6 +279,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          automation_id?: string | null
           channel: Database["public"]["Enums"]["campaign_channel"]
           content?: Json
           coupon_id?: string | null
@@ -233,6 +298,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          automation_id?: string | null
           channel?: Database["public"]["Enums"]["campaign_channel"]
           content?: Json
           coupon_id?: string | null
@@ -251,6 +317,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "campaigns_automation_id_fkey"
+            columns: ["automation_id"]
+            isOneToOne: false
+            referencedRelation: "automations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "campaigns_coupon_id_fkey"
             columns: ["coupon_id"]

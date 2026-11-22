@@ -1458,5 +1458,33 @@
       "team_id_mismatch": "Team ID doesn't match the certificate.",
       "not_configured": "Save the credentials first."
     }
+  },
+  "auto": {
+    "title": "Automations",
+    "subtitle": "Messages that send themselves every day to the right customer.",
+    "winback": {
+      "title": "Win back absent customers",
+      "desc": "Sent automatically to customers who haven't visited for a while.",
+      "default": "We miss you {prenom} 💚 Come back and enjoy 50% off your next visit!"
+    },
+    "birthday": {
+      "title": "Happy birthday",
+      "desc": "Sent on the customer's birthday (when known).",
+      "default": "Happy birthday {prenom} 🎂 A gift is waiting for you at {commerce}!"
+    },
+    "enabled": "On",
+    "disabled": "Off",
+    "inactiveDays": "Absent for (days)",
+    "cooldownDays": "At most one message every (days)",
+    "message": "Message",
+    "channel": "Channel",
+    "coupon": "Gift coupon",
+    "noCoupon": "None",
+    "save": "Save",
+    "saved": "Automation saved.",
+    "sent": "{count} messages sent in total",
+    "lastRun": "Last run {date}",
+    "schedule": "Checked every day at 10 am.",
+    "error": "Check the fields."
   }
 }

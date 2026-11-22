@@ -66,3 +66,21 @@ test("card announcement reaches every customer on their card page", async ({ pag
     await deleteUserAndMerchants(owner.id);
   }
 });
+
+test("merchant enables the automatic win-back message", async ({ page }) => {
+  const owner = await signInWithBusiness(page, "Café Relance");
+  try {
+    await page.goto("/dashboard/campaigns");
+    const card = page.locator("form").filter({ has: page.locator("#winback-days") });
+    await card.locator("#winback-days").fill("21");
+    await card.locator("#winback-msg").fill("Vous nous manquez {prenom} 💚 -50% pour votre retour !");
+    await card.getByRole("switch").click();
+    await card.locator("button[type=submit]").click();
+    await expect(card.getByRole("status")).toBeVisible();
+    await page.reload();
+    await expect(page.locator("#winback-days")).toHaveValue("21");
+    await expect(page.locator("form").filter({ has: page.locator("#winback-days") }).getByRole("switch")).toHaveAttribute("data-state", "checked");
+  } finally {
+    await deleteUserAndMerchants(owner.id);
+  }
+});

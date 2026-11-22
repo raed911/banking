@@ -1458,5 +1458,33 @@
       "team_id_mismatch": "Le Team ID ne correspond pas au certificat.",
       "not_configured": "Enregistrez d'abord les identifiants."
     }
+  },
+  "auto": {
+    "title": "Automatisations",
+    "subtitle": "Des messages envoyés tout seuls, chaque jour, au bon client.",
+    "winback": {
+      "title": "Relance des clients absents",
+      "desc": "Envoyé automatiquement aux clients qui ne sont pas venus depuis un certain temps.",
+      "default": "Vous nous manquez {prenom} 💚 Revenez nous voir : -50% sur votre prochaine visite !"
+    },
+    "birthday": {
+      "title": "Joyeux anniversaire",
+      "desc": "Envoyé le jour de l'anniversaire du client (si la date est connue).",
+      "default": "Joyeux anniversaire {prenom} 🎂 Un cadeau vous attend chez {commerce} !"
+    },
+    "enabled": "Activée",
+    "disabled": "Désactivée",
+    "inactiveDays": "Absent depuis (jours)",
+    "cooldownDays": "Pas plus d'un message tous les (jours)",
+    "message": "Message",
+    "channel": "Canal",
+    "coupon": "Coupon offert",
+    "noCoupon": "Aucun",
+    "save": "Enregistrer",
+    "saved": "Automatisation enregistrée.",
+    "sent": "{count} messages envoyés au total",
+    "lastRun": "Dernier passage {date}",
+    "schedule": "Vérification chaque jour à 10h.",
+    "error": "Vérifiez les champs."
   }
 }
