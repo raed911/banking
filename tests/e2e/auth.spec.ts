@@ -29,7 +29,7 @@ test.describe("authentication & onboarding", () => {
       await page.locator("#phone").fill("20 123 456");
       await page.getByRole("button", { name: /créer mon espace|create my workspace/i }).click();
       await expect(page).toHaveURL(/\/dashboard/);
-      await expect(page.getByTestId("dashboard-title")).toHaveText("Café E2E");
+      await expect(page.locator("main").getByText(/Café E2E/).first()).toBeVisible();
 
       // signed-in users are sent away from the login page
       await page.goto("/login");

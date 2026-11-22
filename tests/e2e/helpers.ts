@@ -20,3 +20,20 @@ export async function deleteUserAndMerchants(userId: string) {
   for (const m of data ?? []) await db.from("merchants").delete().eq("id", m.id);
   await db.auth.admin.deleteUser(userId);
 }
+
+import type { Page } from "@playwright/test";
+
+/** Creates a confirmed user, signs in and creates a business. Returns the user for cleanup. */
+export async function signInWithBusiness(page: Page, businessName = "Café E2E") {
+  const user = await createConfirmedUser();
+  await page.goto("/login");
+  await page.locator("#email").fill(user.email);
+  await page.locator("#password").fill(user.password);
+  await page.locator("button[type=submit]").click();
+  await page.waitForURL(/\/onboarding/);
+  await page.waitForLoadState("load");
+  await page.locator("#name").fill(businessName);
+  await page.locator("form button[type=submit]").click();
+  await page.waitForURL(/\/dashboard/);
+  return user;
+}

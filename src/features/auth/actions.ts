@@ -21,9 +21,10 @@ async function clientIp() {
   return h.get("x-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || "unknown";
 }
 
-async function allow(action: string, max: number, windowSeconds: number) {
+async function allow(action: string, max: number, windowSeconds: number, subject = "") {
   try {
-    const { data } = await createAdminClient().rpc("check_rate_limit", { p_key: `${action}:${await clientIp()}`, p_max: max, p_window_seconds: windowSeconds });
+    const key = `${action}:${await clientIp()}${subject ? `:${subject}` : ""}`;
+    const { data } = await createAdminClient().rpc("check_rate_limit", { p_key: key, p_max: max, p_window_seconds: windowSeconds });
     return data !== false;
   } catch {
     return true; // never lock users out because the limiter is unavailable; Supabase Auth has its own limits
@@ -36,7 +37,8 @@ const password = z.string().min(8).max(72).regex(/[A-Za-z]/).regex(/[0-9]/);
 export async function signIn(_: ActionState, form: FormData): Promise<ActionState> {
   const parsed = z.object({ email, password: z.string().min(1).max(72) }).safeParse(Object.fromEntries(form));
   if (!parsed.success) return { error: "invalid_credentials" };
-  if (!(await allow("login", 10, 300))) return { error: "rate_limited" };
+  // per account+IP (brute force) and per IP (credential stuffing); shops often share one IP
+  if (!(await allow("login", 8, 300, parsed.data.email)) || !(await allow("login-ip", 60, 300))) return { error: "rate_limited" };
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword(parsed.data);
   if (error) return { error: mapAuthError(error.code) };
@@ -49,7 +51,7 @@ export async function signUp(_: ActionState, form: FormData): Promise<ActionStat
     const field = parsed.error.issues[0]?.path[0];
     return { error: field === "password" ? "weak_password" : field === "email" ? "invalid_email" : "required", fieldErrors: { [String(field)]: "1" } };
   }
-  if (!(await allow("signup", 5, 3600))) return { error: "rate_limited" };
+  if (!(await allow("signup", 20, 3600))) return { error: "rate_limited" };
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
