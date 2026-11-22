@@ -2,7 +2,7 @@
 
 _Last updated: 2026-11-22_
 
-## Current phase: Phase 0 + 1 complete → next: Phase 2 (public website) and Phase 3 (merchant dashboard)
+## Current phase: Phases 0–1 done, 3–4 core done → next: remaining merchant modules (rewards/coupons/transactions pages, team & roles, locations, settings), then public website, billing, super admin, wallet
 
 | Phase | Status | Tested |
 |---|---|---|
@@ -10,8 +10,8 @@ _Last updated: 2026-11-22_
 | 0 Foundation & design system | ✅ Done | typecheck, lint, build, unit tests, visual check desktop/mobile |
 | 1 Database & Auth | ✅ Done (invitation acceptance moves to Phase 5, workspace switcher to Phase 3) | 8 migrations applied; SQL security suite (isolation, escalation, ledger, billing) passes; E2E login → onboarding → dashboard passes on desktop + mobile; FR/AR(RTL)/EN checked |
 | 2 Public website | Not started | — |
-| 3 Merchant core | Not started | — |
-| 4 Loyalty engine | Not started | — |
+| 3 Merchant core | 🟡 Partial: dashboard shell + Overview, Programs (+ card designer, rewards, sign-up links), Customers + profiles done. Locations & Settings pages pending | E2E: programs flow; visual check desktop/mobile |
+| 4 Loyalty engine | 🟡 Core done: ledger, stamps/points/visits, sign-up page, customer card page with signed rotating QR, staff scanner (camera + manual), rewards redemption, coupon redemption, anti-fraud. Pending: coupons management UI, transactions page, fraud review UI | SQL suite + E2E full loop (sign-up → scan → stamps → reward) + QR token unit tests |
 | 5 Team & permissions | Not started | — |
 | 6 Engagement | Not started | — |
 | 7 Apple / Google Wallet | Not started | — |
