@@ -49,7 +49,7 @@ export function RolesEditor({ roles, usage }: { roles: Role[]; usage: Record<str
                     <legend className="px-1 text-xs font-semibold uppercase tracking-[0.12em] text-fg-subtle">{t(`groups.${g.key}`)}</legend>
                     <div className="space-y-2.5">
                       {g.permissions.map((p) => (
-                        <label key={p} className="flex items-center gap-3 text-sm"><input type="checkbox" name="permissions" value={p} defaultChecked={role?.permissions.includes(p) || role?.permissions.includes("*")} className="size-4 accent-ink-900" />{t(`perms.${p}`)}</label>
+                        <label key={p} className="flex items-center gap-3 text-sm"><input type="checkbox" name="permissions" value={p} defaultChecked={role?.permissions.includes(p) || role?.permissions.includes("*")} className="size-4 accent-ink-900" />{t(`perms.${p.replace(".", "_")}` as "perms.dashboard_view")}</label>
                       ))}
                     </div>
                   </fieldset>

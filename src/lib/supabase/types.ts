@@ -2154,6 +2154,10 @@ export type Database = {
       invitation_preview: { Args: { p_token_hash: string }; Returns: Json }
       is_merchant_member: { Args: { mid: string }; Returns: boolean }
       is_platform_admin: { Args: never; Returns: boolean }
+      merchant_analytics: {
+        Args: { p_days?: number; p_merchant_id: string }
+        Returns: Json
+      }
       merchant_is_entitled: { Args: { p_merchant: string }; Returns: boolean }
       merchant_overview: {
         Args: { p_days?: number; p_merchant_id: string }

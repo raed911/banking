@@ -17,7 +17,7 @@ _Last updated: 2026-11-22_
 | 7 Apple / Google Wallet | Not started | — |
 | 8 Subscriptions & billing | 🟡 Cash flow done: plans/prices, trials, merchant Billing page (choose period + locations → invoice with payment instructions), admin payment recording, renewals, daily expiry job, plan limits (locations). Online gateway not connected (not needed for cash) | E2E: invoice request; admin payment; SQL suite |
 | 9 Super Admin | 🟡 Core done: platform KPIs (MRR/ARR, merchants by state, customers, cards, revenue), merchant directory + detail, cash payment recording (extends subscription, invoice + receipt), trial extension, suspension/reactivation, payments & open invoices, plan pricing editor, audit/system logs. Pending: MFA enforcement, platform wallet integrations page | E2E: non-admin blocked; admin records payment → subscription active |
-| 10 Analytics | Not started | — |
+| 10 Analytics | 🟡 Merchant analytics: per-program table, peak hours, top customers, by location, by employee, consent rate, CSV export (formula-injection safe). Daily rollups for scale pending | E2E smoke + export test |
 | 11 Hardening & launch | Not started | — |
 
 ## Live site

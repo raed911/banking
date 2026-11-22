@@ -35,11 +35,21 @@ test("merchant modules: coupons, billing, locations, settings, transactions, rew
     await page.locator("form button[type=submit]").last().click();
     await expect(page.getByRole("status")).toBeVisible();
 
-    for (const path of ["/dashboard/roles", "/dashboard/employees", "/dashboard/transactions", "/dashboard/transactions?tab=fraud", "/dashboard/rewards", "/dashboard"]) {
+    for (const path of ["/dashboard/analytics", "/dashboard/notifications", "/dashboard/roles", "/dashboard/employees", "/dashboard/transactions", "/dashboard/transactions?tab=fraud", "/dashboard/rewards", "/dashboard"]) {
       await page.goto(path);
       await expect(page.locator("main h1").first()).toBeVisible();
     }
     expect(errors).toEqual([]);
+  } finally {
+    await deleteUserAndMerchants(owner.id);
+  }
+});
+
+test("customer CSV export is a file download with a header row", async ({ page }) => {
+  const owner = await signInWithBusiness(page, "Export Test");
+  try {
+    const csv = await page.evaluate(() => fetch("/dashboard/customers/export").then((r) => r.text()));
+    expect(csv).toContain("first_name,last_name,phone,email");
   } finally {
     await deleteUserAndMerchants(owner.id);
   }
