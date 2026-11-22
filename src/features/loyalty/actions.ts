@@ -1,5 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
+import { refreshGoogleCardIfIssued } from "@/lib/wallet/google-sync";
 import { z } from "zod";
 import { requireMerchant } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
@@ -55,10 +57,12 @@ export async function resolveCard(input: string): Promise<{ ok: true; cards: Sca
 const key = z.string().min(8).max(100);
 const uuid = z.uuid();
 
-function done(r: unknown): OpResult {
+function done(r: unknown, cardId?: string): OpResult {
   const res = r as { ok: boolean; error?: string } & Record<string, unknown>;
   if (!res?.ok) return { ok: false, error: res?.error ?? "generic", meta: res };
   revalidatePath("/dashboard", "layout");
+  // push the new balance to the customer's Wallet pass right after responding (the queue worker is the fallback)
+  if (cardId && !res.duplicate) after(() => refreshGoogleCardIfIssued(cardId).catch(() => undefined));
   return { ok: true, data: res };
 }
 
@@ -71,7 +75,7 @@ export async function earn(cardId: string, idempotencyKey: string, opts: { amoun
     p_idempotency_key: key.parse(idempotencyKey), p_location_id: opts.locationId ? uuid.parse(opts.locationId) : undefined,
     p_source: "scanner", p_purchase_millimes: purchase,
   });
-  return error ? { ok: false, error: "generic" } : done(data);
+  return error ? { ok: false, error: "generic" } : done(data, cardId);
 }
 
 export async function adjust(cardId: string, idempotencyKey: string, amount: number, note: string): Promise<OpResult> {
@@ -81,7 +85,7 @@ export async function adjust(cardId: string, idempotencyKey: string, amount: num
     p_card_id: uuid.parse(cardId), p_kind: "adjust", p_amount: z.number().int().min(-100000).max(100000).refine((n) => n !== 0).parse(amount),
     p_idempotency_key: key.parse(idempotencyKey), p_source: "dashboard", p_note: z.string().trim().min(2).max(200).parse(note),
   });
-  return error ? { ok: false, error: "generic" } : done(data);
+  return error ? { ok: false, error: "generic" } : done(data, cardId);
 }
 
 export async function redeem(cardId: string, rewardId: string, idempotencyKey: string, locationId?: string | null): Promise<OpResult> {
@@ -91,7 +95,7 @@ export async function redeem(cardId: string, rewardId: string, idempotencyKey: s
     p_card_id: uuid.parse(cardId), p_reward_id: uuid.parse(rewardId), p_idempotency_key: key.parse(idempotencyKey),
     p_location_id: locationId ? uuid.parse(locationId) : undefined, p_source: "scanner",
   });
-  return error ? { ok: false, error: "generic" } : done(data);
+  return error ? { ok: false, error: "generic" } : done(data, cardId);
 }
 
 export async function applyCoupon(cardId: string | null, code: string, idempotencyKey: string, locationId?: string | null): Promise<OpResult> {

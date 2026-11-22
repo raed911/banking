@@ -1,5 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
+import { refreshGoogleMerchant } from "@/lib/wallet/google-sync";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireMerchant } from "@/lib/auth/session";
@@ -72,6 +74,7 @@ export async function saveDesign(programId: string, _: ActionState, form: FormDa
   const supabase = await createClient();
   const { error } = await supabase.from("card_designs").upsert({ program_id: id.parse(programId), merchant_id: merchantId, ...parsed.data, logo_text: parsed.data.logo_text || null });
   if (error) return { error: "generic" };
+  after(() => refreshGoogleMerchant(merchantId).catch(() => undefined)); // re-publish card design to issued passes
   revalidatePath(`/dashboard/programs/${programId}`);
   revalidatePath("/dashboard/programs");
   return { ok: true };

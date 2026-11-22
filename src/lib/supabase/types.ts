@@ -2352,6 +2352,25 @@ export type Database = {
         Args: { p_campaign_id: string; p_send_at?: string }
         Returns: Json
       }
+      worker_claim_jobs: {
+        Args: { p_limit?: number }
+        Returns: unknown[]
+        SetofOptions: {
+          from: "*"
+          to: "job_queue"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      worker_finish_job: {
+        Args: {
+          p_defer_seconds?: number
+          p_error?: string
+          p_id: number
+          p_ok: boolean
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       billing_period: "monthly" | "semiannual" | "annual"

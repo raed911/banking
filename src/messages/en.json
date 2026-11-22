@@ -353,7 +353,9 @@
         "stamps": "stamps",
         "points": "points",
         "visits": "visits"
-      }
+      },
+      "appleSoon": "Apple Wallet is coming soon. Meanwhile, add this page to your home screen.",
+      "walletError": "Couldn't add the card right now. Please try again in a few minutes."
     }
   },
   "scan": {

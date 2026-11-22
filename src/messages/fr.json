@@ -353,7 +353,9 @@
         "stamps": "tampons",
         "points": "points",
         "visits": "passages"
-      }
+      },
+      "appleSoon": "L'ajout à Apple Wallet arrive bientôt. En attendant, ajoutez cette page à votre écran d'accueil.",
+      "walletError": "Impossible d'ajouter la carte pour le moment. Réessayez dans quelques minutes."
     }
   },
   "scan": {

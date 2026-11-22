@@ -22,3 +22,10 @@ export async function loadCredentials(provider: WalletProvider, merchantId: stri
 export async function effectiveCredentials(provider: WalletProvider, merchantId: string) {
   return (await loadCredentials(provider, merchantId)) ?? (await loadCredentials(provider, null));
 }
+
+/** Which Wallet platforms can issue passes for this merchant right now (verified credentials). */
+export async function walletAvailability(merchantId: string) {
+  const ok = async (p: WalletProvider) => ((await integrationRow(p, merchantId)) ?? (await integrationRow(p, null)))?.status === "verified";
+  const [google, apple] = await Promise.all([ok("google_wallet"), ok("apple_wallet")]);
+  return { google, apple };
+}

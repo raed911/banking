@@ -6,6 +6,7 @@ import { WalletCard } from "@/components/loyalty/wallet-card";
 import { LiveQr } from "@/components/loyalty/live-qr";
 import { getPublicCard } from "@/lib/loyalty/public-card";
 import { publicAssetUrl } from "@/lib/storage";
+import { walletAvailability } from "@/lib/integrations";
 import { cn } from "@/lib/utils";
 
 export async function generateMetadata({ params }: { params: Promise<{ token: string }> }) {
@@ -13,8 +14,9 @@ export async function generateMetadata({ params }: { params: Promise<{ token: st
   return { title: data ? `${data.card.merchant?.name} · ${data.card.program?.name}` : "VAYRO" };
 }
 
-export default async function CardPage({ params }: { params: Promise<{ token: string }> }) {
+export default async function CardPage({ params, searchParams }: { params: Promise<{ token: string }>; searchParams: Promise<{ wallet?: string }> }) {
   const { token } = await params;
+  const walletError = (await searchParams).wallet === "error";
   const data = await getPublicCard(token);
   if (!data || !data.card.program || !data.card.merchant) notFound();
   const t = await getTranslations("public.card");
@@ -27,6 +29,7 @@ export default async function CardPage({ params }: { params: Promise<{ token: st
   const next = rewards.find((r) => r.cost > card.balance);
   const ready = rewards.filter((r) => r.cost <= card.balance);
   const bg = design?.background_color ?? "#101828";
+  const wallets = await walletAvailability(card.merchant_id);
 
   return (
     <main className="relative mx-auto max-w-md px-4 pb-12">
@@ -66,7 +69,19 @@ export default async function CardPage({ params }: { params: Promise<{ token: st
         </section>
       )}
 
-      <section className="mt-4 rounded-3xl border border-border bg-surface p-5 text-sm text-fg-muted">{t("walletSoon")}</section>
+      {walletError && <p className="mt-4 rounded-2xl bg-danger-50 p-4 text-sm text-danger-700">{t("walletError")}</p>}
+      {active && wallets.google ? (
+        <section className="mt-4 space-y-3">
+          {/* Route handler redirect (not a page) — plain anchor on purpose */}
+          <a href={`/api/wallet/google/${token}`} className="flex h-14 items-center justify-center gap-3 rounded-2xl bg-black text-[15px] font-medium text-white shadow-lg transition active:scale-[0.98]" rel="nofollow">
+            <svg viewBox="0 0 24 24" className="size-6" aria-hidden><rect x="2" y="5" width="20" height="14" rx="3" fill="#4285F4" /><rect x="2" y="5" width="20" height="5" rx="2.5" fill="#EA4335" /><rect x="2" y="8" width="20" height="4" fill="#FBBC04" /><rect x="2" y="10.5" width="20" height="3" fill="#34A853" /></svg>
+            {t("addGoogle")}
+          </a>
+          {!wallets.apple && <p className="text-center text-xs text-fg-muted">{t("appleSoon")}</p>}
+        </section>
+      ) : (
+        <section className="mt-4 rounded-3xl border border-border bg-surface p-5 text-sm text-fg-muted">{t("walletSoon")}</section>
+      )}
 
       {rewards.length > 0 && (
         <section className="mt-6">
