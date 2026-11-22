@@ -1,5 +1,5 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 import { requirePlatformAdmin } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
@@ -64,6 +64,7 @@ export async function updatePrices(_: ActionState, form: FormData): Promise<Acti
   }
   await db.from("audit_logs").insert({ actor_id: user.id, actor_type: "admin", action: "plans.prices_updated", entity_type: "plan", entity_id: String(planId ?? ""), details: { updates } });
   revalidatePath("/admin/plans");
+  revalidateTag("prices", "max"); // public pricing pages pick up the new prices immediately
   return { ok: true };
 }
 

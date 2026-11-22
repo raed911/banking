@@ -4,10 +4,17 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { can, type Permission } from "@/lib/permissions";
 
-export const getUser = cache(async () => {
+/**
+ * Current user from the session JWT. The project signs tokens with an asymmetric key (ES256), so
+ * getClaims() verifies the signature locally (JWKS cached) instead of calling the Auth server on
+ * every request. The database still enforces RLS with the same verified token.
+ */
+export const getUser = cache(async (): Promise<{ id: string; email: string | undefined } | null> => {
   const supabase = await createClient();
-  const { data } = await supabase.auth.getUser();
-  return data.user;
+  const { data } = await supabase.auth.getClaims();
+  const c = data?.claims;
+  if (!c?.sub) return null;
+  return { id: c.sub, email: typeof c.email === "string" ? c.email : undefined };
 });
 
 export async function requireUser(next?: string) {
