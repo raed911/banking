@@ -25,13 +25,14 @@ export interface WalletCardProps {
   qr?: React.ReactNode;
   className?: string;
   compact?: boolean;
+  hideBarcode?: boolean;
 }
 
 /** Apple/Google Wallet-style loyalty pass preview. Pure presentational, used everywhere. */
 export function WalletCard({
   merchantName, programName, type, stampsRequired = 10, balance = 0, customerName, rewardTitle,
   backgroundColor = "#101828", foregroundColor = "#FFFFFF", labelColor = "#C6F36B", accentColor = "#C6F36B",
-  logoUrl, stripUrl, stampIcon = "coffee", serial, qr, className, compact,
+  logoUrl, stripUrl, stampIcon = "coffee", serial, qr, className, compact, hideBarcode,
 }: WalletCardProps) {
   const Icon = STAMP_ICONS[stampIcon] ?? Coffee;
   const total = Math.max(1, Math.min(stampsRequired ?? 10, 20));
@@ -112,12 +113,12 @@ export function WalletCard({
       )}
 
       {/* barcode */}
-      <div className="relative flex flex-col items-center px-5 pb-5 pt-4">
+      {hideBarcode ? <div className="h-5" /> : <div className="relative flex flex-col items-center px-5 pb-5 pt-4">
         <div className="grid size-[104px] place-items-center rounded-xl bg-white p-2 text-ink-900">
           {qr ?? <FakeQr />}
         </div>
         {serial && <div className="mt-2 font-mono text-[10px] tracking-[0.2em] opacity-60">{serial}</div>}
-      </div>
+      </div>}
     </div>
   );
 }
