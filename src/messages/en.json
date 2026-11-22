@@ -1316,5 +1316,70 @@
       "reauth": "For security, sign in again and retry.",
       "generic": "Something went wrong."
     }
+  },
+  "camp": {
+    "title": "Campaigns",
+    "subtitle": "Reach the right customers at the right time.",
+    "new": "New campaign",
+    "edit": "Edit campaign",
+    "empty": "No campaigns. Win back inactive customers or celebrate their birthday.",
+    "name": "Campaign name",
+    "namePlaceholder": "We miss you!",
+    "channel": "Channel",
+    "channels": {
+      "email": "Email",
+      "wallet": "Wallet message",
+      "sms": "SMS"
+    },
+    "channelPending": "Not connected yet",
+    "channelPendingDesc": "The campaign will be sent automatically as soon as this channel is connected (email: domain + Resend; Wallet: Apple/Google Wallet).",
+    "segment": "Audience",
+    "segments": {
+      "all": "All customers",
+      "inactive": "Inactive for…",
+      "active": "Visited recently (…)",
+      "new": "New customers (…)",
+      "birthday_month": "Birthday this month",
+      "tag": "With tag…",
+      "program": "Members of program…"
+    },
+    "days": "Days",
+    "tag": "Tag",
+    "program": "Program",
+    "subject": "Email subject",
+    "body": "Message",
+    "bodyPlaceholder": "Hi {prenom}, your free coffee is waiting 🎁",
+    "variables": "Variables: {prenom}, {commerce}",
+    "coupon": "Attached coupon (optional)",
+    "noCoupon": "None",
+    "sendAt": "Send",
+    "sendNow": "As soon as possible",
+    "sendLater": "Schedule",
+    "audience": "{eligible} recipients",
+    "audienceDetail": "{total} customers in this segment · {noConsent} without marketing consent (excluded)",
+    "saveDraft": "Save draft",
+    "schedule": "Schedule sending",
+    "scheduled": "Campaign scheduled for {count} recipients.",
+    "cancel": "Cancel campaign",
+    "delete": "Delete",
+    "statuses": {
+      "draft": "Draft",
+      "scheduled": "Scheduled",
+      "sending": "Sending",
+      "sent": "Sent",
+      "canceled": "Canceled",
+      "failed": "Failed"
+    },
+    "stats": {
+      "targeted": "Targeted",
+      "sent": "Sent",
+      "failed": "Failed"
+    },
+    "awaiting": "Waiting for the channel to be connected",
+    "errors": {
+      "generic": "Something went wrong.",
+      "validation": "Check the fields.",
+      "subscription_inactive": "Subscription inactive: cannot schedule."
+    }
   }
 }

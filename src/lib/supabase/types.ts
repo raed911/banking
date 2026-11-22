@@ -2235,6 +2235,14 @@ export type Database = {
         }
         Returns: Json
       }
+      campaign_audience_count: {
+        Args: {
+          p_channel: Database["public"]["Enums"]["campaign_channel"]
+          p_merchant_id: string
+          p_segment: Json
+        }
+        Returns: Json
+      }
       check_rate_limit: {
         Args: { p_key: string; p_max: number; p_window_seconds: number }
         Returns: boolean
@@ -2338,6 +2346,10 @@ export type Database = {
       }
       reverse_transaction: {
         Args: { p_reason: string; p_transaction_id: string }
+        Returns: Json
+      }
+      schedule_campaign: {
+        Args: { p_campaign_id: string; p_send_at?: string }
         Returns: Json
       }
     }

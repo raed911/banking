@@ -1316,5 +1316,70 @@
       "reauth": "لأسباب أمنية، سجّل الدخول من جديد ثم حاول مرة أخرى.",
       "generic": "حدث خطأ."
     }
+  },
+  "camp": {
+    "title": "الحملات",
+    "subtitle": "تواصل مع العملاء المناسبين في الوقت المناسب.",
+    "new": "حملة جديدة",
+    "edit": "تعديل الحملة",
+    "empty": "لا توجد حملات. أعِد العملاء غير النشطين أو احتفل بأعياد ميلادهم.",
+    "name": "اسم الحملة",
+    "namePlaceholder": "اشتقنا لك!",
+    "channel": "القناة",
+    "channels": {
+      "email": "البريد الإلكتروني",
+      "wallet": "رسالة Wallet",
+      "sms": "رسالة نصية"
+    },
+    "channelPending": "غير متصلة بعد",
+    "channelPendingDesc": "ستُرسل الحملة تلقائيًا فور ربط هذه القناة (البريد: الدومين + Resend؛ Wallet: Apple/Google Wallet).",
+    "segment": "الجمهور",
+    "segments": {
+      "all": "كل العملاء",
+      "inactive": "غير نشطين منذ…",
+      "active": "زاروا مؤخرًا (…)",
+      "new": "عملاء جدد (…)",
+      "birthday_month": "عيد ميلادهم هذا الشهر",
+      "tag": "بالوسم…",
+      "program": "أعضاء البرنامج…"
+    },
+    "days": "أيام",
+    "tag": "الوسم",
+    "program": "البرنامج",
+    "subject": "موضوع البريد",
+    "body": "الرسالة",
+    "bodyPlaceholder": "مرحبًا {prenom}، قهوتك المجانية بانتظارك 🎁",
+    "variables": "المتغيرات: {prenom}، {commerce}",
+    "coupon": "قسيمة مرفقة (اختياري)",
+    "noCoupon": "لا شيء",
+    "sendAt": "الإرسال",
+    "sendNow": "في أقرب وقت",
+    "sendLater": "جدولة",
+    "audience": "{eligible} مستلم",
+    "audienceDetail": "{total} عميل في هذه الفئة · {noConsent} بدون موافقة تسويقية (مستبعدون)",
+    "saveDraft": "حفظ المسودة",
+    "schedule": "جدولة الإرسال",
+    "scheduled": "تمت جدولة الحملة لـ {count} مستلم.",
+    "cancel": "إلغاء الحملة",
+    "delete": "حذف",
+    "statuses": {
+      "draft": "مسودة",
+      "scheduled": "مجدولة",
+      "sending": "قيد الإرسال",
+      "sent": "أُرسلت",
+      "canceled": "ملغاة",
+      "failed": "فشلت"
+    },
+    "stats": {
+      "targeted": "المستهدفون",
+      "sent": "المرسلة",
+      "failed": "الفاشلة"
+    },
+    "awaiting": "بانتظار ربط القناة",
+    "errors": {
+      "generic": "حدث خطأ.",
+      "validation": "تحقق من الحقول.",
+      "subscription_inactive": "الاشتراك غير نشط: لا يمكن الجدولة."
+    }
   }
 }

@@ -1316,5 +1316,70 @@
       "reauth": "Pour des raisons de sécurité, reconnectez-vous puis réessayez.",
       "generic": "Une erreur est survenue."
     }
+  },
+  "camp": {
+    "title": "Campagnes",
+    "subtitle": "Relancez les bons clients au bon moment.",
+    "new": "Nouvelle campagne",
+    "edit": "Modifier la campagne",
+    "empty": "Aucune campagne. Relancez vos clients inactifs ou fêtez leur anniversaire.",
+    "name": "Nom de la campagne",
+    "namePlaceholder": "On vous a manqué !",
+    "channel": "Canal",
+    "channels": {
+      "email": "Email",
+      "wallet": "Message Wallet",
+      "sms": "SMS"
+    },
+    "channelPending": "Pas encore connecté",
+    "channelPendingDesc": "La campagne sera envoyée automatiquement dès que ce canal sera connecté (email : domaine + Resend ; Wallet : Apple/Google Wallet).",
+    "segment": "Audience",
+    "segments": {
+      "all": "Tous les clients",
+      "inactive": "Inactifs depuis…",
+      "active": "Venus récemment (…)",
+      "new": "Nouveaux clients (…)",
+      "birthday_month": "Anniversaire ce mois-ci",
+      "tag": "Avec l'étiquette…",
+      "program": "Membres du programme…"
+    },
+    "days": "Jours",
+    "tag": "Étiquette",
+    "program": "Programme",
+    "subject": "Objet de l'email",
+    "body": "Message",
+    "bodyPlaceholder": "Bonjour {prenom}, votre café offert vous attend 🎁",
+    "variables": "Variables : {prenom}, {commerce}",
+    "coupon": "Coupon joint (facultatif)",
+    "noCoupon": "Aucun",
+    "sendAt": "Envoi",
+    "sendNow": "Dès que possible",
+    "sendLater": "Programmer",
+    "audience": "{eligible} destinataires",
+    "audienceDetail": "{total} clients dans ce segment · {noConsent} sans consentement marketing (exclus)",
+    "saveDraft": "Enregistrer le brouillon",
+    "schedule": "Programmer l'envoi",
+    "scheduled": "Campagne programmée pour {count} destinataires.",
+    "cancel": "Annuler la campagne",
+    "delete": "Supprimer",
+    "statuses": {
+      "draft": "Brouillon",
+      "scheduled": "Programmée",
+      "sending": "En cours d'envoi",
+      "sent": "Envoyée",
+      "canceled": "Annulée",
+      "failed": "Échec"
+    },
+    "stats": {
+      "targeted": "Ciblés",
+      "sent": "Envoyés",
+      "failed": "Échecs"
+    },
+    "awaiting": "En attente de connexion du canal",
+    "errors": {
+      "generic": "Une erreur est survenue.",
+      "validation": "Vérifiez les champs.",
+      "subscription_inactive": "Abonnement inactif : impossible de programmer."
+    }
   }
 }
