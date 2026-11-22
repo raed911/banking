@@ -10,7 +10,7 @@ import { PasswordInput } from "@/components/forms/password-input";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { FormAlert } from "@/components/forms/form-alert";
 
-export function RegisterForm() {
+export function RegisterForm({ next }: { next?: string }) {
   const t = useTranslations("auth");
   const [state, action] = useActionState(signUp, null);
 
@@ -30,6 +30,7 @@ export function RegisterForm() {
       <h1 className="text-3xl font-semibold tracking-[-0.03em]">{t("registerTitle")}</h1>
       <p className="mt-2 text-fg-muted">{t("registerSubtitle")}</p>
       <form action={action} className="mt-8 space-y-4">
+        <input type="hidden" name="next" value={next ?? ""} />
         <FormAlert>{state?.error ? t(`errors.${state.error}` as "errors.generic") : null}</FormAlert>
         <Field label={t("fullName")} htmlFor="fullName">
           <Input id="fullName" name="fullName" autoComplete="name" required minLength={2} maxLength={80} aria-invalid={!!state?.fieldErrors?.fullName} />
@@ -44,7 +45,7 @@ export function RegisterForm() {
         <p className="text-center text-xs text-fg-subtle">{t("terms")}</p>
       </form>
       <p className="mt-8 text-center text-sm text-fg-muted">
-        {t("hasAccount")} <Link href="/login" className="font-semibold text-fg underline-offset-4 hover:underline">{t("signInLink")}</Link>
+        {t("hasAccount")} <Link href={next ? `/login?next=${encodeURIComponent(next)}` : "/login"} className="font-semibold text-fg underline-offset-4 hover:underline">{t("signInLink")}</Link>
       </p>
     </div>
   );

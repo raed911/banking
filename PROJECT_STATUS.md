@@ -12,7 +12,7 @@ _Last updated: 2026-11-22_
 | 2 Public website | Not started | — |
 | 3 Merchant core | ✅ Overview, Programs (+ card designer, rewards, sign-up links), Customers + profiles, Rewards, Locations (plan-limited), Settings (profile, logo, brand color) | E2E: programs flow + merchant pages smoke test |
 | 4 Loyalty engine | 🟡 Core done: ledger, stamps/points/visits, sign-up page, customer card page with signed rotating QR, staff scanner (camera + manual), rewards redemption, coupon redemption, anti-fraud. Coupons management, Transactions ledger and fraud-alert review now done | SQL suite + E2E full loop (sign-up → scan → stamps → reward) + QR token unit tests |
-| 5 Team & permissions | Not started | — |
+| 5 Team & permissions | ✅ Invitations by secure link (hashed token, 7 days, email-bound — no email provider needed), acceptance flow, member role change/disable/remove, roles & permissions editor (system + custom roles, no wildcard escalation) | E2E: invite → accept → cashier restricted |
 | 6 Engagement | Not started | — |
 | 7 Apple / Google Wallet | Not started | — |
 | 8 Subscriptions & billing | 🟡 Cash flow done: plans/prices, trials, merchant Billing page (choose period + locations → invoice with payment instructions), admin payment recording, renewals, daily expiry job, plan limits (locations). Online gateway not connected (not needed for cash) | E2E: invoice request; admin payment; SQL suite |

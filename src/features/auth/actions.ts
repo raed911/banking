@@ -52,19 +52,20 @@ export async function signUp(_: ActionState, form: FormData): Promise<ActionStat
     return { error: field === "password" ? "weak_password" : field === "email" ? "invalid_email" : "required", fieldErrors: { [String(field)]: "1" } };
   }
   if (!(await allow("signup", 20, 3600))) return { error: "rate_limited" };
+  const next = safeNext(form.get("next"), "/onboarding");
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
-      emailRedirectTo: `${publicEnv.NEXT_PUBLIC_APP_URL}/auth/confirm?next=/onboarding`,
+      emailRedirectTo: `${publicEnv.NEXT_PUBLIC_APP_URL}/auth/confirm?next=${encodeURIComponent(next)}`,
       data: { full_name: parsed.data.fullName, locale: await getLocale() },
     },
   });
   if (error) return { error: mapAuthError(error.code) };
   // Supabase returns a user with no identities when the email is already registered (anti-enumeration)
   if (data.user && data.user.identities?.length === 0) return { ok: true, data: { email: parsed.data.email } };
-  if (data.session) redirect("/onboarding");
+  if (data.session) redirect(next);
   return { ok: true, data: { email: parsed.data.email } };
 }
 

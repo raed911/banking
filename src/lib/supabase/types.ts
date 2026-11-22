@@ -2043,6 +2043,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_invitation: { Args: { p_token_hash: string }; Returns: string }
       admin_extend_trial: {
         Args: { p_days: number; p_merchant_id: string }
         Returns: undefined
@@ -2112,6 +2113,16 @@ export type Database = {
         Args: { p_key: string; p_max: number; p_window_seconds: number }
         Returns: boolean
       }
+      create_invitation: {
+        Args: {
+          p_email: string
+          p_location_ids?: string[]
+          p_merchant_id: string
+          p_role_id: string
+          p_token_hash: string
+        }
+        Returns: string
+      }
       create_merchant: {
         Args: {
           p_city?: string
@@ -2140,12 +2151,29 @@ export type Database = {
         Args: { mid: string; perm: string }
         Returns: boolean
       }
+      invitation_preview: { Args: { p_token_hash: string }; Returns: Json }
       is_merchant_member: { Args: { mid: string }; Returns: boolean }
       is_platform_admin: { Args: never; Returns: boolean }
       merchant_is_entitled: { Args: { p_merchant: string }; Returns: boolean }
       merchant_overview: {
         Args: { p_days?: number; p_merchant_id: string }
         Returns: Json
+      }
+      merchant_team: {
+        Args: { p_merchant_id: string }
+        Returns: {
+          created_at: string
+          email: string
+          full_name: string
+          last_active_at: string
+          location_ids: string[]
+          member_id: string
+          role_id: string
+          role_key: string
+          role_name: string
+          status: Database["public"]["Enums"]["member_status"]
+          user_id: string
+        }[]
       }
       my_permissions: { Args: { mid: string }; Returns: string[] }
       platform_overview: { Args: { p_days?: number }; Returns: Json }

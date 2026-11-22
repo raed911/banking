@@ -6,6 +6,6 @@ export async function generateMetadata() {
   return { title: t("signUp") };
 }
 
-export default function RegisterPage() {
-  return <RegisterForm />;
+export default async function RegisterPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
+  return <RegisterForm next={(await searchParams).next} />;
 }

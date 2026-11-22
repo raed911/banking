@@ -35,7 +35,7 @@ test("merchant modules: coupons, billing, locations, settings, transactions, rew
     await page.locator("form button[type=submit]").last().click();
     await expect(page.getByRole("status")).toBeVisible();
 
-    for (const path of ["/dashboard/transactions", "/dashboard/transactions?tab=fraud", "/dashboard/rewards", "/dashboard"]) {
+    for (const path of ["/dashboard/roles", "/dashboard/employees", "/dashboard/transactions", "/dashboard/transactions?tab=fraud", "/dashboard/rewards", "/dashboard"]) {
       await page.goto(path);
       await expect(page.locator("main h1").first()).toBeVisible();
     }
