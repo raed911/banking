@@ -1,0 +1,19 @@
+{
+  "common": {
+    "appName": "VAYRO",
+    "tagline": "Loyalty, reinvented.",
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "back": "Back",
+    "retry": "Try again",
+    "search": "Search",
+    "language": "Language",
+    "somethingWrong": "Something went wrong",
+    "somethingWrongDesc": "We couldn't load this page. Please try again in a moment.",
+    "notFound": "Page not found",
+    "notFoundDesc": "The page you're looking for doesn't exist or has moved.",
+    "goHome": "Back to home"
+  }
+}

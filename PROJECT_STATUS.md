@@ -24,7 +24,8 @@ _Last updated: 2026-11-22_
 See `docs/SERVICES_AND_CREDENTIALS.md`. Configured: **Supabase** — URL + publishable key in `.env.local` (git-ignored); management access token stored as an encrypted environment network secret (never in code). Connection and SQL execution verified 2026-11-22.
 
 ## Open decisions
-- Payment provider: depends on the country where the business is registered.
+- ✅ Payments: Tunisia, TND, cash collected manually and recorded by the super admin. Plans: 99 TND/month, 499 TND/6 months, 999 TND/year (per point of sale). Brand references in `docs/brand/`.
+- Interface language: French by default, Arabic (RTL) and English available (proposed, awaiting confirmation).
 - Wallet model: platform-level Apple/Google credentials with optional merchant override (proposed default).
 
 ## Known issues

@@ -1,0 +1,184 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ───────────────────────── VAYRO design tokens ───────────────────────── */
+@theme {
+  /* Brand */
+  --color-navy: #101828;
+  --color-lime: #c6f36b;
+  --color-white: #ffffff;
+
+  /* Ink scale (built around Midnight Navy #101828 = ink-900) */
+  --color-ink-50: #f8f9fb;
+  --color-ink-100: #f1f3f7;
+  --color-ink-150: #e8ebf1;
+  --color-ink-200: #dde2ea;
+  --color-ink-300: #c3cad6;
+  --color-ink-400: #98a2b3;
+  --color-ink-500: #667085;
+  --color-ink-600: #475467;
+  --color-ink-700: #344054;
+  --color-ink-800: #1d2939;
+  --color-ink-850: #162032;
+  --color-ink-900: #101828;
+  --color-ink-950: #0a0f1c;
+
+  /* Lime scale (Electric Lime #C6F36B = lime-300) */
+  --color-lime-50: #f8feec;
+  --color-lime-100: #effcd3;
+  --color-lime-200: #def9a6;
+  --color-lime-300: #c6f36b;
+  --color-lime-400: #b0e249;
+  --color-lime-500: #92c62a;
+  --color-lime-600: #6f9a1b;
+  --color-lime-700: #557418;
+  --color-lime-800: #435c18;
+  --color-lime-900: #3a4e19;
+
+  /* Semantic */
+  --color-success-50: #ecfdf3;
+  --color-success-500: #12b76a;
+  --color-success-700: #027a48;
+  --color-warning-50: #fffaeb;
+  --color-warning-500: #f79009;
+  --color-warning-700: #b54708;
+  --color-danger-50: #fef3f2;
+  --color-danger-500: #f04438;
+  --color-danger-700: #b42318;
+  --color-info-50: #eff8ff;
+  --color-info-500: #2e90fa;
+  --color-info-700: #175cd3;
+
+  /* Typography */
+  --font-sans: "Inter Tight Variable", "IBM Plex Sans Arabic", ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: "IBM Plex Sans Arabic", "Inter Tight Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Anton", "Inter Tight Variable", sans-serif;
+  --font-script: "Caveat", cursive;
+
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+
+  /* Radii */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px rgb(16 24 40 / 0.05);
+  --shadow-sm: 0 1px 3px rgb(16 24 40 / 0.08), 0 1px 2px rgb(16 24 40 / 0.04);
+  --shadow-md: 0 6px 16px -4px rgb(16 24 40 / 0.1), 0 2px 6px -2px rgb(16 24 40 / 0.05);
+  --shadow-lg: 0 18px 40px -12px rgb(16 24 40 / 0.18), 0 4px 10px -4px rgb(16 24 40 / 0.06);
+  --shadow-xl: 0 32px 64px -20px rgb(16 24 40 / 0.28);
+  --shadow-glow: 0 0 0 1px rgb(198 243 107 / 0.35), 0 10px 40px -10px rgb(198 243 107 / 0.55);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --animate-fade-in: fade-in 0.4s var(--ease-out-expo) both;
+  --animate-fade-up: fade-up 0.6s var(--ease-out-expo) both;
+  --animate-scale-in: scale-in 0.25s var(--ease-out-expo) both;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-spin-slow: spin 12s linear infinite;
+
+  @keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes fade-up { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: none } }
+  @keyframes scale-in { from { opacity: 0; transform: scale(0.96) } to { opacity: 1; transform: none } }
+  @keyframes shimmer { from { background-position: -200% 0 } to { background-position: 200% 0 } }
+  @keyframes float { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
+}
+
+/* ───────────────────────── Semantic surface tokens ───────────────────────── */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-muted: var(--color-ink-50);
+  --surface-sunken: var(--color-ink-100);
+  --border: var(--color-ink-150);
+  --border-strong: var(--color-ink-200);
+  --fg: var(--color-ink-900);
+  --fg-muted: var(--color-ink-500);
+  --fg-subtle: var(--color-ink-400);
+  --accent: var(--color-lime-300);
+  --accent-fg: var(--color-ink-900);
+  --ring: rgb(198 243 107 / 0.6);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: var(--color-ink-950);
+  --surface: var(--color-ink-900);
+  --surface-muted: var(--color-ink-850);
+  --surface-sunken: #0d1424;
+  --border: rgb(255 255 255 / 0.08);
+  --border-strong: rgb(255 255 255 / 0.14);
+  --fg: #ffffff;
+  --fg-muted: var(--color-ink-400);
+  --fg-subtle: var(--color-ink-500);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+}
+
+@layer base {
+  * { border-color: var(--border); }
+  html { -webkit-text-size-adjust: 100%; text-rendering: optimizeLegibility; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html[lang="ar"] body { font-family: var(--font-arabic); }
+  ::selection { background: var(--color-lime-300); color: var(--color-ink-900); }
+  :focus-visible { outline: 2px solid var(--color-lime-400); outline-offset: 2px; }
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1240px;
+  padding-inline: 1rem;
+  @media (width >= 40rem) { padding-inline: 1.5rem; }
+  @media (width >= 64rem) { padding-inline: 2rem; }
+}
+
+@utility bg-grid {
+  background-image: radial-gradient(rgb(255 255 255 / 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+@utility bg-grid-ink {
+  background-image: radial-gradient(rgb(16 24 40 / 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+@utility skeleton {
+  background: linear-gradient(90deg, var(--surface-sunken) 25%, var(--surface-muted) 37%, var(--surface-sunken) 63%);
+  background-size: 400% 100%;
+  animation: var(--animate-shimmer);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

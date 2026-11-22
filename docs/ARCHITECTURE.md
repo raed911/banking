@@ -24,7 +24,7 @@ platform from a separate Super Admin console.
 | Files | **Supabase Storage** (logos, strip images, pass assets) | Private buckets + signed URLs. |
 | Background jobs | Postgres queue tables + `pg_cron` + Vercel Cron route handlers | Wallet push updates, campaign sends, subscription expiry. No extra infra. |
 | Email | Resend (transactional + campaigns) | |
-| Payments | Provider-agnostic `PaymentProvider` adapter (Stripe / Paddle / regional provider plugged in later) | User's country decides the provider. |
+| Payments | **Manual / cash first** (`ManualProvider`): the super admin records a cash payment, which extends the subscription. Same `PaymentProvider` interface lets a Tunisian online gateway (Konnect, Flouci, Paymee) or Stripe be added later. | Market: Tunisia, currency TND. |
 | Hosting | Vercel (app) + Supabase (data) | Zero-ops, global edge, preview deployments. |
 | Monitoring | Sentry (errors) + `system_logs` table + Vercel logs | |
 | Testing | Vitest (unit/integration), Playwright (E2E, responsive), SQL RLS tests | |
@@ -146,6 +146,21 @@ they override the platform ones. Both forms contain exactly the fields requested
   *Not configured → Configured (unverified) → Verified → Error*.
 
 ## 8. Subscriptions & billing
+
+**Business decisions (2026-11-22):** market Tunisia, currency **TND**, payment collected **in cash**.
+Single **Pro** plan priced per point of sale (location):
+
+| Billing period | Price | Note |
+|---|---|---|
+| Monthly | 99 TND / month | "Simple" |
+| 6 months | 499 TND | "1 mois offert" (≈ 5 months price) |
+| Annual | 999 TND / year | "2 mois offerts" (≈ 10 months price) |
+
+Cash flow: merchant registers → free trial → merchant picks a period in Billing and gets a
+payment reference → VAYRO collects cash → super admin clicks **Record payment** (amount,
+period, receipt no.) → subscription period is extended, invoice/receipt generated, merchant
+notified. Expiry reminders before the period ends; grace period then restriction (read-only)
+then suspension — all configurable.
 
 * `plans` + `plan_prices` (monthly / annual, currency), `limits jsonb`, `features jsonb`.
 * `subscriptions` state machine: `trialing → active → past_due → canceled / expired`, plus

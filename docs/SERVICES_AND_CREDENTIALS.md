@@ -11,7 +11,7 @@ This file only tracks **which** services are needed and their status.
 | 4 | **Domain name** (any registrar) | vayro.xxx website + email sender domain | ~$10–40/yr | 6 / 11 | Not yet |
 | 5 | **Google Wallet API** (pay.google.com/business/console + Google Cloud) | Issuer ID, service account email, private key | Free; publishing to all users needs Google approval | 7 | Not yet |
 | 6 | **Apple Developer Program** (developer.apple.com) | Team ID, Pass Type ID, signing certificate | $99/yr; enrolment verification can take days (organisations need a D-U-N-S number) | 7 | Not yet — **start early** |
-| 7 | **Payment provider** (Stripe / Paddle / Lemon Squeezy / regional) | Subscription billing | % per transaction | 8 | Pending: which country is your business registered in? |
+| 7 | **Payment provider** (Stripe / Paddle / Lemon Squeezy / regional) | Subscription billing | % per transaction | 8 | ✅ Decided: **cash payments recorded by super admin** (no provider needed). Online gateway (Konnect / Flouci / Paymee) optional later. |
 | 8 | Sentry (sentry.io) — optional | Error monitoring | Free tier | 11 | Optional |
 
 ## Values VAYRO generates itself (never asked from you)

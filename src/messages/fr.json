@@ -1,0 +1,19 @@
+{
+  "common": {
+    "appName": "VAYRO",
+    "tagline": "La fidélité, réinventée.",
+    "loading": "Chargement…",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "continue": "Continuer",
+    "back": "Retour",
+    "retry": "Réessayer",
+    "search": "Rechercher",
+    "language": "Langue",
+    "somethingWrong": "Une erreur est survenue",
+    "somethingWrongDesc": "Nous n'avons pas pu charger cette page. Réessayez dans un instant.",
+    "notFound": "Page introuvable",
+    "notFoundDesc": "La page que vous cherchez n'existe pas ou a été déplacée.",
+    "goHome": "Retour à l'accueil"
+  }
+}
