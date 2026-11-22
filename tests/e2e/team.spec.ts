@@ -25,7 +25,8 @@ test("owner invites a cashier who accepts and only sees the cashier tools", asyn
     // cashiers land on the scanner (no dashboard.view permission)
     await p2.waitForURL(/\/(scan|dashboard)/);
     await p2.goto("/dashboard/billing");
-    await expect(p2).toHaveURL(/denied=1|\/scan/);
+    await p2.waitForURL(/\/scan/); // billing denied → dashboard → cashiers land on the scanner
+    await p2.waitForLoadState("load");
     await p2.goto("/dashboard/customers");
     await expect(p2.locator("main h1")).toBeVisible();
     await ctx.close();
