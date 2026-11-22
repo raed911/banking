@@ -15,6 +15,8 @@ import { FormAlert } from "@/components/forms/form-alert";
 import { PhonePreviews } from "./phone-previews";
 
 const GeoMap = dynamic(() => import("./geo-map"), { ssr: false, loading: () => <div className="skeleton size-full" /> });
+const GoogleGeoMap = dynamic(() => import("./google-geo-map"), { ssr: false, loading: () => <div className="skeleton size-full" /> });
+const GOOGLE_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 const TUNIS = { lat: 36.8065, lng: 10.1815 };
 
 export type Zone = { id: string; name: string; address: string | null; city: string | null; latitude: number | null; longitude: number | null; geo_enabled: boolean; geo_radius_m: number; geo_message: string | null };
@@ -37,6 +39,12 @@ export function ZoneEditor({ zone, merchantName, canEdit }: { zone: Zone; mercha
     if (!query.trim()) return;
     setSearching(true); setSearchError(false);
     try {
+      if (GOOGLE_KEY && typeof window !== "undefined" && (window as unknown as { google?: typeof google }).google?.maps?.Geocoder) {
+        const { results } = await new google.maps.Geocoder().geocode({ address: query, region: "tn" });
+        const loc = results[0]?.geometry.location;
+        if (loc) { move(loc.lat(), loc.lng()); setZoomKey((k) => k + 1); } else setSearchError(true);
+        return;
+      }
       // OpenStreetMap Nominatim: one request on explicit user action (no autocomplete), per its usage policy.
       const res = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(query)}`, { headers: { "Accept-Language": document.documentElement.lang } });
       const [hit] = (await res.json()) as { lat: string; lon: string }[];
@@ -65,7 +73,7 @@ export function ZoneEditor({ zone, merchantName, canEdit }: { zone: Zone; mercha
               <Button type="button" variant="ghost" size="icon" onClick={locate} aria-label={t("myPosition")} title={t("myPosition")}><Crosshair /></Button>
             </div>
             {searchError && <p className="text-xs text-danger-700">{t("noResult")}</p>}
-            <div className="relative z-0 h-[340px] overflow-hidden rounded-2xl border border-border"><GeoMap lat={pos.lat} lng={pos.lng} radius={radius} enabled={enabled} onMove={move} zoomKey={zoomKey} /></div>
+            <div className="relative z-0 h-[340px] overflow-hidden rounded-2xl border border-border">{GOOGLE_KEY ? <GoogleGeoMap apiKey={GOOGLE_KEY} lat={pos.lat} lng={pos.lng} radius={radius} enabled={enabled} onMove={move} zoomKey={zoomKey} /> : <GeoMap lat={pos.lat} lng={pos.lng} radius={radius} enabled={enabled} onMove={move} zoomKey={zoomKey} />}</div>
             <p className="text-xs text-fg-muted">{t("dragHint")}</p>
             <div className="grid grid-cols-2 gap-3">
               <Field label={t("lat")} htmlFor={`lat-${zone.id}`}><Input id={`lat-${zone.id}`} type="number" step="0.000001" value={pos.lat.toFixed(6)} onChange={(e) => move(Number(e.target.value), pos.lng)} dir="ltr" /></Field>

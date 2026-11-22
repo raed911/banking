@@ -8,11 +8,11 @@ const isDev = process.env.NODE_ENV !== "production";
 // Next.js App Router needs inline scripts for hydration; everything else is locked to known origins.
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
-  "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' data: blob: https://${supabaseHost} https://tile.openstreetmap.org`,
-  "font-src 'self' data:",
-  `connect-src 'self' https://${supabaseHost} wss://${supabaseHost} https://nominatim.openstreetmap.org`,
+  `script-src 'self' 'unsafe-inline' https://maps.googleapis.com${isDev ? " 'unsafe-eval'" : ""}`,
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  `img-src 'self' data: blob: https://${supabaseHost} https://tile.openstreetmap.org https://maps.googleapis.com https://maps.gstatic.com https://*.googleapis.com https://*.gstatic.com`,
+  "font-src 'self' data: https://fonts.gstatic.com",
+  `connect-src 'self' https://${supabaseHost} wss://${supabaseHost} https://nominatim.openstreetmap.org https://maps.googleapis.com https://*.googleapis.com`,
   "worker-src 'self' blob:",
   "media-src 'self' blob:",
   "frame-ancestors 'none'",
