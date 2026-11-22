@@ -1,12 +1,12 @@
 "use server";
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { publicEnv } from "@/lib/env";
 import { safeNext, type ActionState } from "@/lib/action";
 import { getLocale } from "next-intl/server";
+import { clientIp } from "@/lib/request";
 
 const KNOWN = new Set(["invalid_credentials", "email_not_confirmed", "user_already_exists", "weak_password", "over_email_send_rate_limit", "email_address_invalid"]);
 function mapAuthError(code?: string) {
@@ -16,10 +16,6 @@ function mapAuthError(code?: string) {
   return KNOWN.has(code) ? code : "generic";
 }
 
-async function clientIp() {
-  const h = await headers();
-  return h.get("x-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || "unknown";
-}
 
 async function allow(action: string, max: number, windowSeconds: number, subject = "") {
   try {

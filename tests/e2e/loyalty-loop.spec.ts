@@ -17,7 +17,7 @@ test("full loop: program → customer sign-up → scan → stamps → reward", a
     const joinPath = (await page.locator("text=/\\/join\\/[a-z0-9]{8}/").first().textContent())!.match(/\/join\/[a-z0-9]{8}/)![0];
 
     // customer signs up on their phone
-    const customerCtx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true });
+    const customerCtx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, extraHTTPHeaders: { "x-real-ip": `10.${Math.floor(Math.random() * 250)}.${Math.floor(Math.random() * 250)}.${Math.floor(Math.random() * 250)}` } });
     const customer = await customerCtx.newPage();
     await customer.goto(joinPath);
     await customer.locator("#first_name").fill("Sami");

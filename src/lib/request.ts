@@ -4,7 +4,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function clientIp() {
   const h = await headers();
-  return h.get("x-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || "unknown";
+  // On Vercel, x-vercel-forwarded-for / x-real-ip are set by the edge and cannot be spoofed by the client.
+  return h.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || h.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
 }
 
 /** Fixed-window rate limit backed by Postgres. Fails open if the limiter itself is unavailable. */
