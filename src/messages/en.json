@@ -113,7 +113,8 @@
       "groupGrowth": "Growth",
       "groupBusiness": "Business",
       "menu": "Menu",
-      "more": "More"
+      "more": "More",
+      "locationMarketing": "Location marketing"
     },
     "user": {
       "account": "My account",
@@ -495,7 +496,8 @@
       "payments": "Payments",
       "plans": "Plans",
       "logs": "Logs",
-      "messages": "Messages"
+      "messages": "Messages",
+      "geo": "Location marketing"
     },
     "overview": {
       "title": "VAYRO platform",
@@ -648,6 +650,17 @@
       "empty": "No messages.",
       "handled": "Handled",
       "markHandled": "Mark as handled"
+    },
+    "geo": {
+      "title": "Location marketing",
+      "subtitle": "Proximity zones and campaigns configuration and usage.",
+      "merchant": "Merchant",
+      "zones": "Active zones",
+      "campaigns": "Campaigns",
+      "active": "Running",
+      "passes": "Wallet cards",
+      "last": "Last campaign",
+      "empty": "No merchant uses location marketing yet."
     }
   },
   "billing": {
@@ -1156,6 +1169,114 @@
       "contact": "Contact",
       "terms": "Terms of service",
       "privacy": "Privacy policy"
+    }
+  },
+  "geo": {
+    "title": "Location marketing",
+    "subtitle": "Your card shows up on customers' phones when they walk near your shop.",
+    "status": {
+      "apple": "Apple Wallet",
+      "google": "Google Wallet",
+      "ready": "Active",
+      "pending": "Credentials required",
+      "pendingHint": "Cards will carry these locations as soon as the Wallet integrations are activated."
+    },
+    "tabs": {
+      "zones": "Zones",
+      "campaigns": "Campaigns",
+      "how": "How it works"
+    },
+    "zone": {
+      "title": "Proximity zone",
+      "enable": "Proximity notifications",
+      "search": "Search an address…",
+      "searchBtn": "Search",
+      "myPosition": "My position",
+      "noResult": "Address not found.",
+      "dragHint": "Drag the pin to place your shop's entrance precisely.",
+      "lat": "Latitude",
+      "lng": "Longitude",
+      "radius": "Radius",
+      "radiusHint": "Apple Wallet may use a shorter distance depending on the card type.",
+      "message": "Displayed message",
+      "messagePlaceholder": "☕ Your free coffee is waiting right here!",
+      "messageHint": "120 characters max. Shown on the Lock Screen (Apple) or in the card (Google).",
+      "save": "Save zone",
+      "saved": "Zone saved. Wallet cards will be updated.",
+      "error": "Could not save.",
+      "coordsRequired": "Place your shop on the map first.",
+      "noLocations": "Add a location first.",
+      "preview": "Phone preview",
+      "now": "now",
+      "nearby": "Nearby",
+      "androidBody": "Your loyalty card is close at hand.",
+      "androidNote": "Android text is written by Google."
+    },
+    "campaign": {
+      "new": "New campaign",
+      "edit": "Edit campaign",
+      "empty": "No location campaigns. Create one for a time-limited promotion.",
+      "name": "Name",
+      "namePlaceholder": "Friday happy hour",
+      "message": "Proximity message",
+      "locations": "Targeted shops",
+      "programs": "Cards",
+      "allPrograms": "All cards",
+      "starts": "Start",
+      "ends": "End",
+      "coupon": "Linked coupon (optional)",
+      "noCoupon": "None",
+      "schedule": "Schedule",
+      "saveDraft": "Draft",
+      "pause": "Pause",
+      "resume": "Resume",
+      "end": "End",
+      "delete": "Delete",
+      "statuses": {
+        "draft": "Draft",
+        "scheduled": "Scheduled",
+        "active": "Running",
+        "paused": "Paused",
+        "ended": "Ended"
+      },
+      "stats": {
+        "visits": "Visits",
+        "before": "Previous period",
+        "uplift": "Change",
+        "customers": "Customers",
+        "coupons": "Coupons used",
+        "passes": "Targeted Wallet cards"
+      },
+      "statsNote": "Apple and Google don't report how many times the notification was shown. We measure the real effect: in-store visits during the campaign compared with the previous period of the same length.",
+      "errors": {
+        "generic": "Something went wrong.",
+        "validation": "Check the fields (dates, message, at least one shop)."
+      }
+    },
+    "how": {
+      "title": "How it works",
+      "items": [
+        {
+          "t": "No location collected",
+          "d": "VAYRO never knows where your customers are. Your shop's coordinates are stored in their card; the phone compares privately."
+        },
+        {
+          "t": "Apple Wallet",
+          "d": "Up to 10 locations per card. Nearby, iOS may show the card and your message on the Lock Screen. iOS decides when; the customer must allow location for Wallet."
+        },
+        {
+          "t": "Google Wallet",
+          "d": "Up to 10 locations per card. Google may send a 'nearby' notification if the customer enabled location and Wallet notifications. Google limits how often."
+        },
+        {
+          "t": "Card updates",
+          "d": "When you change a zone or a campaign starts or ends, installed cards are updated automatically."
+        },
+        {
+          "t": "Not spam",
+          "d": "Platforms deliberately limit these displays to protect users. A short, useful message placed near the entrance works best."
+        }
+      ]
     }
   }
 }

@@ -1,4 +1,4 @@
-import { BarChart3, Bell, Building2, CreditCard, Gift, LayoutGrid, MapPin, Megaphone, Plug, Receipt, ScanLine, Settings, ShieldCheck, Ticket, Users, UsersRound, type LucideIcon } from "lucide-react";
+import { BarChart3, Bell, Building2, CreditCard, Gift, LayoutGrid, MapPin, Radar, Megaphone, Plug, Receipt, ScanLine, Settings, ShieldCheck, Ticket, Users, UsersRound, type LucideIcon } from "lucide-react";
 import type { Permission } from "@/lib/permissions";
 
 export type NavItem = { key: string; href: string; icon: LucideIcon; perm?: Permission };
@@ -20,6 +20,7 @@ export const NAV: NavGroup[] = [
     key: "groupGrowth",
     items: [
       { key: "campaigns", href: "/dashboard/campaigns", icon: Megaphone, perm: "campaigns.manage" },
+      { key: "locationMarketing", href: "/dashboard/location-marketing", icon: Radar, perm: "campaigns.manage" },
       { key: "notifications", href: "/dashboard/notifications", icon: Bell },
       { key: "analytics", href: "/dashboard/analytics", icon: BarChart3, perm: "analytics.view" },
     ],

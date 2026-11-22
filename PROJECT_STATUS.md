@@ -23,6 +23,12 @@ _Last updated: 2026-11-22_
 ## Live site
 - https://vayro-app.vercel.app (auto-deploys on every push to the development branch). E2E suite passes against production.
 
+## Location marketing (geofencing)
+✅ Built: merchant "Proximité" section (interactive map, coordinates, radius, enable/disable, message, phone previews),
+time-boxed location campaigns with first-party analytics, admin usage view, Apple `locations`/`maxDistance` and
+Google `merchantLocations` builders (unit-tested), automatic pass-refresh jobs, scheduler (pg_cron).
+⏳ Goes live on phones when Apple/Google Wallet credentials are configured (Phase 7). Tested: SQL suite 002 + E2E.
+
 ## Credentials status
 See `docs/SERVICES_AND_CREDENTIALS.md`. Configured: **Supabase**, **Vercel** (token as environment network secret) — URL + publishable key in `.env.local` (git-ignored); management access token stored as an encrypted environment network secret (never in code). Connection and SQL execution verified 2026-11-22.
 

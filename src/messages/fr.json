@@ -113,7 +113,8 @@
       "groupGrowth": "Croissance",
       "groupBusiness": "Entreprise",
       "menu": "Menu",
-      "more": "Plus"
+      "more": "Plus",
+      "locationMarketing": "Proximité"
     },
     "user": {
       "account": "Mon compte",
@@ -495,7 +496,8 @@
       "payments": "Paiements",
       "plans": "Formules",
       "logs": "Journaux",
-      "messages": "Messages"
+      "messages": "Messages",
+      "geo": "Proximité"
     },
     "overview": {
       "title": "Plateforme VAYRO",
@@ -648,6 +650,17 @@
       "empty": "Aucun message.",
       "handled": "Traité",
       "markHandled": "Marquer comme traité"
+    },
+    "geo": {
+      "title": "Marketing de proximité",
+      "subtitle": "Configurations et usage des zones et campagnes de proximité.",
+      "merchant": "Commerçant",
+      "zones": "Zones actives",
+      "campaigns": "Campagnes",
+      "active": "En cours",
+      "passes": "Cartes Wallet",
+      "last": "Dernière campagne",
+      "empty": "Aucun commerçant n'utilise encore le marketing de proximité."
     }
   },
   "billing": {
@@ -1156,6 +1169,114 @@
       "contact": "Contact",
       "terms": "Conditions d'utilisation",
       "privacy": "Politique de confidentialité"
+    }
+  },
+  "geo": {
+    "title": "Marketing de proximité",
+    "subtitle": "Votre carte apparaît sur le téléphone de vos clients quand ils passent près de votre boutique.",
+    "status": {
+      "apple": "Apple Wallet",
+      "google": "Google Wallet",
+      "ready": "Actif",
+      "pending": "Identifiants requis",
+      "pendingHint": "Les cartes porteront ces emplacements dès que les intégrations Wallet seront activées."
+    },
+    "tabs": {
+      "zones": "Zones",
+      "campaigns": "Campagnes",
+      "how": "Fonctionnement"
+    },
+    "zone": {
+      "title": "Zone de proximité",
+      "enable": "Notifications de proximité",
+      "search": "Rechercher une adresse…",
+      "searchBtn": "Rechercher",
+      "myPosition": "Ma position",
+      "noResult": "Adresse introuvable.",
+      "dragHint": "Déplacez le repère pour placer précisément l'entrée de votre boutique.",
+      "lat": "Latitude",
+      "lng": "Longitude",
+      "radius": "Rayon",
+      "radiusHint": "Apple Wallet peut utiliser une distance plus courte selon le type de carte.",
+      "message": "Message affiché",
+      "messagePlaceholder": "☕ Votre café offert vous attend juste ici !",
+      "messageHint": "120 caractères max. Affiché sur l'écran verrouillé (Apple) ou dans la carte (Google).",
+      "save": "Enregistrer la zone",
+      "saved": "Zone enregistrée. Les cartes Wallet seront mises à jour.",
+      "error": "Impossible d'enregistrer.",
+      "coordsRequired": "Placez d'abord votre boutique sur la carte.",
+      "noLocations": "Ajoutez d'abord un point de vente.",
+      "preview": "Aperçu sur le téléphone",
+      "now": "maintenant",
+      "nearby": "À proximité",
+      "androidBody": "Votre carte de fidélité est à portée de main.",
+      "androidNote": "Le texte Android est rédigé par Google."
+    },
+    "campaign": {
+      "new": "Nouvelle campagne",
+      "edit": "Modifier la campagne",
+      "empty": "Aucune campagne de proximité. Créez-en une pour une promotion limitée dans le temps.",
+      "name": "Nom",
+      "namePlaceholder": "Happy hour du vendredi",
+      "message": "Message de proximité",
+      "locations": "Boutiques ciblées",
+      "programs": "Cartes concernées",
+      "allPrograms": "Toutes les cartes",
+      "starts": "Début",
+      "ends": "Fin",
+      "coupon": "Coupon associé (facultatif)",
+      "noCoupon": "Aucun",
+      "schedule": "Programmer",
+      "saveDraft": "Brouillon",
+      "pause": "Pause",
+      "resume": "Reprendre",
+      "end": "Terminer",
+      "delete": "Supprimer",
+      "statuses": {
+        "draft": "Brouillon",
+        "scheduled": "Programmée",
+        "active": "En cours",
+        "paused": "En pause",
+        "ended": "Terminée"
+      },
+      "stats": {
+        "visits": "Passages",
+        "before": "Période précédente",
+        "uplift": "Évolution",
+        "customers": "Clients",
+        "coupons": "Coupons utilisés",
+        "passes": "Cartes Wallet ciblées"
+      },
+      "statsNote": "Apple et Google ne communiquent pas le nombre d'affichages. Nous mesurons l'effet réel : les passages en boutique pendant la campagne, comparés à la période précédente de même durée.",
+      "errors": {
+        "generic": "Une erreur est survenue.",
+        "validation": "Vérifiez les champs (dates, message, au moins une boutique)."
+      }
+    },
+    "how": {
+      "title": "Comment ça marche",
+      "items": [
+        {
+          "t": "Aucune localisation collectée",
+          "d": "VAYRO ne connaît jamais la position de vos clients. Les coordonnées de votre boutique sont enregistrées dans leur carte ; c'est le téléphone qui compare, en privé."
+        },
+        {
+          "t": "Apple Wallet",
+          "d": "Jusqu'à 10 emplacements par carte. À proximité, iOS peut afficher la carte et votre message sur l'écran verrouillé. iOS décide du moment ; le client doit autoriser la localisation pour Wallet."
+        },
+        {
+          "t": "Google Wallet",
+          "d": "Jusqu'à 10 emplacements par carte. Google peut envoyer une notification « à proximité » si le client a activé la localisation et les notifications Wallet. Google limite leur fréquence."
+        },
+        {
+          "t": "Mises à jour des cartes",
+          "d": "Quand vous modifiez une zone ou qu'une campagne démarre ou se termine, les cartes déjà installées sont mises à jour automatiquement."
+        },
+        {
+          "t": "Ce n'est pas du spam",
+          "d": "Les plateformes limitent volontairement ces affichages pour protéger les utilisateurs. Un message court, utile et proche de l'entrée donne les meilleurs résultats."
+        }
+      ]
     }
   }
 }

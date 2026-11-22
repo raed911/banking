@@ -938,11 +938,83 @@ export type Database = {
           },
         ]
       }
+      location_campaigns: {
+        Row: {
+          coupon_id: string | null
+          created_at: string
+          created_by: string | null
+          ends_at: string
+          id: string
+          last_published_at: string | null
+          location_ids: string[]
+          merchant_id: string
+          message: string
+          name: string
+          passes_updated: number
+          program_ids: string[] | null
+          starts_at: string
+          status: Database["public"]["Enums"]["location_campaign_status"]
+          updated_at: string
+        }
+        Insert: {
+          coupon_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          ends_at: string
+          id?: string
+          last_published_at?: string | null
+          location_ids: string[]
+          merchant_id: string
+          message: string
+          name: string
+          passes_updated?: number
+          program_ids?: string[] | null
+          starts_at: string
+          status?: Database["public"]["Enums"]["location_campaign_status"]
+          updated_at?: string
+        }
+        Update: {
+          coupon_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          ends_at?: string
+          id?: string
+          last_published_at?: string | null
+          location_ids?: string[]
+          merchant_id?: string
+          message?: string
+          name?: string
+          passes_updated?: number
+          program_ids?: string[] | null
+          starts_at?: string
+          status?: Database["public"]["Enums"]["location_campaign_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "location_campaigns_coupon_id_fkey"
+            columns: ["coupon_id"]
+            isOneToOne: false
+            referencedRelation: "coupons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "location_campaigns_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       locations: {
         Row: {
           address: string | null
           city: string | null
           created_at: string
+          geo_enabled: boolean
+          geo_message: string | null
+          geo_radius_m: number
           id: string
           is_active: boolean
           latitude: number | null
@@ -957,6 +1029,9 @@ export type Database = {
           address?: string | null
           city?: string | null
           created_at?: string
+          geo_enabled?: boolean
+          geo_message?: string | null
+          geo_radius_m?: number
           id?: string
           is_active?: boolean
           latitude?: number | null
@@ -971,6 +1046,9 @@ export type Database = {
           address?: string | null
           city?: string | null
           created_at?: string
+          geo_enabled?: boolean
+          geo_message?: string | null
+          geo_radius_m?: number
           id?: string
           is_active?: boolean
           latitude?: number | null
@@ -2084,6 +2162,18 @@ export type Database = {
         Args: { p_days: number; p_merchant_id: string }
         Returns: undefined
       }
+      admin_location_marketing: {
+        Args: never
+        Returns: {
+          campaigns_active: number
+          campaigns_total: number
+          geo_locations: number
+          last_campaign_at: string
+          merchant: string
+          merchant_id: string
+          wallet_passes: number
+        }[]
+      }
       admin_merchants: {
         Args: {
           p_limit?: number
@@ -2190,6 +2280,10 @@ export type Database = {
       invitation_preview: { Args: { p_token_hash: string }; Returns: Json }
       is_merchant_member: { Args: { mid: string }; Returns: boolean }
       is_platform_admin: { Args: never; Returns: boolean }
+      location_campaign_stats: {
+        Args: { p_campaign_id: string }
+        Returns: Json
+      }
       merchant_analytics: {
         Args: { p_days?: number; p_merchant_id: string }
         Returns: Json
@@ -2263,6 +2357,12 @@ export type Database = {
       invoice_status: "draft" | "open" | "paid" | "void"
       job_status: "pending" | "running" | "done" | "failed"
       ledger_kind: "earn" | "redeem" | "adjust" | "expire" | "reverse"
+      location_campaign_status:
+        | "draft"
+        | "scheduled"
+        | "active"
+        | "paused"
+        | "ended"
       member_status: "active" | "invited" | "disabled"
       merchant_status: "active" | "suspended" | "closed"
       payment_method: "cash" | "bank_transfer" | "card" | "cheque" | "other"
@@ -2420,6 +2520,13 @@ export const Constants = {
       invoice_status: ["draft", "open", "paid", "void"],
       job_status: ["pending", "running", "done", "failed"],
       ledger_kind: ["earn", "redeem", "adjust", "expire", "reverse"],
+      location_campaign_status: [
+        "draft",
+        "scheduled",
+        "active",
+        "paused",
+        "ended",
+      ],
       member_status: ["active", "invited", "disabled"],
       merchant_status: ["active", "suspended", "closed"],
       payment_method: ["cash", "bank_transfer", "card", "cheque", "other"],

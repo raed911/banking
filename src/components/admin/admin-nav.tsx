@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { ArrowLeft, Building2, CreditCard, Inbox, LayoutGrid, ScrollText, Tags } from "lucide-react";
+import { ArrowLeft, Building2, CreditCard, Inbox, LayoutGrid, Radar, ScrollText, Tags } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +11,7 @@ const ITEMS = [
   { key: "merchants", href: "/admin/merchants", icon: Building2 },
   { key: "payments", href: "/admin/payments", icon: CreditCard },
   { key: "plans", href: "/admin/plans", icon: Tags },
+  { key: "geo", href: "/admin/location-marketing", icon: Radar },
   { key: "messages", href: "/admin/messages", icon: Inbox },
   { key: "logs", href: "/admin/logs", icon: ScrollText },
 ] as const;
