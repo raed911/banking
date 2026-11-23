@@ -2,9 +2,9 @@
 import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { Ban, Copy, ExternalLink, MoreHorizontal, Pencil, Plus, SlidersHorizontal, Trash2, Undo2 } from "lucide-react";
+import { Ban, Copy, ExternalLink, MoreHorizontal, Pencil, Plus, SlidersHorizontal, Ticket, Trash2, Undo2 } from "lucide-react";
 import { toast } from "sonner";
-import { adjust, earn, reverseTransaction } from "@/features/loyalty/actions";
+import { adjust, applyCoupon, earn, reverseTransaction } from "@/features/loyalty/actions";
 import { deleteCustomer, issueCard, setCardStatus, updateCustomer } from "@/features/customers/actions";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -24,16 +24,21 @@ function useOpError() {
   };
 }
 
-export function CardActions({ customerId, card, cardUrl, canEarn, canAdjust }: { customerId: string; card: { id: string; status: string; type: string; pointsPerUnit: number | null }; cardUrl: string; canEarn: boolean; canAdjust: boolean }) {
+export function CardActions({ customerId, card, cardUrl, canEarn, canAdjust, canCoupon }: { customerId: string; card: { id: string; status: string; type: string; pointsPerUnit: number | null }; cardUrl: string; canEarn: boolean; canAdjust: boolean; canCoupon: boolean }) {
   const t = useTranslations("customers.profile");
   const ts = useTranslations("scan");
   const [pending, start] = useTransition();
   const [adjustOpen, setAdjustOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [reason, setReason] = useState("");
+  const [couponOpen, setCouponOpen] = useState(false);
+  const [code, setCode] = useState("");
   const fail = useOpError();
   return (
     <div className="flex items-center gap-2">
+      {canCoupon && card.status === "active" && (
+        <Button size="sm" variant="secondary" onClick={() => setCouponOpen(true)}><Ticket />{t("applyCoupon")}</Button>
+      )}
       {canEarn && card.status === "active" && card.type !== "points" && (
         <Button size="sm" variant="accent" loading={pending} onClick={() => start(async () => { const r = await earn(card.id, crypto.randomUUID(), { amount: 1 }); if (!fail(r)) toast.success(ts("success.earn", { amount: 1 })); })}><Plus />{t("earn")}</Button>
       )}
@@ -46,6 +51,14 @@ export function CardActions({ customerId, card, cardUrl, canEarn, canAdjust }: {
           {canAdjust && <DropdownMenuItem danger={card.status === "active"} onSelect={() => start(() => setCardStatus(customerId, card.id, card.status === "active" ? "blocked" : "active"))}><Ban />{card.status === "active" ? t("block") : t("unblock")}</DropdownMenuItem>}
         </DropdownMenuContent>
       </DropdownMenu>
+      <Dialog open={couponOpen} onOpenChange={setCouponOpen}>
+        <DialogContent title={t("applyCoupon")}>
+          <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); start(async () => { const r = await applyCoupon(card.id, code, crypto.randomUUID()); if (!fail(r)) { toast.success(t("couponApplied", { name: String(r.ok ? r.data.coupon : "") })); setCouponOpen(false); setCode(""); } }); }}>
+            <Field label={t("couponCode")} htmlFor="cp-code"><Input id="cp-code" required minLength={3} maxLength={24} value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} className="h-12 font-mono text-lg uppercase tracking-wider" dir="ltr" autoFocus /></Field>
+            <div className="flex justify-end"><Button type="submit" loading={pending} disabled={code.trim().length < 3}>{t("apply")}</Button></div>
+          </form>
+        </DialogContent>
+      </Dialog>
       <Dialog open={adjustOpen} onOpenChange={setAdjustOpen}>
         <DialogContent title={t("adjustTitle")}>
           <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); start(async () => { const r = await adjust(card.id, crypto.randomUUID(), Number(amount), reason); if (!fail(r)) { setAdjustOpen(false); setAmount(""); setReason(""); } }); }}>

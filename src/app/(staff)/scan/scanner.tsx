@@ -19,7 +19,7 @@ export function Scanner({ merchantName, locations, permissions }: { merchantName
   const videoRef = useRef<HTMLVideoElement>(null);
   const scannerRef = useRef<QrScannerType | null>(null);
   const busy = useRef(false);
-  const [mode, setMode] = useState<"camera" | "manual">("camera");
+  const [mode, setMode] = useState<"camera" | "manual" | "coupon">("camera");
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [torch, setTorch] = useState<{ available: boolean; on: boolean }>({ available: false, on: false });
   const [cards, setCards] = useState<ScannedCard[] | null>(null);
@@ -125,6 +125,13 @@ export function Scanner({ merchantName, locations, permissions }: { merchantName
               <button onClick={async () => { await scannerRef.current?.toggleFlash(); setTorch((s) => ({ ...s, on: !s.on })); }} className={cn("absolute end-4 top-4 grid size-11 place-items-center rounded-full backdrop-blur", torch.on ? "bg-lime-300 text-ink-900" : "bg-white/10")} aria-label={t("torch")}><Flashlight className="size-5" /></button>
             )}
           </>
+        ) : mode === "coupon" ? (
+          <form onSubmit={(e) => { e.preventDefault(); if (coupon.trim().length >= 3) run(() => applyCoupon(null, coupon, crypto.randomUUID(), locationId), (d) => { setCoupon(""); return { tone: "success", text: t("success.coupon", { coupon: String(d.coupon) }) }; }); }} className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 px-6">
+            <div className="mx-auto grid size-16 place-items-center rounded-2xl bg-white/5 text-lime-300"><Ticket className="size-7" /></div>
+            <p className="text-center text-sm text-ink-300">{t("couponNoCardHint")}</p>
+            <Input value={coupon} onChange={(e) => setCoupon(e.target.value.toUpperCase())} autoFocus dir="ltr" aria-label={t("coupon")} className="h-14 border-white/10 bg-white/5 text-center font-mono text-lg uppercase tracking-widest text-white placeholder:text-ink-500" placeholder="CAFE20" />
+            <Button type="submit" variant="accent" size="lg" loading={pending} disabled={coupon.trim().length < 3}>{t("applyCoupon")}</Button>
+          </form>
         ) : (
           <form onSubmit={(e) => { e.preventDefault(); if (manual.trim()) lookup(manual); }} className="mx-auto flex h-full max-w-md flex-col justify-center gap-4 px-6">
             <div className="mx-auto grid size-16 place-items-center rounded-2xl bg-white/5 text-lime-300"><Keyboard className="size-7" /></div>
@@ -133,16 +140,16 @@ export function Scanner({ merchantName, locations, permissions }: { merchantName
             <Button type="submit" variant="accent" size="lg" loading={pending}>{t("search")}</Button>
           </form>
         )}
-        {feedback && !card && <div className="absolute inset-x-4 top-4 animate-fade-up rounded-2xl bg-danger-500 px-4 py-3 text-sm font-medium shadow-lg">{feedback.text}</div>}
+        {feedback && !card && <div role="status" className={cn("absolute inset-x-4 top-4 animate-fade-up rounded-2xl px-4 py-3 text-sm font-medium shadow-lg", feedback.tone === "success" ? "bg-lime-300 text-ink-900" : "bg-danger-500")}>{feedback.text}</div>}
         {pending && !card && <div className="absolute inset-0 grid place-items-center bg-ink-950/40"><Loader2 className="size-8 animate-spin text-lime-300" /></div>}
       </div>
 
       {/* mode switch */}
       {!card && (
-        <div className="relative z-10 flex justify-center gap-2 px-4 pb-[max(env(safe-area-inset-bottom),1.25rem)] pt-4">
-          {(["camera", "manual"] as const).map((m) => (
-            <button key={m} onClick={() => { setMode(m); setFeedback(null); }} className={cn("flex h-11 items-center gap-2 rounded-full px-5 text-sm font-medium transition", mode === m ? "bg-white text-ink-900" : "bg-white/10 text-white")}>
-              {m === "camera" ? <Camera className="size-4" /> : <Keyboard className="size-4" />}{t(m)}
+        <div className="relative z-10 flex flex-wrap justify-center gap-2 px-4 pb-[max(env(safe-area-inset-bottom),1.25rem)] pt-4">
+          {(can(permissions, "coupons.redeem") ? (["camera", "manual", "coupon"] as const) : (["camera", "manual"] as const)).map((m) => (
+            <button key={m} onClick={() => { setMode(m); setFeedback(null); setCoupon(""); }} className={cn("flex h-11 items-center gap-2 rounded-full px-4 text-sm font-medium transition", mode === m ? "bg-white text-ink-900" : "bg-white/10 text-white")}>
+              {m === "camera" ? <Camera className="size-4" /> : m === "manual" ? <Keyboard className="size-4" /> : <Ticket className="size-4" />}{m === "coupon" ? t("couponNoCard") : t(m)}
             </button>
           ))}
         </div>

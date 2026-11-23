@@ -414,7 +414,9 @@
       "coupon_already_used": "This customer already used this coupon.",
       "invalid_amount": "Invalid amount.",
       "generic": "Something went wrong. Please try again."
-    }
+    },
+    "couponNoCard": "Coupon without card",
+    "couponNoCardHint": "For a customer without a loyalty card. The per-customer limit can't be checked without a card."
   },
   "customers": {
     "title": "Customers",
@@ -479,7 +481,12 @@
       "since": "Customer since",
       "consentYes": "Accepts offers",
       "consentNo": "Doesn't accept offers",
-      "edit": "Edit"
+      "edit": "Edit",
+      "applyCoupon": "Apply a coupon",
+      "couponCode": "Coupon code",
+      "apply": "Apply",
+      "couponsUsed": "Coupons used",
+      "couponApplied": "Coupon applied: {name}"
     },
     "errors": {
       "duplicate": "A customer already exists with this phone or email.",

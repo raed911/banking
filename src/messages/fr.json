@@ -414,7 +414,9 @@
       "coupon_already_used": "Ce client a déjà utilisé ce coupon.",
       "invalid_amount": "Montant invalide.",
       "generic": "Une erreur est survenue. Réessayez."
-    }
+    },
+    "couponNoCard": "Coupon sans carte",
+    "couponNoCardHint": "Pour un client sans carte de fidélité. La limite « par client » ne peut pas être vérifiée sans carte."
   },
   "customers": {
     "title": "Clients",
@@ -479,7 +481,12 @@
       "since": "Client depuis",
       "consentYes": "Accepte les offres",
       "consentNo": "N'accepte pas les offres",
-      "edit": "Modifier"
+      "edit": "Modifier",
+      "applyCoupon": "Appliquer un coupon",
+      "couponCode": "Code du coupon",
+      "apply": "Appliquer",
+      "couponsUsed": "Coupons utilisés",
+      "couponApplied": "Coupon appliqué : {name}"
     },
     "errors": {
       "duplicate": "Un client existe déjà avec ce téléphone ou cet email.",

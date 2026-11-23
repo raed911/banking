@@ -21,10 +21,11 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
   const supabase = await createClient();
   const { data: c } = await supabase.from("customers").select("*").eq("id", id).eq("merchant_id", merchantId).is("deleted_at", null).maybeSingle();
   if (!c) notFound();
-  const [{ data: cards }, { data: tx }, { data: programs }] = await Promise.all([
+  const [{ data: cards }, { data: tx }, { data: programs }, { data: couponsUsed }] = await Promise.all([
     supabase.from("loyalty_cards").select("id, serial, public_token, balance, lifetime_earned, status, program:loyalty_programs(id, name, type, stamps_required, points_per_unit)").eq("customer_id", id).neq("status", "archived").order("created_at"),
     supabase.from("loyalty_transactions").select("id, kind, amount, balance_after, created_at, note, source, reversed_transaction_id, program:loyalty_programs(name)").eq("customer_id", id).order("created_at", { ascending: false }).limit(50),
     supabase.from("loyalty_programs").select("id, name").eq("merchant_id", merchantId).eq("status", "active"),
+    supabase.from("coupon_redemptions").select("id, created_at, coupon:coupons(name, code)").eq("customer_id", id).order("created_at", { ascending: false }).limit(20),
   ]);
   const reversed = new Set((tx ?? []).map((x) => x.reversed_transaction_id).filter(Boolean));
   const name = `${c.first_name} ${c.last_name ?? ""}`.trim();
@@ -62,7 +63,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
                     </div>
                   </div>
                   <CardActions customerId={c.id} card={{ id: k.id, status: k.status, type: k.program?.type ?? "stamps", pointsPerUnit: k.program?.points_per_unit ?? null }}
-                    cardUrl={`${publicEnv.NEXT_PUBLIC_APP_URL}/c/${k.public_token}`} canEarn={can(permissions, "cards.earn")} canAdjust={adjustPerm} />
+                    cardUrl={`${publicEnv.NEXT_PUBLIC_APP_URL}/c/${k.public_token}`} canEarn={can(permissions, "cards.earn")} canAdjust={adjustPerm} canCoupon={can(permissions, "coupons.redeem")} />
                 </div>
               ))}
             </CardContent>
@@ -98,6 +99,12 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
               {c.tags.map((tag) => <Badge key={tag} tone="lime">{tag}</Badge>)}
             </div>
             {c.notes && <p className="mt-4 whitespace-pre-wrap rounded-xl bg-surface-muted p-3 text-sm text-fg-muted">{c.notes}</p>}
+            {!!couponsUsed?.length && (
+              <div className="mt-5">
+                <div className="mb-2 text-xs font-medium uppercase tracking-[0.12em] text-fg-subtle">{t("profile.couponsUsed")}</div>
+                <ul className="space-y-1.5">{couponsUsed.map((r) => <li key={r.id} className="flex items-center justify-between gap-2 rounded-lg bg-surface-muted px-3 py-2 text-sm"><span className="font-mono text-xs font-semibold" dir="ltr">{r.coupon?.code}</span><span className="text-xs text-fg-muted">{format.dateTime(new Date(r.created_at), { dateStyle: "medium" })}</span></li>)}</ul>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

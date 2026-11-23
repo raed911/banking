@@ -62,6 +62,28 @@ test("full loop: program → customer sign-up → scan → stamps → reward", a
     await page.goto("/dashboard/customers");
     await page.locator("main").getByText("Sami").click();
     await expect(page.getByText(/Carte test/).first()).toBeVisible();
+    const profileUrl = page.url();
+
+    // coupon: create it, apply it from the customer profile, then once without a card in the scanner
+    await page.goto("/dashboard/coupons");
+    await page.getByRole("button", { name: /nouveau coupon|new coupon/i }).click();
+    await page.locator("#c-name").fill("Boissons -20%");
+    await page.locator("#c-code").fill("CAFE20");
+    await page.locator("#c-value").fill("20");
+    await page.locator("[role=dialog] button[type=submit]").click();
+    await expect(page.getByText("CAFE20")).toBeVisible();
+    await page.goto(profileUrl);
+    await page.getByRole("button", { name: /appliquer un coupon|apply a coupon/i }).click();
+    await page.locator("#cp-code").fill("cafe20");
+    await page.locator("[role=dialog] button[type=submit]").click();
+    await expect(page.getByText(/coupon appliqué|coupon applied/i)).toBeVisible();
+    await page.reload();
+    await expect(page.getByText(/coupons utilisés|coupons used/i)).toBeVisible();
+    await page.goto("/scan");
+    await page.getByRole("button", { name: /coupon sans carte|coupon without card/i }).click();
+    await page.locator("input[placeholder='CAFE20']").fill("CAFE20");
+    await page.getByRole("button", { name: /appliquer|apply/i }).last().click();
+    await expect(page.getByRole("status").filter({ hasText: /CAFE20|Boissons/ })).toBeVisible();
     await customerCtx.close();
   } finally {
     await deleteUserAndMerchants(owner.id);
