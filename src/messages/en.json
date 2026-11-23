@@ -1432,11 +1432,21 @@
       "passType": "Pass Type Identifier",
       "passTypeHint": "E.g. pass.app.vayro.loyalty",
       "cert": "Certificate",
-      "certHint": ".p12 file (recommended) or .pem certificate.",
+      "certHint": "The .cer file downloaded from Apple (or a .p12).",
       "key": "Private Key",
-      "keyHint": "Only if the certificate is a .pem.",
+      "keyHint": "Only if you didn't use step 1 and the certificate is a .pem.",
       "password": "Certificate password",
-      "file": "Choose a file"
+      "file": "Choose a file",
+      "step1": "Generate the certificate request",
+      "step1Hint": "VAYRO creates the private key (kept encrypted on our servers) and a file to send to Apple. No Mac needed.",
+      "csrButton": "Download the file for Apple",
+      "csrDone": "File downloaded: VAYRO.certSigningRequest",
+      "step2": "Create the Pass Type ID and certificate at Apple",
+      "step2Hint": "Identifiers → + → Pass Type IDs (e.g. pass.app.vayro.loyalty). Then Certificates → + → Pass Type ID Certificate → pick this Pass Type ID → upload the file from step 1 → download the certificate (.cer).",
+      "step3": "Import the certificate below",
+      "step3Hint": "Team ID and Pass Type ID fill in automatically. Save, then click “Test connection”.",
+      "advanced": "Advanced: .p12 or .pem certificate",
+      "passwordHint": "Only for a protected .p12 file."
     },
     "secretSaved": "Saved {hint}",
     "keepSecret": "Leave empty to keep the current value.",
@@ -1463,7 +1473,9 @@
       "not_a_pass_type_certificate": "This isn't a Pass Type ID certificate.",
       "pass_type_id_mismatch": "Pass Type Identifier doesn't match the certificate.",
       "team_id_mismatch": "Team ID doesn't match the certificate.",
-      "not_configured": "Save the credentials first."
+      "not_configured": "Save the credentials first.",
+      "wwdr_unavailable": "Couldn't download Apple's intermediate certificate (WWDR). Try again.",
+      "signature_failed": "The test signature failed with this certificate."
     }
   },
   "auto": {

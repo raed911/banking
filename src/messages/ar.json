@@ -1432,11 +1432,21 @@
       "passType": "Pass Type Identifier",
       "passTypeHint": "مثال pass.app.vayro.loyalty",
       "cert": "الشهادة",
-      "certHint": "ملف ‎.p12 (موصى به) أو شهادة ‎.pem.",
+      "certHint": "ملف ‎.cer‎ الذي نزّلته من Apple (أو ‎.p12‎).",
       "key": "Private Key",
-      "keyHint": "فقط إذا كانت الشهادة بصيغة ‎.pem.",
+      "keyHint": "فقط إذا لم تستخدم الخطوة 1 وكانت الشهادة بصيغة ‎.pem‎.",
       "password": "كلمة مرور الشهادة",
-      "file": "اختر ملفًا"
+      "file": "اختر ملفًا",
+      "step1": "إنشاء طلب الشهادة",
+      "step1Hint": "تنشئ VAYRO المفتاح الخاص (يُحفظ مشفّرًا على خوادمنا) وملفًا لإرساله إلى Apple. لا حاجة لجهاز Mac.",
+      "csrButton": "تنزيل الملف لـ Apple",
+      "csrDone": "تم تنزيل الملف: VAYRO.certSigningRequest",
+      "step2": "إنشاء Pass Type ID والشهادة لدى Apple",
+      "step2Hint": "Identifiers ← + ← Pass Type IDs (مثال pass.app.vayro.loyalty). ثم Certificates ← + ← Pass Type ID Certificate ← اختر هذا المعرّف ← ارفع ملف الخطوة 1 ← نزّل الشهادة (.cer).",
+      "step3": "استيراد الشهادة أدناه",
+      "step3Hint": "يُملأ Team ID وPass Type ID تلقائيًا. احفظ ثم اضغط «اختبار الاتصال».",
+      "advanced": "متقدم: شهادة .p12 أو .pem",
+      "passwordHint": "فقط لملف .p12 محمي."
     },
     "secretSaved": "محفوظ {hint}",
     "keepSecret": "اتركه فارغًا للإبقاء على القيمة الحالية.",
@@ -1463,7 +1473,9 @@
       "not_a_pass_type_certificate": "هذه ليست شهادة Pass Type ID.",
       "pass_type_id_mismatch": "Pass Type Identifier لا يطابق الشهادة.",
       "team_id_mismatch": "Team ID لا يطابق الشهادة.",
-      "not_configured": "احفظ البيانات أولًا."
+      "not_configured": "احفظ البيانات أولًا.",
+      "wwdr_unavailable": "تعذّر تنزيل شهادة Apple الوسيطة (WWDR). حاول مجددًا.",
+      "signature_failed": "فشل توقيع الاختبار بهذه الشهادة."
     }
   },
   "auto": {

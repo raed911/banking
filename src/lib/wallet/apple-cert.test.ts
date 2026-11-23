@@ -32,3 +32,27 @@ describe("apple certificate inspection", () => {
     expect(inspectAppleCertificate({ certificate: c.certPem, privateKey: makeCert("pass.x", "Y").keyPem, passTypeIdentifier: "pass.app.vayro.loyalty", teamId: "ABCDE12345" })).toEqual({ ok: false, error: "key_does_not_match_certificate" });
   });
 });
+
+describe("apple certificate from a VAYRO-generated CSR", () => {
+  it("accepts the DER .cer Apple returns, with the key generated for the CSR", async () => {
+    const { createCsr, certificateIdentity, signingMaterial } = await import("./apple-cert");
+    const { csrPem, keyPem } = createCsr("VAYRO Pass Type ID");
+    const csr = forge.pki.certificationRequestFromPem(csrPem);
+    expect(csr.verify()).toBe(true);
+    // Simulate Apple issuing the certificate for this CSR.
+    const ca = forge.pki.rsa.generateKeyPair(1024);
+    const cert = forge.pki.createCertificate();
+    cert.publicKey = csr.publicKey!;
+    cert.serialNumber = "0a";
+    cert.validity.notBefore = new Date(Date.now() - 1000);
+    cert.validity.notAfter = new Date(Date.now() + 365 * 86400000);
+    cert.setSubject([{ type: "0.9.2342.19200300.100.1.1", value: "pass.app.vayro.loyalty" }, { name: "commonName", value: "Pass Type ID: pass.app.vayro.loyalty" }, { shortName: "OU", value: "ABCDE12345" }]);
+    cert.setIssuer([{ name: "commonName", value: "Apple Worldwide Developer Relations Certification Authority" }]);
+    cert.sign(ca.privateKey, forge.md.sha256.create());
+    const derB64 = forge.util.encode64(forge.asn1.toDer(forge.pki.certificateToAsn1(cert)).getBytes());
+    expect(certificateIdentity(derB64)).toEqual({ passTypeIdentifier: "pass.app.vayro.loyalty", teamId: "ABCDE12345" });
+    expect(inspectAppleCertificate({ certificate: derB64, passTypeIdentifier: "pass.app.vayro.loyalty", teamId: "ABCDE12345" })).toEqual({ ok: false, error: "private_key_missing" });
+    expect(inspectAppleCertificate({ certificate: derB64, privateKey: keyPem, passTypeIdentifier: "pass.app.vayro.loyalty", teamId: "ABCDE12345" })).toMatchObject({ ok: true });
+    expect(signingMaterial({ certificate: derB64, privateKey: keyPem }).certPem).toContain("BEGIN CERTIFICATE");
+  });
+});

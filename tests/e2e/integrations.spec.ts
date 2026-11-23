@@ -33,6 +33,7 @@ test("merchant saves Wallet credentials: validated, encrypted at rest, never sho
     await page.locator("#a-team").fill("ABCDE12345");
     await page.locator("#a-pass").fill("pass.app.vayro.test");
     await page.locator("#a-cert").setInputFiles({ name: "pass.p12", mimeType: "application/x-pkcs12", buffer: p12 });
+    await page.getByText(/avancé|advanced/i).click();
     await page.locator("#a-pass-word").fill("pw123");
     await page.locator("form").nth(1).locator("button[type=submit]").click();
     await expect(page.getByText(/valide jusqu|valid until/i)).toBeVisible();

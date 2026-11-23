@@ -2,9 +2,9 @@
 import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useRef, useState, useTransition } from "react";
 import { useFormatter, useTranslations } from "next-intl";
-import { Apple, CheckCircle2, CircleAlert, CircleDashed, FileUp, PlugZap, Smartphone, Trash2 } from "lucide-react";
+import { Apple, CheckCircle2, CircleAlert, CircleDashed, Download, ExternalLink, FileUp, PlugZap, Smartphone, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { removeIntegration, saveIntegration, testIntegration } from "@/features/integrations/actions";
+import { generateAppleCsr, readAppleCertificate, removeIntegration, saveIntegration, testIntegration } from "@/features/integrations/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -86,33 +86,68 @@ export function AppleWalletForm({ state, scope }: { state: IntegrationState; sco
   const [res, action] = useActionState(saveIntegration.bind(null, scope, "apple_wallet"), null);
   const [cert, setCert] = useState("");
   const [certName, setCertName] = useState("");
+  const [teamId, setTeamId] = useState(state?.config.teamId ?? "");
+  const [passType, setPassType] = useState(state?.config.passTypeIdentifier ?? "");
+  const [csrPending, startCsr] = useTransition();
   const fileRef = useRef<HTMLInputElement>(null);
   async function readCert(file?: File) {
     if (!file) return;
     const buf = new Uint8Array(await file.arrayBuffer());
     const text = new TextDecoder().decode(buf);
-    setCert(text.includes("-----BEGIN") ? text : btoa(String.fromCharCode(...buf)));
+    let bin = "";
+    for (let i = 0; i < buf.length; i++) bin += String.fromCharCode(buf[i]!);
+    const value = text.includes("-----BEGIN") ? text : btoa(bin);
+    setCert(value);
     setCertName(file.name);
+    const id = await readAppleCertificate(scope, value);
+    if (id.passTypeIdentifier) setPassType(id.passTypeIdentifier);
+    if (id.teamId) setTeamId(id.teamId);
+  }
+  function downloadCsr() {
+    startCsr(async () => {
+      const r = await generateAppleCsr(scope);
+      if (!r.ok) { toast.error(t("errors.generic")); return; }
+      const url = URL.createObjectURL(new Blob([r.csr], { type: "application/pkcs10" }));
+      const a = document.createElement("a");
+      a.href = url; a.download = "VAYRO.certSigningRequest"; a.click();
+      URL.revokeObjectURL(url);
+      toast.success(t("apple.csrDone"));
+    });
   }
   return (
     <Shell icon={<Apple className="size-6" />} title={t("apple.title")} desc={t("apple.desc")} state={state} scope={scope} provider="apple_wallet">
+      <ol className="mb-6 space-y-3 rounded-2xl bg-surface-muted p-4 text-sm">
+        <li className="flex gap-3"><span className="grid size-6 shrink-0 place-items-center rounded-full bg-ink-900 text-xs font-bold text-lime-300">1</span>
+          <div className="flex-1"><p className="font-medium">{t("apple.step1")}</p><p className="mt-0.5 text-fg-muted">{t("apple.step1Hint")}</p>
+            <Button type="button" size="sm" variant="secondary" className="mt-2" loading={csrPending} onClick={downloadCsr}><Download />{t("apple.csrButton")}</Button></div></li>
+        <li className="flex gap-3"><span className="grid size-6 shrink-0 place-items-center rounded-full bg-ink-900 text-xs font-bold text-lime-300">2</span>
+          <div className="flex-1"><p className="font-medium">{t("apple.step2")}</p><p className="mt-0.5 text-fg-muted">{t("apple.step2Hint")}</p>
+            <a href="https://developer.apple.com/account/resources/identifiers/list/passTypeId" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-fg underline underline-offset-4">developer.apple.com<ExternalLink className="size-3.5" /></a></div></li>
+        <li className="flex gap-3"><span className="grid size-6 shrink-0 place-items-center rounded-full bg-ink-900 text-xs font-bold text-lime-300">3</span>
+          <div className="flex-1"><p className="font-medium">{t("apple.step3")}</p><p className="mt-0.5 text-fg-muted">{t("apple.step3Hint")}</p></div></li>
+      </ol>
       <ActionForm action={action} className="space-y-4" autoComplete="off">
         <FormAlert>{res?.error ? t(`errors.${res.error}` as "errors.generic") : null}</FormAlert>
         <FormAlert tone="success">{res?.ok ? t("saved") : null}</FormAlert>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label={t("apple.teamId")} htmlFor="a-team" hint={t("apple.teamHint")}><Input id="a-team" name="teamId" required maxLength={10} defaultValue={state?.config.teamId} className="font-mono uppercase" dir="ltr" /></Field>
-          <Field label={t("apple.passType")} htmlFor="a-pass" hint={t("apple.passTypeHint")}><Input id="a-pass" name="passTypeIdentifier" required defaultValue={state?.config.passTypeIdentifier} className="font-mono" dir="ltr" /></Field>
-        </div>
         <input type="hidden" name="certificate" value={cert} />
         <Field label={t("apple.cert")} htmlFor="a-cert" hint={state?.hints.certificate && !cert ? `${t("secretSaved", { hint: state.hints.certificate })} · ${t("keepSecret")}` : t("apple.certHint")}>
           <div className="flex items-center gap-3 rounded-xl border border-dashed border-border-strong p-3">
             <FileUp className="size-5 text-fg-subtle" /><span className="flex-1 truncate text-sm">{certName || "—"}</span>
-            <input id="a-cert" ref={fileRef} type="file" accept=".p12,.pfx,.pem,.cer,.crt" className="hidden" onChange={(e) => readCert(e.target.files?.[0])} />
+            <input id="a-cert" ref={fileRef} type="file" accept=".cer,.p12,.pfx,.pem,.crt" className="hidden" onChange={(e) => readCert(e.target.files?.[0])} />
             <Button type="button" size="sm" variant="secondary" onClick={() => fileRef.current?.click()}>{t("apple.file")}</Button>
           </div>
         </Field>
-        <Field label={t("apple.key")} htmlFor="a-key" hint={t("apple.keyHint")}><Textarea id="a-key" name="privateKey" placeholder="-----BEGIN PRIVATE KEY-----" className="min-h-20 font-mono text-xs [-webkit-text-security:disc]" dir="ltr" spellCheck={false} autoComplete="off" /></Field>
-        <Field label={t("apple.password")} htmlFor="a-pass-word" hint={state ? t("keepSecret") : undefined}><PasswordInput id="a-pass-word" name="password" autoComplete="new-password" /></Field>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label={t("apple.teamId")} htmlFor="a-team" hint={t("apple.teamHint")}><Input id="a-team" name="teamId" required maxLength={10} value={teamId} onChange={(e) => setTeamId(e.target.value.toUpperCase())} className="font-mono uppercase" dir="ltr" /></Field>
+          <Field label={t("apple.passType")} htmlFor="a-pass" hint={t("apple.passTypeHint")}><Input id="a-pass" name="passTypeIdentifier" required value={passType} onChange={(e) => setPassType(e.target.value.trim())} className="font-mono" dir="ltr" /></Field>
+        </div>
+        <details className="rounded-xl border border-border p-3 text-sm">
+          <summary className="cursor-pointer font-medium text-fg-muted">{t("apple.advanced")}</summary>
+          <div className="mt-3 space-y-4">
+            <Field label={t("apple.key")} htmlFor="a-key" hint={t("apple.keyHint")}><Textarea id="a-key" name="privateKey" placeholder="-----BEGIN PRIVATE KEY-----" className="min-h-20 font-mono text-xs [-webkit-text-security:disc]" dir="ltr" spellCheck={false} autoComplete="off" /></Field>
+            <Field label={t("apple.password")} htmlFor="a-pass-word" hint={state ? t("keepSecret") : t("apple.passwordHint")}><PasswordInput id="a-pass-word" name="password" autoComplete="new-password" /></Field>
+          </div>
+        </details>
         <div className="flex justify-end"><SubmitButton>{t("save")}</SubmitButton></div>
       </ActionForm>
     </Shell>

@@ -1,6 +1,6 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { refreshGoogleCardIfIssued, refreshGoogleMerchant } from "@/lib/wallet/google-sync";
+import { refreshWalletCard, refreshWalletMerchant } from "@/lib/wallet/sync";
 import { integrationRow } from "@/lib/integrations";
 import { sendWalletCampaignBatch } from "@/lib/campaign-sender";
 
@@ -37,10 +37,10 @@ export async function processCampaign(campaignId: string): Promise<Outcome> {
 async function handle(job: Job): Promise<Outcome> {
   switch (job.kind) {
     case "wallet.update":
-      await refreshGoogleCardIfIssued(job.payload.card_id!);
+      await refreshWalletCard(job.payload.card_id!);
       return { ok: true };
     case "wallet.refresh_merchant":
-      await refreshGoogleMerchant(job.payload.merchant_id!);
+      await refreshWalletMerchant(job.payload.merchant_id!);
       return { ok: true };
     case "campaign.send":
       return processCampaign(job.payload.campaign_id!);

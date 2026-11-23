@@ -33,9 +33,12 @@ export default async function CardPage({ params, searchParams }: { params: Promi
   const bg = design?.background_color ?? "#101828";
   const [wallets, { data: announcement }] = await Promise.all([walletAvailability(card.merchant_id), createAdminClient().rpc("card_announcement", { p_card_id: card.id })]);
   const ann = announcement as { body: string; coupon: string | null; coupon_name: string | null } | null;
-  // Google Wallet isn't available on iOS: don't offer a button that can't work there.
-  const isIos = /iPhone|iPad|iPod/i.test((await headers()).get("user-agent") ?? "");
+  // Google Wallet isn't available on iOS; Apple Wallet only opens on iPhone/iPad (and Safari on Mac).
+  const ua = (await headers()).get("user-agent") ?? "";
+  const isIos = /iPhone|iPad|iPod/i.test(ua);
+  const isMacSafari = /Macintosh/i.test(ua) && /Safari/i.test(ua) && !/Chrome|Chromium|Edg|Firefox/i.test(ua);
   const showGoogle = wallets.google && !isIos;
+  const showApple = wallets.apple && (isIos || isMacSafari);
 
   return (
     <main className="relative mx-auto max-w-md px-4 pb-12">
@@ -87,14 +90,21 @@ export default async function CardPage({ params, searchParams }: { params: Promi
       )}
 
       {walletError && <p className="mt-4 rounded-2xl bg-danger-50 p-4 text-sm text-danger-700">{t("walletError")}</p>}
-      {active && showGoogle ? (
+      {active && (showGoogle || showApple) ? (
         <section className="mt-4 space-y-3">
-          {/* Route handler redirect (not a page) — plain anchor on purpose */}
-          <a href={`/api/wallet/google/${token}`} className="flex h-14 items-center justify-center gap-3 rounded-2xl bg-black text-[15px] font-medium text-white shadow-lg transition active:scale-[0.98]" rel="nofollow">
-            <svg viewBox="0 0 24 24" className="size-6" aria-hidden><rect x="2" y="5" width="20" height="14" rx="3" fill="#4285F4" /><rect x="2" y="5" width="20" height="5" rx="2.5" fill="#EA4335" /><rect x="2" y="8" width="20" height="4" fill="#FBBC04" /><rect x="2" y="10.5" width="20" height="3" fill="#34A853" /></svg>
-            {t("addGoogle")}
-          </a>
-          {!wallets.apple && <p className="text-center text-xs text-fg-muted">{t("appleSoon")}</p>}
+          {/* Route handlers (file download / redirect), not pages — plain anchors on purpose */}
+          {showApple && (
+            <a href={`/api/wallet/apple/${token}`} className="flex h-14 items-center justify-center gap-3 rounded-2xl bg-black text-[15px] font-medium text-white shadow-lg transition active:scale-[0.98]" rel="nofollow">
+              <svg viewBox="0 0 24 24" className="size-6" aria-hidden><rect x="2" y="4" width="20" height="16" rx="3.5" fill="#fff" /><rect x="2" y="7" width="20" height="3" fill="#3BAFDA" /><rect x="2" y="10" width="20" height="3" fill="#F6BB42" /><rect x="2" y="13" width="20" height="3" fill="#E9573F" /><path d="M2 14.5h7.2a2.8 2.8 0 0 0 5.6 0H22V17a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3z" fill="#D9D9D9" /></svg>
+              {t("addApple")}
+            </a>
+          )}
+          {showGoogle && (
+            <a href={`/api/wallet/google/${token}`} className="flex h-14 items-center justify-center gap-3 rounded-2xl bg-black text-[15px] font-medium text-white shadow-lg transition active:scale-[0.98]" rel="nofollow">
+              <svg viewBox="0 0 24 24" className="size-6" aria-hidden><rect x="2" y="5" width="20" height="14" rx="3" fill="#4285F4" /><rect x="2" y="5" width="20" height="5" rx="2.5" fill="#EA4335" /><rect x="2" y="8" width="20" height="4" fill="#FBBC04" /><rect x="2" y="10.5" width="20" height="3" fill="#34A853" /></svg>
+              {t("addGoogle")}
+            </a>
+          )}
         </section>
       ) : (
         <section className="mt-4 rounded-3xl border border-border bg-surface p-5 text-sm text-fg-muted">{wallets.google && isIos ? t("appleSoon") : t("walletSoon")}</section>

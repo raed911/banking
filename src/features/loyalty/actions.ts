@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { after } from "next/server";
-import { refreshGoogleCardIfIssued } from "@/lib/wallet/google-sync";
+import { refreshWalletCard } from "@/lib/wallet/sync";
 import { z } from "zod";
 import { requireMerchant } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
@@ -62,7 +62,7 @@ function done(r: unknown, cardId?: string): OpResult {
   if (!res?.ok) return { ok: false, error: res?.error ?? "generic", meta: res };
   revalidatePath("/dashboard", "layout");
   // push the new balance to the customer's Wallet pass right after responding (the queue worker is the fallback)
-  if (cardId && !res.duplicate) after(() => refreshGoogleCardIfIssued(cardId).catch(() => undefined));
+  if (cardId && !res.duplicate) after(() => refreshWalletCard(cardId).catch(() => undefined));
   return { ok: true, data: res };
 }
 

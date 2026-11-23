@@ -1,10 +1,12 @@
 "use server";
+import { after } from "next/server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireMerchant } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { normalizePhone } from "@/lib/phone";
 import type { ActionState } from "@/lib/action";
+import { refreshWalletMerchant } from "@/lib/wallet/sync";
 
 const opt = (max: number) => z.string().trim().max(max).optional().or(z.literal(""));
 
@@ -26,6 +28,7 @@ export async function saveSettings(_: ActionState, form: FormData): Promise<Acti
   }).eq("id", merchantId);
   if (error) return { error: "error" };
   revalidatePath("/dashboard", "layout");
+  after(() => refreshWalletMerchant(merchantId).catch(() => undefined)); // name/logo/language appear on issued passes
   return { ok: true };
 }
 

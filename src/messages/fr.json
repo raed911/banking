@@ -1432,11 +1432,21 @@
       "passType": "Pass Type Identifier",
       "passTypeHint": "Ex. pass.app.vayro.loyalty",
       "cert": "Certificat",
-      "certHint": "Fichier .p12 (recommandé) ou certificat .pem.",
+      "certHint": "Le fichier .cer téléchargé chez Apple (ou un .p12).",
       "key": "Private Key",
-      "keyHint": "Uniquement si le certificat est au format .pem.",
+      "keyHint": "Uniquement si vous n'avez pas utilisé l'étape 1 et que le certificat est au format .pem.",
       "password": "Mot de passe du certificat",
-      "file": "Choisir un fichier"
+      "file": "Choisir un fichier",
+      "step1": "Générer la demande de certificat",
+      "step1Hint": "VAYRO crée la clé privée (gardée chiffrée sur nos serveurs) et un fichier à envoyer à Apple. Pas besoin de Mac.",
+      "csrButton": "Télécharger le fichier pour Apple",
+      "csrDone": "Fichier téléchargé : VAYRO.certSigningRequest",
+      "step2": "Créer le Pass Type ID et le certificat chez Apple",
+      "step2Hint": "Identifiers → + → Pass Type IDs (ex. pass.app.vayro.loyalty). Puis Certificates → + → Pass Type ID Certificate → choisissez ce Pass Type ID → importez le fichier de l'étape 1 → téléchargez le certificat (.cer).",
+      "step3": "Importer le certificat ci-dessous",
+      "step3Hint": "Le Team ID et le Pass Type ID se remplissent tout seuls. Enregistrez puis cliquez « Tester la connexion ».",
+      "advanced": "Avancé : certificat .p12 ou .pem",
+      "passwordHint": "Uniquement pour un fichier .p12 protégé."
     },
     "secretSaved": "Enregistrée {hint}",
     "keepSecret": "Laisser vide pour conserver la valeur actuelle.",
@@ -1463,7 +1473,9 @@
       "not_a_pass_type_certificate": "Ce n'est pas un certificat Pass Type ID.",
       "pass_type_id_mismatch": "Le Pass Type Identifier ne correspond pas au certificat.",
       "team_id_mismatch": "Le Team ID ne correspond pas au certificat.",
-      "not_configured": "Enregistrez d'abord les identifiants."
+      "not_configured": "Enregistrez d'abord les identifiants.",
+      "wwdr_unavailable": "Impossible de récupérer le certificat intermédiaire Apple (WWDR). Réessayez.",
+      "signature_failed": "La signature de test a échoué avec ce certificat."
     }
   },
   "auto": {
