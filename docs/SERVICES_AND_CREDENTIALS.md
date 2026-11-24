@@ -6,11 +6,11 @@ This file only tracks **which** services are needed and their status.
 | # | Service | Purpose | Cost | Needed for phase | Status |
 |---|---|---|---|---|---|
 | 1 | **Supabase** (supabase.com) | Database, Auth, Storage | Free tier to start; Pro $25/mo before launch (backups, no pausing) | 1 | ✅ Connected & verified (project `vayro`, eu-central-1, Postgres 17) |
-| 2 | **Vercel** (vercel.com) | Hosting, cron, preview deploys | Free (Hobby) for dev; **Pro $20/mo required for commercial use at launch** | 11 | ✅ Connected — project `vayro`, live at https://vayro-app.vercel.app, production branch = development branch, env vars set via API |
+| 2 | **Vercel** (vercel.com) | Hosting, cron, preview deploys | **Pro $20/mo** (since 2026-11-24; spend budget $30 with pause) | 11 | ✅ Pro · Connected — project `vayro`, live at https://vayro-app.vercel.app, production branch = development branch, env vars set via API |
 | 3 | **Resend** (resend.com) | Transactional email, invites, campaigns | Free 3k emails/mo | 5–6 | Not yet |
 | 4 | **Domain name** (any registrar) | vayro.xxx website + email sender domain | ~$10–40/yr | 6 / 11 | Not yet |
 | 5 | **Google Wallet API** (pay.google.com/business/console + Google Cloud) | Issuer ID, service account email, private key | Free; publishing to all users needs Google approval | 7 | ✅ Connected & verified (demo mode until publishing approval) |
-| 6 | **Apple Developer Program** (developer.apple.com) | Team ID, Pass Type ID, signing certificate | $99/yr; enrolment verification can take days (organisations need a D-U-N-S number) | 7 | ⏳ Enrolled 2026-11-23 (Individual, Tunisia) — waiting for Apple activation (≤ 2 business days). Then: Pass Type ID + certificate via the assistant in Admin → Intégrations. Plan: convert to Organization once the company exists (same Team ID) |
+| 6 | **Apple Developer Program** (developer.apple.com) | Team ID, Pass Type ID, signing certificate | $99/yr | 7 | ✅ Active (Individual, Team ATP9UG29MN). Pass Type ID `pass.app.vayro.loyalty`; certificate (VAYRO-generated key, stored encrypted) valid until **2027-12-24** — create a new one before then via Admin → Intégrations. Plan: convert to Organization once the company exists (same Team ID) |
 | 7 | **Payment provider** (Stripe / Paddle / Lemon Squeezy / regional) | Subscription billing | % per transaction | 8 | ✅ Decided: **cash payments recorded by super admin** (no provider needed). Online gateway (Konnect / Flouci / Paymee) optional later. |
 | 8 | Sentry (sentry.io) — optional | Error monitoring | Free tier | 11 | Optional |
 
