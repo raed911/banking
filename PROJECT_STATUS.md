@@ -21,7 +21,7 @@ _Last updated: 2026-11-23_
 | 11 Hardening & launch | Not started | — |
 
 ## Live site
-- https://vayro-app.vercel.app (auto-deploys on every push to the development branch). E2E suite passes against production.
+- **https://vayrocard.company** (domain bought via Vercel 2026-11-24, renews yearly ~$16.5; `www.` redirects to it). `https://vayro-app.vercel.app` stays live as an alias — Apple passes issued before the switch keep using it for updates, and the pg_cron worker calls it. Auto-deploys on every push to the development branch.
 
 ## Location marketing (geofencing)
 ✅ Built: merchant "Proximité" section (interactive map, coordinates, radius, enable/disable, message, phone previews),
