@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import forge from "node-forge";
 import { appleRelevance, type ActiveLocationCampaign, type GeoLocation } from "./relevance";
 import { zipStore } from "./zip";
+import { STAMP_ICON_SVG } from "./stamp-icons";
 
 /**
  * Apple Wallet (PassKit) — pure builders, no network:
@@ -92,8 +93,12 @@ export function buildPassJson(ctx: ApplePassContext, card: ApplePassCard) {
   };
 }
 
-/** Stamp grid for the strip (1125×369 = @3x of 375×123). No text: safe to rasterise without fonts. */
-export function stampStripSvg(opts: { required: number; balance: number; background: string; filled: string; empty: string; backgroundImage?: string }) {
+/**
+ * Stamp grid for the strip (1125×369 = @3x of 375×123), matching the web card:
+ * earned stamps are solid discs (accent colour) showing the program's icon; the rest are outlined discs with a faint icon.
+ * With a background photo, every disc gets an opaque backing so stamps stay readable on any image.
+ */
+export function stampStripSvg(opts: { required: number; balance: number; background: string; filled: string; empty: string; icon?: string | null; backgroundImage?: string }) {
   const W = 1125, H = 369;
   const n = Math.max(1, Math.min(opts.required, 20));
   const rows = n <= 6 ? 1 : 2;
@@ -101,6 +106,16 @@ export function stampStripSvg(opts: { required: number; balance: number; backgro
   const gap = 28;
   const d = Math.min((W - 120 - gap * (perRow - 1)) / perRow, (H - 70 - gap * (rows - 1)) / rows, 170);
   const totalH = rows * d + (rows - 1) * gap;
+  const photo = !!opts.backgroundImage;
+  const iconInner = STAMP_ICON_SVG[opts.icon ?? ""] ?? null;
+  const glyph = (cx: number, cy: number, r: number, color: string, opacity: number) => {
+    const size = r * 0.95;
+    if (!iconInner) {
+      const s = r * 0.42;
+      return `<path d="M ${cx - s} ${cy} L ${cx - s * 0.25} ${cy + s * 0.75} L ${cx + s} ${cy - s * 0.65}" fill="none" stroke="${color}" stroke-opacity="${opacity}" stroke-width="${Math.max(6, r * 0.16)}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    }
+    return `<svg x="${cx - size / 2}" y="${cy - size / 2}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-opacity="${opacity}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${iconInner}</svg>`;
+  };
   let circles = "";
   for (let i = 0; i < n; i++) {
     const row = Math.floor(i / perRow), col = i % perRow;
@@ -110,14 +125,15 @@ export function stampStripSvg(opts: { required: number; balance: number; backgro
     const cy = (H - totalH) / 2 + row * (d + gap) + d / 2;
     const r = d / 2;
     if (i < opts.balance) {
-      const s = r * 0.42;
-      circles += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${opts.filled}"/><path d="M ${cx - s} ${cy} L ${cx - s * 0.25} ${cy + s * 0.75} L ${cx + s} ${cy - s * 0.65}" fill="none" stroke="${opts.background}" stroke-width="${Math.max(6, r * 0.16)}" stroke-linecap="round" stroke-linejoin="round"/>`;
+      circles += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${opts.filled}"${photo ? ` stroke="${opts.background}" stroke-width="6"` : ""}/>` + glyph(cx, cy, r, opts.background, 1);
     } else {
-      circles += `<circle cx="${cx}" cy="${cy}" r="${r - 4}" fill="none" stroke="${opts.empty}" stroke-opacity="0.55" stroke-width="7" stroke-dasharray="2 14" stroke-linecap="round"/>`;
+      circles += (photo ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${opts.background}" fill-opacity="0.72"/>` : "")
+        + `<circle cx="${cx}" cy="${cy}" r="${r - 4}" fill="none" stroke="${opts.empty}" stroke-opacity="${photo ? 0.9 : 0.45}" stroke-width="6"/>`
+        + (iconInner ? glyph(cx, cy, r, opts.empty, photo ? 0.6 : 0.35) : "");
     }
   }
-  const bg = opts.backgroundImage
-    ? `<image href="${opts.backgroundImage}" x="0" y="0" width="${W}" height="${H}" preserveAspectRatio="xMidYMid slice"/><rect width="${W}" height="${H}" fill="#000" fill-opacity="0.35"/>`
+  const bg = photo
+    ? `<image href="${opts.backgroundImage}" x="0" y="0" width="${W}" height="${H}" preserveAspectRatio="xMidYMid slice"/><rect width="${W}" height="${H}" fill="${opts.background}" fill-opacity="0.25"/>`
     : `<rect width="${W}" height="${H}" fill="${opts.background}"/>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${bg}${circles}</svg>`;
 }

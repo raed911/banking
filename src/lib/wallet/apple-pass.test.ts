@@ -53,7 +53,11 @@ describe("apple pass.json", () => {
   it("draws the right number of stamps", () => {
     const svg = stampStripSvg({ required: 8, balance: 3, background: "#101828", filled: "#C6F36B", empty: "#FFFFFF" });
     expect(svg.match(/<circle/g)).toHaveLength(8);
-    expect(svg.match(/<path/g)).toHaveLength(3);
+    expect(svg.match(/<path/g)).toHaveLength(3); // no icon: check marks on earned stamps only
+    const withIcon = stampStripSvg({ required: 8, balance: 3, background: "#101828", filled: "#C6F36B", empty: "#FFFFFF", icon: "scissors" });
+    expect(withIcon.match(/viewBox="0 0 24 24"/g)).toHaveLength(8); // the chosen icon on every stamp
+    const onPhoto = stampStripSvg({ required: 8, balance: 3, background: "#101828", filled: "#C6F36B", empty: "#FFFFFF", icon: "star", backgroundImage: "data:image/png;base64,AA==" });
+    expect(onPhoto.match(/fill-opacity="0.72"/g)).toHaveLength(5); // opaque backing behind empty stamps
   });
 });
 

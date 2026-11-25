@@ -61,7 +61,7 @@ export async function buildApplePass(cardId: string, creds: AppleCreds) {
   const [{ data: m }, { data: p }, { data: d }, { data: locs }, { data: camps }] = await Promise.all([
     db.from("merchants").select("id, name, locale, logo_path").eq("id", card.merchant_id).single(),
     db.from("loyalty_programs").select("id, name, type, stamps_required, reward_title, terms").eq("id", card.program_id).single(),
-    db.from("card_designs").select("background_color, foreground_color, label_color, accent_color, logo_text, logo_path, strip_path").eq("program_id", card.program_id).maybeSingle(),
+    db.from("card_designs").select("background_color, foreground_color, label_color, accent_color, stamp_icon, logo_text, logo_path, strip_path").eq("program_id", card.program_id).maybeSingle(),
     db.from("locations").select("id, name, latitude, longitude, geo_enabled, geo_radius_m, geo_message, is_active").eq("merchant_id", card.merchant_id),
     db.from("location_campaigns").select("id, message, location_ids, program_ids, starts_at, ends_at, status").eq("merchant_id", card.merchant_id).eq("status", "active"),
   ]);
@@ -93,7 +93,7 @@ export async function buildApplePass(cardId: string, creds: AppleCreds) {
   let strip: Buffer | null = null;
   if (p!.type !== "points" && p!.stamps_required) {
     const bgData = stripImage ? `data:image/png;base64,${(await sharp(stripImage).resize(1125, 369, { fit: "cover" }).png().toBuffer()).toString("base64")}` : undefined;
-    strip = await sharp(Buffer.from(stampStripSvg({ required: p!.stamps_required, balance: card.balance, background: bg, filled: d?.label_color ?? "#C6F36B", empty: d?.foreground_color ?? "#FFFFFF", backgroundImage: bgData }))).png().toBuffer();
+    strip = await sharp(Buffer.from(stampStripSvg({ required: p!.stamps_required, balance: card.balance, background: bg, filled: d?.accent_color ?? d?.label_color ?? "#C6F36B", empty: d?.foreground_color ?? "#FFFFFF", icon: d?.stamp_icon ?? "coffee", backgroundImage: bgData }))).png().toBuffer();
   } else if (stripImage) {
     strip = await sharp(stripImage).resize(1125, 369, { fit: "cover" }).png().toBuffer();
   }
