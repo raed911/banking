@@ -24,7 +24,7 @@ export async function createProgram(_: ActionState, form: FormData): Promise<Act
     reward_title: v.reward_title || null, welcome_bonus: v.welcome_bonus,
     cooldown_minutes: v.cooldown_minutes, max_earn_per_day: v.type === "points" ? Math.max(v.max_earn_per_day, 100000) : v.max_earn_per_day,
     max_earn_per_transaction: v.type === "points" ? Math.max(v.max_earn_per_transaction, 100000) : v.max_earn_per_transaction,
-    terms: v.terms || null,
+    terms: v.terms || null, referral_enabled: v.referral_enabled, referral_reward: v.referral_reward,
   }).select("id").single();
   if (error || !program) return { error: error?.code === "42501" ? "forbidden" : "generic" };
 
@@ -51,6 +51,7 @@ export async function updateProgram(programId: string, _: ActionState, form: For
     stamps_required: v.type === "points" ? null : v.stamps_required, points_per_unit: v.type === "points" ? v.points_per_unit : null,
     reward_title: v.reward_title || null, welcome_bonus: v.welcome_bonus, cooldown_minutes: v.cooldown_minutes,
     max_earn_per_day: v.max_earn_per_day, max_earn_per_transaction: v.max_earn_per_transaction, terms: v.terms || null,
+    referral_enabled: v.referral_enabled, referral_reward: v.referral_reward,
   }).eq("id", id.parse(programId));
   if (error) return { error: "generic" };
   revalidatePath(`/dashboard/programs/${programId}`);

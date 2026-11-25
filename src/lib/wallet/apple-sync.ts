@@ -11,6 +11,7 @@ import { pushPassUpdates } from "./apns";
 import { buildPassJson, packagePass, stampStripSvg, type ApplePassContext } from "./apple-pass";
 import { DEFAULT_ICON_PNG_BASE64 } from "./default-icon";
 import { renderMessage } from "@/lib/campaign-message";
+import { programJoinCode, referralUrl } from "@/lib/loyalty/referral";
 
 const appUrl = () => process.env.NEXT_PUBLIC_APP_URL ?? "https://vayro-app.vercel.app";
 
@@ -56,11 +57,11 @@ async function latestNews(customerId: string, programId: string, merchantName: s
 /** Builds the signed .pkpass for a card, from the current database state. */
 export async function buildApplePass(cardId: string, creds: AppleCreds) {
   const db = createAdminClient();
-  const { data: card } = await db.from("loyalty_cards").select("id, merchant_id, program_id, customer_id, serial, balance, public_token, status, updated_at, customer:customers(first_name)").eq("id", cardId).single();
+  const { data: card } = await db.from("loyalty_cards").select("id, merchant_id, program_id, customer_id, serial, balance, public_token, status, updated_at, referral_code, customer:customers(first_name)").eq("id", cardId).single();
   if (!card) throw new Error("card_not_found");
   const [{ data: m }, { data: p }, { data: d }, { data: locs }, { data: camps }] = await Promise.all([
     db.from("merchants").select("id, name, locale, logo_path").eq("id", card.merchant_id).single(),
-    db.from("loyalty_programs").select("id, name, type, stamps_required, reward_title, terms").eq("id", card.program_id).single(),
+    db.from("loyalty_programs").select("id, name, type, stamps_required, reward_title, terms, referral_enabled").eq("id", card.program_id).single(),
     db.from("card_designs").select("background_color, foreground_color, label_color, accent_color, stamp_icon, logo_text, logo_path, strip_path").eq("program_id", card.program_id).maybeSingle(),
     db.from("locations").select("id, name, latitude, longitude, geo_enabled, geo_radius_m, geo_message, is_active").eq("merchant_id", card.merchant_id),
     db.from("location_campaigns").select("id, message, location_ids, program_ids, starts_at, ends_at, status").eq("merchant_id", card.merchant_id).eq("status", "active"),
@@ -75,6 +76,7 @@ export async function buildApplePass(cardId: string, creds: AppleCreds) {
   const passJson = buildPassJson(ctx, {
     serial: card.serial, balance: card.balance, public_token: card.public_token, status: card.status, customerName: firstName,
     authenticationToken: appleAuthToken(card.serial), news: await latestNews(card.customer_id, card.program_id, m!.name, firstName),
+    referralUrl: p!.referral_enabled ? await programJoinCode(card.program_id).then((code) => (code ? referralUrl(code, card.referral_code) : null)) : null,
   });
 
   const bg = d?.background_color ?? "#101828";

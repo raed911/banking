@@ -20,7 +20,7 @@ export type ApplePassContext = {
   locations: GeoLocation[];
   campaign: ActiveLocationCampaign | null;
 };
-export type ApplePassCard = { serial: string; balance: number; public_token: string; status: string; customerName: string; authenticationToken: string; news: string | null };
+export type ApplePassCard = { serial: string; balance: number; public_token: string; status: string; customerName: string; authenticationToken: string; news: string | null; referralUrl?: string | null };
 
 type L = "fr" | "ar" | "en";
 const lang = (l: string): L => (l === "ar" || l === "en" ? l : "fr");
@@ -37,6 +37,8 @@ const TXT = {
   terms: { fr: "Conditions", ar: "الشروط", en: "Terms" },
   balanceChange: { fr: "Votre carte : %@", ar: "بطاقتك: %@", en: "Your card: %@" },
   number: { fr: "N° de carte", ar: "رقم البطاقة", en: "Card number" },
+  invite: { fr: "Invitez un ami", ar: "ادعُ صديقًا", en: "Invite a friend" },
+  inviteLink: { fr: "Partager mon lien", ar: "مشاركة رابطي", en: "Share my link" },
 } as const;
 
 export function hexToRgb(hex: string | null | undefined, fallback = "rgb(16,24,40)") {
@@ -85,6 +87,7 @@ export function buildPassJson(ctx: ApplePassContext, card: ApplePassCard) {
       backFields: [
         { key: "news", label: TXT.news[l], value: news, changeMessage: "%@" },
         { key: "card", label: TXT.myCard[l], value: cardUrl, attributedValue: `<a href="${cardUrl}">${TXT.open[l]}</a>` },
+        ...(card.referralUrl ? [{ key: "invite", label: TXT.invite[l], value: card.referralUrl, attributedValue: `<a href="${card.referralUrl}">${TXT.inviteLink[l]}</a>` }] : []),
         { key: "serial", label: TXT.number[l], value: card.serial },
         ...(p.terms ? [{ key: "terms", label: TXT.terms[l], value: p.terms.slice(0, 1000) }] : []),
       ],

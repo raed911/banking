@@ -5,6 +5,8 @@ import { Gift, Lock, MapPin, Phone, Sparkles } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { WalletCard } from "@/components/loyalty/wallet-card";
 import { LiveQr } from "@/components/loyalty/live-qr";
+import { ReferralShare } from "@/components/loyalty/referral-share";
+import { referralInfo } from "@/lib/loyalty/referral";
 import { getPublicCard } from "@/lib/loyalty/public-card";
 import { publicAssetUrl } from "@/lib/storage";
 import { walletAvailability } from "@/lib/integrations";
@@ -31,7 +33,10 @@ export default async function CardPage({ params, searchParams }: { params: Promi
   const next = rewards.find((r) => r.cost > card.balance);
   const ready = rewards.filter((r) => r.cost <= card.balance);
   const bg = design?.background_color ?? "#101828";
-  const [wallets, { data: announcement }] = await Promise.all([walletAvailability(card.merchant_id), createAdminClient().rpc("card_announcement", { p_card_id: card.id })]);
+  const [wallets, { data: announcement }, referral] = await Promise.all([
+    walletAvailability(card.merchant_id), createAdminClient().rpc("card_announcement", { p_card_id: card.id }),
+    program.referral_enabled ? referralInfo(card) : Promise.resolve(null),
+  ]);
   const ann = announcement as { body: string; coupon: string | null; coupon_name: string | null } | null;
   // Google Wallet isn't available on iOS; Apple Wallet only opens on iPhone/iPad (and Safari on Mac).
   const ua = (await headers()).get("user-agent") ?? "";
@@ -108,6 +113,10 @@ export default async function CardPage({ params, searchParams }: { params: Promi
         </section>
       ) : (
         <section className="mt-4 rounded-3xl border border-border bg-surface p-5 text-sm text-fg-muted">{wallets.google && isIos ? t("appleSoon") : t("walletSoon")}</section>
+      )}
+
+      {active && referral && (
+        <ReferralShare url={referral.url} merchant={merchant.name} reward={program.referral_reward} invited={referral.invited} completed={referral.completed} />
       )}
 
       {rewards.length > 0 && (

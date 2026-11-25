@@ -14,6 +14,7 @@ const schema = z.object({
   email: z.string().trim().max(254).optional().or(z.literal("")),
   birthday: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().or(z.literal("")),
   website: z.string().max(0).optional().or(z.literal("")), // honeypot: must stay empty
+  ref: z.string().regex(/^[A-Za-z2-9]{8}$/).optional().or(z.literal("")).catch(""), // friend's referral code (ignored if malformed)
 });
 
 export async function enroll(code: string, _: ActionState, form: FormData): Promise<ActionState> {
@@ -32,6 +33,7 @@ export async function enroll(code: string, _: ActionState, form: FormData): Prom
     // the SQL function treats NULL as "not provided"
     p_link_code: code, p_first_name: v.first_name, p_last_name: (v.last_name || null) as string, p_phone: phone as string, p_email: email as string,
     p_birthday: v.birthday || undefined, p_marketing_consent: form.get("consent") === "on", p_locale: await getLocale(),
+    p_referral_code: v.ref ? v.ref.toUpperCase() : undefined,
   });
   if (error) return { error: "generic" };
   const r = data as { ok: boolean; error?: string; card_token?: string };

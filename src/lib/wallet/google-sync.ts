@@ -4,6 +4,7 @@ import { effectiveCredentials } from "@/lib/integrations";
 import { currentCampaign } from "./relevance";
 import { googleIds, upsert, type GoogleCreds } from "./google";
 import { buildLoyaltyClass, buildLoyaltyObject, type PassContext } from "./google-pass";
+import { programJoinCode, referralUrl } from "@/lib/loyalty/referral";
 
 const appUrl = () => process.env.NEXT_PUBLIC_APP_URL ?? "https://vayro-app.vercel.app";
 
@@ -17,7 +18,7 @@ async function context(merchantId: string, programId: string): Promise<PassConte
   const db = createAdminClient();
   const [{ data: m }, { data: p }, { data: d }, { data: locs }, { data: camps }] = await Promise.all([
     db.from("merchants").select("id, name, locale, slug").eq("id", merchantId).single(),
-    db.from("loyalty_programs").select("id, name, type, stamps_required, reward_title, terms").eq("id", programId).single(),
+    db.from("loyalty_programs").select("id, name, type, stamps_required, reward_title, terms, referral_enabled").eq("id", programId).single(),
     db.from("card_designs").select("background_color, strip_path, logo_text").eq("program_id", programId).maybeSingle(),
     db.from("locations").select("id, name, latitude, longitude, geo_enabled, geo_radius_m, geo_message, is_active").eq("merchant_id", merchantId),
     db.from("location_campaigns").select("id, message, location_ids, program_ids, starts_at, ends_at, status").eq("merchant_id", merchantId).eq("status", "active"),
@@ -28,14 +29,15 @@ async function context(merchantId: string, programId: string): Promise<PassConte
 /** Creates/updates the class and the card's object, records the pass. Returns the object id. */
 export async function syncGoogleCard(cardId: string, creds?: GoogleCreds | null) {
   const db = createAdminClient();
-  const { data: card } = await db.from("loyalty_cards").select("id, merchant_id, program_id, serial, balance, public_token, status, customer:customers(first_name)").eq("id", cardId).single();
+  const { data: card } = await db.from("loyalty_cards").select("id, merchant_id, program_id, serial, balance, public_token, status, referral_code, customer:customers(first_name)").eq("id", cardId).single();
   if (!card) throw new Error("card_not_found");
   creds ??= await googleCredsFor(card.merchant_id);
   if (!creds) throw new Error("google_not_configured");
   const ctx = await context(card.merchant_id, card.program_id);
   const { classId, objectId } = googleIds(creds.issuerId, ctx.slug, card.program_id, card.serial);
   await upsert(creds, "loyaltyClass", classId, buildLoyaltyClass(classId, ctx));
-  await upsert(creds, "loyaltyObject", objectId!, buildLoyaltyObject(objectId!, classId, ctx, { serial: card.serial, balance: card.balance, public_token: card.public_token, status: card.status, customerName: card.customer?.first_name ?? "" }));
+  await upsert(creds, "loyaltyObject", objectId!, buildLoyaltyObject(objectId!, classId, ctx, { serial: card.serial, balance: card.balance, public_token: card.public_token, status: card.status, customerName: card.customer?.first_name ?? "",
+    referralUrl: ctx.program.referral_enabled ? await programJoinCode(card.program_id).then((c) => (c ? referralUrl(c, card.referral_code) : null)) : null }));
   const { data: existing } = await db.from("wallet_passes").select("id, version").eq("card_id", card.id).eq("platform", "google").maybeSingle();
   if (existing) await db.from("wallet_passes").update({ version: existing.version + 1, last_updated_at: new Date().toISOString(), removed_at: null }).eq("id", existing.id);
   else await db.from("wallet_passes").insert({ merchant_id: card.merchant_id, card_id: card.id, platform: "google", serial_number: objectId!, google_object_id: objectId!, google_class_id: classId });

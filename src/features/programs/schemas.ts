@@ -15,6 +15,8 @@ export const programSchema = z.object({
   max_earn_per_day: optInt(1, 100000).default(3),
   max_earn_per_transaction: optInt(1, 100000).default(1),
   terms: z.string().trim().max(1000).optional().or(z.literal("")),
+  referral_enabled: z.preprocess((v) => v === "on" || v === "true" || v === true, z.boolean()),
+  referral_reward: optInt(1, 1000).default(1),
 }).superRefine((v, ctx) => {
   if (v.type !== "points" && !v.stamps_required) ctx.addIssue({ code: "custom", path: ["stamps_required"], message: "required" });
   if (v.type === "points" && !v.points_per_unit) ctx.addIssue({ code: "custom", path: ["points_per_unit"], message: "required" });

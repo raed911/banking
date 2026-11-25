@@ -17,6 +17,7 @@ type ProgramType = "stamps" | "points" | "visits";
 export type ProgramValues = {
   id: string; name: string; description: string | null; type: ProgramType; stamps_required: number | null; points_per_unit: number | null;
   reward_title: string | null; welcome_bonus: number; cooldown_minutes: number; max_earn_per_day: number; max_earn_per_transaction: number; terms: string | null;
+  referral_enabled: boolean; referral_reward: number;
 };
 
 const TYPES: { key: ProgramType; icon: typeof Stamp }[] = [{ key: "stamps", icon: Stamp }, { key: "points", icon: Coins }, { key: "visits", icon: CalendarCheck }];
@@ -85,6 +86,18 @@ export function ProgramForm({ merchantName, program }: { merchantName: string; p
                   <Input id="welcome_bonus" name="welcome_bonus" type="number" min={0} max={10000} defaultValue={program?.welcome_bonus ?? 0} />
                 </Field>
               </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader><div><CardTitle>{t("form.referral")}</CardTitle><CardDescription>{t("form.referralDesc")}</CardDescription></div></CardHeader>
+            <CardContent className="grid gap-4 sm:grid-cols-2">
+              <label className="flex items-center gap-3 rounded-xl border border-border p-3 text-sm font-medium sm:col-span-1">
+                <input type="checkbox" id="referral_enabled" name="referral_enabled" defaultChecked={program?.referral_enabled ?? true} className="size-5 accent-ink-900" />
+                {t("form.referralEnabled")}
+              </label>
+              <Field label={t(type === "points" ? "form.referralRewardPoints" : "form.referralReward")} htmlFor="referral_reward" hint={t("form.referralHint")}>
+                <Input id="referral_reward" name="referral_reward" type="number" min={1} max={1000} defaultValue={program?.referral_reward ?? 1} />
+              </Field>
             </CardContent>
           </Card>
           <Card>

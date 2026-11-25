@@ -21,12 +21,16 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
   const supabase = await createClient();
   const { data: c } = await supabase.from("customers").select("*").eq("id", id).eq("merchant_id", merchantId).is("deleted_at", null).maybeSingle();
   if (!c) notFound();
-  const [{ data: cards }, { data: tx }, { data: programs }, { data: couponsUsed }] = await Promise.all([
+  const [{ data: cards }, { data: tx }, { data: programs }, { data: couponsUsed }, { data: referrals }] = await Promise.all([
     supabase.from("loyalty_cards").select("id, serial, public_token, balance, lifetime_earned, status, program:loyalty_programs(id, name, type, stamps_required, points_per_unit)").eq("customer_id", id).neq("status", "archived").order("created_at"),
     supabase.from("loyalty_transactions").select("id, kind, amount, balance_after, created_at, note, source, reversed_transaction_id, program:loyalty_programs(name)").eq("customer_id", id).order("created_at", { ascending: false }).limit(50),
     supabase.from("loyalty_programs").select("id, name").eq("merchant_id", merchantId).eq("status", "active"),
     supabase.from("coupon_redemptions").select("id, created_at, coupon:coupons(name, code)").eq("customer_id", id).order("created_at", { ascending: false }).limit(20),
+    supabase.from("referrals").select("id, status, created_at, referrer_customer_id, referred_customer_id, referrer:customers!referrals_referrer_customer_id_fkey(id, first_name, last_name), referred:customers!referrals_referred_customer_id_fkey(id, first_name, last_name)")
+      .or(`referrer_customer_id.eq.${id},referred_customer_id.eq.${id}`).order("created_at", { ascending: false }).limit(50),
   ]);
+  const invitedBy = referrals?.find((r) => r.referred_customer_id === id) ?? null;
+  const invited = referrals?.filter((r) => r.referrer_customer_id === id) ?? [];
   const reversed = new Set((tx ?? []).map((x) => x.reversed_transaction_id).filter(Boolean));
   const name = `${c.first_name} ${c.last_name ?? ""}`.trim();
   const available = (programs ?? []).filter((p) => !(cards ?? []).some((k) => k.program?.id === p.id));
@@ -99,6 +103,25 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
               {c.tags.map((tag) => <Badge key={tag} tone="lime">{tag}</Badge>)}
             </div>
             {c.notes && <p className="mt-4 whitespace-pre-wrap rounded-xl bg-surface-muted p-3 text-sm text-fg-muted">{c.notes}</p>}
+            {(invitedBy || invited.length > 0) && (
+              <div className="mt-5" data-testid="referrals">
+                <div className="mb-2 text-xs font-medium uppercase tracking-[0.12em] text-fg-subtle">{t("profile.referrals")}</div>
+                {invitedBy?.referrer && (
+                  <p className="mb-2 rounded-lg bg-lime-100 px-3 py-2 text-sm text-lime-900">
+                    {t("profile.invitedBy")} <Link href={`/dashboard/customers/${invitedBy.referrer.id}`} className="font-semibold underline underline-offset-2">{invitedBy.referrer.first_name} {invitedBy.referrer.last_name ?? ""}</Link>
+                    {" · "}{t(`profile.referralStatus.${invitedBy.status as "pending"}`)}
+                  </p>
+                )}
+                {invited.length > 0 && (
+                  <ul className="space-y-1.5">{invited.map((r) => r.referred && (
+                    <li key={r.id} className="flex items-center justify-between gap-2 rounded-lg bg-surface-muted px-3 py-2 text-sm">
+                      <Link href={`/dashboard/customers/${r.referred.id}`} className="truncate font-medium hover:underline">{r.referred.first_name} {r.referred.last_name ?? ""}</Link>
+                      <Badge tone={r.status === "completed" ? "success" : "neutral"}>{t(`profile.referralStatus.${r.status as "pending"}`)}</Badge>
+                    </li>
+                  ))}</ul>
+                )}
+              </div>
+            )}
             {!!couponsUsed?.length && (
               <div className="mt-5">
                 <div className="mb-2 text-xs font-medium uppercase tracking-[0.12em] text-fg-subtle">{t("profile.couponsUsed")}</div>

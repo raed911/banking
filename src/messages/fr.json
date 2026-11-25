@@ -220,7 +220,13 @@
       "activate": "Activer",
       "pause": "Mettre en pause",
       "archive": "Archiver",
-      "archiveConfirm": "Archiver ce programme ? Les cartes existantes ne pourront plus recevoir de tampons."
+      "archiveConfirm": "Archiver ce programme ? Les cartes existantes ne pourront plus recevoir de tampons.",
+      "referral": "Parrainage",
+      "referralDesc": "Vos clients invitent leurs amis avec un lien personnel. À la première visite de l'ami, chacun reçoit le bonus, une seule fois.",
+      "referralEnabled": "Activer le parrainage",
+      "referralReward": "Tampons offerts à chacun",
+      "referralRewardPoints": "Points offerts à chacun",
+      "referralHint": "Donné au parrain et à l'ami quand l'ami vient pour la première fois."
     },
     "tabs": {
       "design": "Design de la carte",
@@ -324,7 +330,9 @@
         "generic": "Une erreur est survenue. Réessayez.",
         "required": "Merci de remplir les champs obligatoires."
       },
-      "unavailableTitle": "Lien indisponible"
+      "unavailableTitle": "Lien indisponible",
+      "invitedBy": "{name} vous invite !",
+      "invitedBonus": "Lors de votre première visite, vous recevez chacun {count, plural, one {# bonus} other {# bonus}}."
     },
     "card": {
       "hello": "Bonjour {name}",
@@ -356,7 +364,15 @@
       },
       "appleSoon": "L'ajout à Apple Wallet arrive bientôt. En attendant, ajoutez cette page à votre écran d'accueil.",
       "walletError": "Impossible d'ajouter la carte pour le moment. Réessayez dans quelques minutes.",
-      "offer": "Offre spéciale"
+      "offer": "Offre spéciale",
+      "referral": {
+        "title": "Invitez un ami",
+        "desc": "Quand votre ami vient pour la première fois, vous recevez chacun +{count} sur votre carte.",
+        "share": "Partager",
+        "copy": "Copier le lien",
+        "message": "Rejoins-moi chez {merchant} et reçois un bonus à ta première visite 🎁",
+        "stats": "{invited, plural, one {# ami invité} other {# amis invités}} · {completed, plural, one {# venu} other {# venus}}"
+      }
     }
   },
   "scan": {
@@ -486,7 +502,14 @@
       "couponCode": "Code du coupon",
       "apply": "Appliquer",
       "couponsUsed": "Coupons utilisés",
-      "couponApplied": "Coupon appliqué : {name}"
+      "couponApplied": "Coupon appliqué : {name}",
+      "referrals": "Parrainage",
+      "invitedBy": "Invité(e) par",
+      "referralStatus": {
+        "pending": "En attente de visite",
+        "completed": "Validé",
+        "canceled": "Annulé"
+      }
     },
     "errors": {
       "duplicate": "Un client existe déjà avec ce téléphone ou cet email.",

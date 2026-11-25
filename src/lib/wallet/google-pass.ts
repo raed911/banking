@@ -5,7 +5,7 @@ import { googleRelevance, type ActiveLocationCampaign, type GeoLocation } from "
 export type PassContext = {
   appUrl: string;
   merchant: { id: string; name: string; locale: string };
-  program: { id: string; name: string; type: "stamps" | "points" | "visits"; stamps_required: number | null; reward_title: string | null; terms: string | null };
+  program: { id: string; name: string; type: "stamps" | "points" | "visits"; stamps_required: number | null; reward_title: string | null; terms: string | null; referral_enabled?: boolean };
   design: { background_color: string; strip_path: string | null; logo_text: string | null } | null;
   locations: GeoLocation[];
   campaign: ActiveLocationCampaign | null;
@@ -32,7 +32,7 @@ export function buildLoyaltyClass(classId: string, ctx: PassContext) {
   };
 }
 
-export function buildLoyaltyObject(objectId: string, classId: string, ctx: PassContext, card: { serial: string; balance: number; public_token: string; status: string; customerName: string }) {
+export function buildLoyaltyObject(objectId: string, classId: string, ctx: PassContext, card: { serial: string; balance: number; public_token: string; status: string; customerName: string; referralUrl?: string | null }) {
   const L = lang(ctx.merchant.locale);
   const p = ctx.program;
   const progress = p.type !== "points" && p.stamps_required ? `${Math.min(card.balance, p.stamps_required)} / ${p.stamps_required}` : String(card.balance);
@@ -46,7 +46,10 @@ export function buildLoyaltyObject(objectId: string, classId: string, ctx: PassC
     loyaltyPoints: { label: UNITS[p.type][L], balance: { string: progress } },
     barcode: { type: "QR_CODE", value: `VYS.${card.serial}`, alternateText: card.serial },
     ...(p.reward_title ? { secondaryLoyaltyPoints: { label: L === "ar" ? "المكافأة" : L === "en" ? "Reward" : "Récompense", balance: { string: p.reward_title.slice(0, 30) } } } : {}),
-    linksModuleData: { uris: [{ id: "card", uri: `${ctx.appUrl}/c/${card.public_token}`, description: L === "ar" ? "بطاقتي" : L === "en" ? "My card" : "Ma carte" }] },
+    linksModuleData: { uris: [
+      { id: "card", uri: `${ctx.appUrl}/c/${card.public_token}`, description: L === "ar" ? "بطاقتي" : L === "en" ? "My card" : "Ma carte" },
+      ...(card.referralUrl ? [{ id: "invite", uri: card.referralUrl, description: L === "ar" ? "ادعُ صديقًا" : L === "en" ? "Invite a friend" : "Invitez un ami" }] : []),
+    ] },
     ...(rel.merchantLocations ? { merchantLocations: rel.merchantLocations } : {}),
     ...(rel.messages ? { messages: rel.messages } : {}),
   };

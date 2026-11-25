@@ -220,7 +220,13 @@
       "activate": "Activate",
       "pause": "Pause",
       "archive": "Archive",
-      "archiveConfirm": "Archive this program? Existing cards will no longer receive stamps."
+      "archiveConfirm": "Archive this program? Existing cards will no longer receive stamps.",
+      "referral": "Referrals",
+      "referralDesc": "Your customers invite friends with a personal link. On the friend's first visit, both get the bonus, once.",
+      "referralEnabled": "Enable referrals",
+      "referralReward": "Stamps given to each",
+      "referralRewardPoints": "Points given to each",
+      "referralHint": "Given to the referrer and the friend when the friend first visits."
     },
     "tabs": {
       "design": "Card design",
@@ -324,7 +330,9 @@
         "generic": "Something went wrong. Please try again.",
         "required": "Please fill in the required fields."
       },
-      "unavailableTitle": "Link unavailable"
+      "unavailableTitle": "Link unavailable",
+      "invitedBy": "{name} invited you!",
+      "invitedBonus": "On your first visit, you both get {count, plural, one {# bonus} other {# bonus}}."
     },
     "card": {
       "hello": "Hello {name}",
@@ -356,7 +364,15 @@
       },
       "appleSoon": "Apple Wallet is coming soon. Meanwhile, add this page to your home screen.",
       "walletError": "Couldn't add the card right now. Please try again in a few minutes.",
-      "offer": "Special offer"
+      "offer": "Special offer",
+      "referral": {
+        "title": "Invite a friend",
+        "desc": "When your friend comes for the first time, you each get +{count} on your card.",
+        "share": "Share",
+        "copy": "Copy link",
+        "message": "Join me at {merchant} and get a bonus on your first visit 🎁",
+        "stats": "{invited, plural, one {# friend invited} other {# friends invited}} · {completed} came"
+      }
     }
   },
   "scan": {
@@ -486,7 +502,14 @@
       "couponCode": "Coupon code",
       "apply": "Apply",
       "couponsUsed": "Coupons used",
-      "couponApplied": "Coupon applied: {name}"
+      "couponApplied": "Coupon applied: {name}",
+      "referrals": "Referrals",
+      "invitedBy": "Invited by",
+      "referralStatus": {
+        "pending": "Waiting for visit",
+        "completed": "Completed",
+        "canceled": "Canceled"
+      }
     },
     "errors": {
       "duplicate": "A customer already exists with this phone or email.",

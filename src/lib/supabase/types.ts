@@ -1154,6 +1154,7 @@ export type Database = {
           merchant_id: string
           program_id: string
           public_token: string
+          referral_code: string
           rewards_earned: number
           serial: string
           status: Database["public"]["Enums"]["card_status"]
@@ -1170,6 +1171,7 @@ export type Database = {
           merchant_id: string
           program_id: string
           public_token?: string
+          referral_code?: string
           rewards_earned?: number
           serial?: string
           status?: Database["public"]["Enums"]["card_status"]
@@ -1186,6 +1188,7 @@ export type Database = {
           merchant_id?: string
           program_id?: string
           public_token?: string
+          referral_code?: string
           rewards_earned?: number
           serial?: string
           status?: Database["public"]["Enums"]["card_status"]
@@ -1227,6 +1230,8 @@ export type Database = {
           name: string
           points_expire_days: number | null
           points_per_unit: number | null
+          referral_enabled: boolean
+          referral_reward: number
           reward_title: string | null
           settings: Json
           stamps_required: number | null
@@ -1247,6 +1252,8 @@ export type Database = {
           name: string
           points_expire_days?: number | null
           points_per_unit?: number | null
+          referral_enabled?: boolean
+          referral_reward?: number
           reward_title?: string | null
           settings?: Json
           stamps_required?: number | null
@@ -1267,6 +1274,8 @@ export type Database = {
           name?: string
           points_expire_days?: number | null
           points_per_unit?: number | null
+          referral_enabled?: boolean
+          referral_reward?: number
           reward_title?: string | null
           settings?: Json
           stamps_required?: number | null
@@ -1852,6 +1861,91 @@ export type Database = {
           },
         ]
       }
+      referrals: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          id: string
+          merchant_id: string
+          program_id: string
+          referred_card_id: string
+          referred_customer_id: string
+          referrer_card_id: string
+          referrer_customer_id: string
+          reward: number | null
+          status: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          merchant_id: string
+          program_id: string
+          referred_card_id: string
+          referred_customer_id: string
+          referrer_card_id: string
+          referrer_customer_id: string
+          reward?: number | null
+          status?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          merchant_id?: string
+          program_id?: string
+          referred_card_id?: string
+          referred_customer_id?: string
+          referrer_card_id?: string
+          referrer_customer_id?: string
+          reward?: number | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "loyalty_programs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_referred_card_id_fkey"
+            columns: ["referred_card_id"]
+            isOneToOne: true
+            referencedRelation: "loyalty_cards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_referred_customer_id_fkey"
+            columns: ["referred_customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_referrer_card_id_fkey"
+            columns: ["referrer_card_id"]
+            isOneToOne: false
+            referencedRelation: "loyalty_cards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_referrer_customer_id_fkey"
+            columns: ["referrer_customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reward_redemptions: {
         Row: {
           card_id: string
@@ -2352,6 +2446,7 @@ export type Database = {
           p_locale?: string
           p_marketing_consent?: boolean
           p_phone: string
+          p_referral_code?: string
         }
         Returns: Json
       }
