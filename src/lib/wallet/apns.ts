@@ -5,6 +5,7 @@ import http2 from "node:http2";
  * Apple Push Notification service for Wallet passes: an empty push tells the device "this pass changed";
  * the device then calls our PassKit web service to fetch the new version. Authenticated with the
  * Pass Type ID certificate (TLS client cert); topic = passTypeIdentifier.
+ * apns-expiration (7 days): if the phone is offline, Apple keeps the latest push and delivers it when the phone reconnects.
  */
 export type PushResult = { token: string; status: number; reason?: string };
 
@@ -22,7 +23,7 @@ export async function pushPassUpdates(tokens: string[], opts: { certPem: string;
     for (let i = 0; i < tokens.length; i += 50) {
       const batch = tokens.slice(i, i + 50);
       results.push(...(await Promise.all(batch.map((token) => new Promise<PushResult>((resolve) => {
-        const req = client.request({ ":method": "POST", ":path": `/3/device/${token}`, "apns-topic": opts.topic, "content-type": "application/json" });
+        const req = client.request({ ":method": "POST", ":path": `/3/device/${token}`, "apns-topic": opts.topic, "content-type": "application/json", "apns-expiration": String(Math.floor(Date.now() / 1000) + 7 * 86400) });
         let status = 0, body = "";
         req.setTimeout(10_000, () => { req.close(); resolve({ token, status: 0, reason: "timeout" }); });
         req.on("response", (h) => { status = Number(h[":status"] ?? 0); });
