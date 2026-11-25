@@ -56,6 +56,19 @@ test("full loop: program → customer sign-up → scan → stamps → reward", a
     await page.getByRole("button", { name: /^(utiliser|redeem)$/i }).click();
     await expect(page.getByText(/récompense validée|reward redeemed/i)).toBeVisible();
 
+    // merchant adds Google Maps + review links → the customer sees both buttons on the card
+    await page.goto("/dashboard/settings");
+    await page.locator("#review_url").fill("http://not-secure.example");
+    await page.locator("form button[type=submit]").last().click();
+    await expect(page.getByRole("alert")).toBeVisible();
+    await page.locator("#maps_url").fill("https://maps.app.goo.gl/abcDEF123");
+    await page.locator("#review_url").fill("https://g.page/r/CabcDEF123/review");
+    await page.locator("form button[type=submit]").last().click();
+    await expect(page.getByRole("status")).toBeVisible();
+    await customer.reload();
+    await expect(customer.getByTestId("place-links").getByRole("link", { name: /avis|review/i })).toHaveAttribute("href", "https://g.page/r/CabcDEF123/review");
+    await expect(customer.getByTestId("place-links").getByRole("link", { name: /itinéraire|directions/i })).toHaveAttribute("href", "https://maps.app.goo.gl/abcDEF123");
+
     // customer card shows history; dashboard shows the customer
     await customer.reload();
     await expect(customer.getByText(/récompense|reward/i).first()).toBeVisible();

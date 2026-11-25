@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { Gift, Lock, MapPin, Phone, Sparkles } from "lucide-react";
+import { Gift, Lock, MapPin, Navigation, Phone, Sparkles, Star } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { WalletCard } from "@/components/loyalty/wallet-card";
 import { LiveQr } from "@/components/loyalty/live-qr";
@@ -113,6 +113,21 @@ export default async function CardPage({ params, searchParams }: { params: Promi
         </section>
       ) : (
         <section className="mt-4 rounded-3xl border border-border bg-surface p-5 text-sm text-fg-muted">{wallets.google && isIos ? t("appleSoon") : t("walletSoon")}</section>
+      )}
+
+      {(merchant.review_url || merchant.maps_url) && (
+        <section className="mt-4 grid grid-cols-2 gap-2" data-testid="place-links">
+          {merchant.review_url && (
+            <a href={merchant.review_url} target="_blank" rel="noopener noreferrer nofollow" className={cn("flex h-12 items-center justify-center gap-2 rounded-2xl border border-border bg-surface text-sm font-medium", !merchant.maps_url && "col-span-2")}>
+              <Star className="size-4 fill-amber-400 text-amber-400" />{t("review")}
+            </a>
+          )}
+          {merchant.maps_url && (
+            <a href={merchant.maps_url} target="_blank" rel="noopener noreferrer nofollow" className={cn("flex h-12 items-center justify-center gap-2 rounded-2xl border border-border bg-surface text-sm font-medium", !merchant.review_url && "col-span-2")}>
+              <Navigation className="size-4" />{t("directions")}
+            </a>
+          )}
+        </section>
       )}
 
       {active && referral && (

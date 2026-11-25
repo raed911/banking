@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { ImagePlus } from "lucide-react";
 import { toast } from "sonner";
 import { saveSettings } from "@/features/settings/actions";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { SubmitButton } from "@/components/forms/submit-button";
@@ -13,7 +13,7 @@ import { FormAlert } from "@/components/forms/form-alert";
 import { createClient } from "@/lib/supabase/client";
 import { BRAND_BUCKET, publicAssetUrl } from "@/lib/storage";
 
-type M = { name: string; legal_name: string | null; tax_id: string | null; email: string | null; phone: string | null; website: string | null; address: string | null; city: string | null; locale: string; brand_color: string; logo_path: string | null };
+type M = { name: string; legal_name: string | null; tax_id: string | null; email: string | null; phone: string | null; website: string | null; address: string | null; city: string | null; locale: string; brand_color: string; logo_path: string | null; maps_url: string | null; review_url: string | null };
 
 export function SettingsForm({ merchantId, m }: { merchantId: string; m: M }) {
   const t = useTranslations("settings");
@@ -67,6 +67,13 @@ export function SettingsForm({ merchantId, m }: { merchantId: string; m: M }) {
           <Field label={t("locale")} htmlFor="locale">
             <select id="locale" name="locale" defaultValue={m.locale} className="h-10 w-full rounded-lg border border-border-strong bg-surface px-3 text-sm"><option value="fr">Français</option><option value="ar">العربية</option><option value="en">English</option></select>
           </Field>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader><div><CardTitle>{t("reviews.title")}</CardTitle><CardDescription>{t("reviews.desc")}</CardDescription></div></CardHeader>
+        <CardContent className="grid gap-4">
+          <Field label={t("reviews.maps")} htmlFor="maps_url" hint={t("reviews.mapsHint")}><Input id="maps_url" name="maps_url" type="url" defaultValue={m.maps_url ?? ""} dir="ltr" placeholder="https://maps.app.goo.gl/…" /></Field>
+          <Field label={t("reviews.review")} htmlFor="review_url" hint={t("reviews.reviewHint")}><Input id="review_url" name="review_url" type="url" defaultValue={m.review_url ?? ""} dir="ltr" placeholder="https://g.page/r/…/review" /></Field>
         </CardContent>
       </Card>
       <Card>

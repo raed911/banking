@@ -60,7 +60,7 @@ export async function buildApplePass(cardId: string, creds: AppleCreds) {
   const { data: card } = await db.from("loyalty_cards").select("id, merchant_id, program_id, customer_id, serial, balance, public_token, status, updated_at, referral_code, customer:customers(first_name)").eq("id", cardId).single();
   if (!card) throw new Error("card_not_found");
   const [{ data: m }, { data: p }, { data: d }, { data: locs }, { data: camps }] = await Promise.all([
-    db.from("merchants").select("id, name, locale, logo_path").eq("id", card.merchant_id).single(),
+    db.from("merchants").select("id, name, locale, logo_path, maps_url, review_url").eq("id", card.merchant_id).single(),
     db.from("loyalty_programs").select("id, name, type, stamps_required, reward_title, terms, referral_enabled").eq("id", card.program_id).single(),
     db.from("card_designs").select("background_color, foreground_color, label_color, accent_color, stamp_icon, logo_text, logo_path, strip_path").eq("program_id", card.program_id).maybeSingle(),
     db.from("locations").select("id, name, latitude, longitude, geo_enabled, geo_radius_m, geo_message, is_active").eq("merchant_id", card.merchant_id),
@@ -69,7 +69,7 @@ export async function buildApplePass(cardId: string, creds: AppleCreds) {
   const firstName = card.customer?.first_name ?? "";
   const ctx: ApplePassContext = {
     appUrl: appUrl(), passTypeIdentifier: creds.passTypeIdentifier, teamIdentifier: creds.teamId,
-    merchant: { id: m!.id, name: m!.name, locale: m!.locale }, program: p!,
+    merchant: { id: m!.id, name: m!.name, locale: m!.locale, maps_url: m!.maps_url, review_url: m!.review_url }, program: p!,
     design: d ? { background_color: d.background_color, foreground_color: d.foreground_color, label_color: d.label_color, logo_text: d.logo_text } : null,
     locations: locs ?? [], campaign: currentCampaign(camps ?? [], card.program_id),
   };

@@ -14,7 +14,7 @@ export type ApplePassContext = {
   appUrl: string;
   passTypeIdentifier: string;
   teamIdentifier: string;
-  merchant: { id: string; name: string; locale: string };
+  merchant: { id: string; name: string; locale: string; maps_url?: string | null; review_url?: string | null };
   program: { id: string; name: string; type: "stamps" | "points" | "visits"; stamps_required: number | null; reward_title: string | null; terms: string | null };
   design: { background_color: string; foreground_color: string; label_color: string; logo_text: string | null } | null;
   locations: GeoLocation[];
@@ -39,6 +39,10 @@ const TXT = {
   number: { fr: "N° de carte", ar: "رقم البطاقة", en: "Card number" },
   invite: { fr: "Invitez un ami", ar: "ادعُ صديقًا", en: "Invite a friend" },
   inviteLink: { fr: "Partager mon lien", ar: "مشاركة رابطي", en: "Share my link" },
+  review: { fr: "Votre avis compte", ar: "رأيك يهمنا", en: "Leave a review" },
+  reviewLink: { fr: "Laisser un avis ⭐", ar: "اترك تقييمًا ⭐", en: "Write a review ⭐" },
+  maps: { fr: "Nous trouver", ar: "موقعنا", en: "Find us" },
+  mapsLink: { fr: "Itinéraire", ar: "الاتجاهات", en: "Directions" },
 } as const;
 
 export function hexToRgb(hex: string | null | undefined, fallback = "rgb(16,24,40)") {
@@ -87,6 +91,8 @@ export function buildPassJson(ctx: ApplePassContext, card: ApplePassCard) {
       backFields: [
         { key: "news", label: TXT.news[l], value: news, changeMessage: "%@" },
         { key: "card", label: TXT.myCard[l], value: cardUrl, attributedValue: `<a href="${cardUrl}">${TXT.open[l]}</a>` },
+        ...(ctx.merchant.review_url ? [{ key: "review", label: TXT.review[l], value: ctx.merchant.review_url, attributedValue: `<a href="${ctx.merchant.review_url}">${TXT.reviewLink[l]}</a>` }] : []),
+        ...(ctx.merchant.maps_url ? [{ key: "maps", label: TXT.maps[l], value: ctx.merchant.maps_url, attributedValue: `<a href="${ctx.merchant.maps_url}">${TXT.mapsLink[l]}</a>` }] : []),
         ...(card.referralUrl ? [{ key: "invite", label: TXT.invite[l], value: card.referralUrl, attributedValue: `<a href="${card.referralUrl}">${TXT.inviteLink[l]}</a>` }] : []),
         { key: "serial", label: TXT.number[l], value: card.serial },
         ...(p.terms ? [{ key: "terms", label: TXT.terms[l], value: p.terms.slice(0, 1000) }] : []),

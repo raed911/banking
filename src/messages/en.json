@@ -372,7 +372,9 @@
         "copy": "Copy link",
         "message": "Join me at {merchant} and get a bonus on your first visit 🎁",
         "stats": "{invited, plural, one {# friend invited} other {# friends invited}} · {completed} came"
-      }
+      },
+      "review": "Leave a review",
+      "directions": "Directions"
     }
   },
   "scan": {
@@ -783,7 +785,16 @@
       "limit": "Limit reached: add locations to your plan in Billing.",
       "error": "Something went wrong.",
       "usage": "{used} / {max} active locations"
-    }
+    },
+    "reviews": {
+      "title": "Google Maps & reviews",
+      "desc": "Your customers find these links on their card and in Apple / Google Wallet.",
+      "maps": "Google Maps link of your business",
+      "mapsHint": "Google Maps → your business → Share → Copy link.",
+      "review": "Review link",
+      "reviewHint": "Google Business Profile → “Ask for reviews” → copy the link. Google forbids giving stamps or gifts in exchange for a review."
+    },
+    "invalid_link": "Invalid link: it must start with https://"
   },
   "coupons": {
     "title": "Coupons",

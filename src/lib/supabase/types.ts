@@ -1481,9 +1481,11 @@ export type Database = {
           legal_name: string | null
           locale: string
           logo_path: string | null
+          maps_url: string | null
           name: string
           onboarding_completed_at: string | null
           phone: string | null
+          review_url: string | null
           settings: Json
           slug: string
           status: Database["public"]["Enums"]["merchant_status"]
@@ -1509,9 +1511,11 @@ export type Database = {
           legal_name?: string | null
           locale?: string
           logo_path?: string | null
+          maps_url?: string | null
           name: string
           onboarding_completed_at?: string | null
           phone?: string | null
+          review_url?: string | null
           settings?: Json
           slug: string
           status?: Database["public"]["Enums"]["merchant_status"]
@@ -1537,9 +1541,11 @@ export type Database = {
           legal_name?: string | null
           locale?: string
           logo_path?: string | null
+          maps_url?: string | null
           name?: string
           onboarding_completed_at?: string | null
           phone?: string | null
+          review_url?: string | null
           settings?: Json
           slug?: string
           status?: Database["public"]["Enums"]["merchant_status"]

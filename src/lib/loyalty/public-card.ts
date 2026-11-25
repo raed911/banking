@@ -8,7 +8,7 @@ export const getPublicCard = cache(async (token: string) => {
   const db = createAdminClient();
   const { data: card } = await db
     .from("loyalty_cards")
-    .select("id, serial, balance, lifetime_earned, status, created_at, program_id, merchant_id, referral_code, customer:customers(first_name), program:loyalty_programs(name, type, status, stamps_required, reward_title, terms, referral_enabled, referral_reward), merchant:merchants(name, status, logo_path, phone, city)")
+    .select("id, serial, balance, lifetime_earned, status, created_at, program_id, merchant_id, referral_code, customer:customers(first_name), program:loyalty_programs(name, type, status, stamps_required, reward_title, terms, referral_enabled, referral_reward), merchant:merchants(name, status, logo_path, phone, city, maps_url, review_url)")
     .eq("public_token", token)
     .maybeSingle();
   if (!card) return null;

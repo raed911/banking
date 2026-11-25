@@ -372,7 +372,9 @@
         "copy": "Copier le lien",
         "message": "Rejoins-moi chez {merchant} et reçois un bonus à ta première visite 🎁",
         "stats": "{invited, plural, one {# ami invité} other {# amis invités}} · {completed, plural, one {# venu} other {# venus}}"
-      }
+      },
+      "review": "Laisser un avis",
+      "directions": "Itinéraire"
     }
   },
   "scan": {
@@ -783,7 +785,16 @@
       "limit": "Limite atteinte : ajoutez des points de vente à votre formule dans Facturation.",
       "error": "Une erreur est survenue.",
       "usage": "{used} / {max} points de vente actifs"
-    }
+    },
+    "reviews": {
+      "title": "Google Maps & avis",
+      "desc": "Vos clients trouvent ces liens sur leur carte et dans Apple / Google Wallet.",
+      "maps": "Lien Google Maps de votre commerce",
+      "mapsHint": "Google Maps → votre commerce → Partager → Copier le lien.",
+      "review": "Lien pour laisser un avis",
+      "reviewHint": "Google Business Profile → « Demander des avis » → copier le lien. Google interdit d'offrir des tampons ou cadeaux en échange d'un avis."
+    },
+    "invalid_link": "Lien invalide : il doit commencer par https://"
   },
   "coupons": {
     "title": "Coupons",

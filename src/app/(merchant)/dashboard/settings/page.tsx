@@ -8,7 +8,7 @@ export default async function SettingsPage() {
   const { merchantId } = await requireMerchant("settings.manage");
   const t = await getTranslations("settings");
   const supabase = await createClient();
-  const { data: m } = await supabase.from("merchants").select("name, legal_name, tax_id, email, phone, website, address, city, locale, brand_color, logo_path").eq("id", merchantId).single();
+  const { data: m } = await supabase.from("merchants").select("name, legal_name, tax_id, email, phone, website, address, city, locale, brand_color, logo_path, maps_url, review_url").eq("id", merchantId).single();
   return (
     <div className="space-y-6">
       <PageHeader title={t("title")} description={t("subtitle")} />

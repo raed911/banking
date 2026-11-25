@@ -4,7 +4,7 @@ import { googleRelevance, type ActiveLocationCampaign, type GeoLocation } from "
 /** Pure builders for Google Wallet LoyaltyClass / LoyaltyObject resources (no network). */
 export type PassContext = {
   appUrl: string;
-  merchant: { id: string; name: string; locale: string };
+  merchant: { id: string; name: string; locale: string; maps_url?: string | null; review_url?: string | null };
   program: { id: string; name: string; type: "stamps" | "points" | "visits"; stamps_required: number | null; reward_title: string | null; terms: string | null; referral_enabled?: boolean };
   design: { background_color: string; strip_path: string | null; logo_text: string | null } | null;
   locations: GeoLocation[];
@@ -48,6 +48,8 @@ export function buildLoyaltyObject(objectId: string, classId: string, ctx: PassC
     ...(p.reward_title ? { secondaryLoyaltyPoints: { label: L === "ar" ? "المكافأة" : L === "en" ? "Reward" : "Récompense", balance: { string: p.reward_title.slice(0, 30) } } } : {}),
     linksModuleData: { uris: [
       { id: "card", uri: `${ctx.appUrl}/c/${card.public_token}`, description: L === "ar" ? "بطاقتي" : L === "en" ? "My card" : "Ma carte" },
+      ...(ctx.merchant.review_url ? [{ id: "review", uri: ctx.merchant.review_url, description: L === "ar" ? "اترك تقييمًا ⭐" : L === "en" ? "Write a review ⭐" : "Laisser un avis ⭐" }] : []),
+      ...(ctx.merchant.maps_url ? [{ id: "maps", uri: ctx.merchant.maps_url, description: L === "ar" ? "الاتجاهات" : L === "en" ? "Directions" : "Itinéraire" }] : []),
       ...(card.referralUrl ? [{ id: "invite", uri: card.referralUrl, description: L === "ar" ? "ادعُ صديقًا" : L === "en" ? "Invite a friend" : "Invitez un ami" }] : []),
     ] },
     ...(rel.merchantLocations ? { merchantLocations: rel.merchantLocations } : {}),

@@ -17,13 +17,13 @@ export async function googleCredsFor(merchantId: string): Promise<GoogleCreds | 
 async function context(merchantId: string, programId: string): Promise<PassContext & { slug: string }> {
   const db = createAdminClient();
   const [{ data: m }, { data: p }, { data: d }, { data: locs }, { data: camps }] = await Promise.all([
-    db.from("merchants").select("id, name, locale, slug").eq("id", merchantId).single(),
+    db.from("merchants").select("id, name, locale, slug, maps_url, review_url").eq("id", merchantId).single(),
     db.from("loyalty_programs").select("id, name, type, stamps_required, reward_title, terms, referral_enabled").eq("id", programId).single(),
     db.from("card_designs").select("background_color, strip_path, logo_text").eq("program_id", programId).maybeSingle(),
     db.from("locations").select("id, name, latitude, longitude, geo_enabled, geo_radius_m, geo_message, is_active").eq("merchant_id", merchantId),
     db.from("location_campaigns").select("id, message, location_ids, program_ids, starts_at, ends_at, status").eq("merchant_id", merchantId).eq("status", "active"),
   ]);
-  return { appUrl: appUrl(), merchant: { id: m!.id, name: m!.name, locale: m!.locale }, slug: m!.slug, program: p!, design: d, locations: locs ?? [], campaign: currentCampaign(camps ?? [], programId) };
+  return { appUrl: appUrl(), merchant: { id: m!.id, name: m!.name, locale: m!.locale, maps_url: m!.maps_url, review_url: m!.review_url }, slug: m!.slug, program: p!, design: d, locations: locs ?? [], campaign: currentCampaign(camps ?? [], programId) };
 }
 
 /** Creates/updates the class and the card's object, records the pass. Returns the object id. */

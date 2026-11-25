@@ -15,8 +15,10 @@ export async function saveSettings(_: ActionState, form: FormData): Promise<Acti
   const parsed = z.object({
     name: z.string().trim().min(2).max(80), legal_name: opt(120), tax_id: opt(40), email: opt(254), phone: opt(30), website: opt(200),
     address: opt(200), city: opt(60), locale: z.enum(["fr", "ar", "en"]), brand_color: z.string().regex(/^#[0-9A-Fa-f]{6}$/), logo_path: opt(300),
+    maps_url: z.url({ protocol: /^https$/ }).max(500).optional().or(z.literal("")),
+    review_url: z.url({ protocol: /^https$/ }).max(500).optional().or(z.literal("")),
   }).safeParse(Object.fromEntries(form));
-  if (!parsed.success) return { error: "error" };
+  if (!parsed.success) return { error: parsed.error.issues.some((i) => i.path[0] === "maps_url" || i.path[0] === "review_url") ? "invalid_link" : "error" };
   const v = parsed.data;
   const phone = v.phone ? normalizePhone(v.phone) : null;
   if (v.phone && !phone) return { error: "invalid_phone" };
@@ -25,6 +27,7 @@ export async function saveSettings(_: ActionState, form: FormData): Promise<Acti
   const { error } = await supabase.from("merchants").update({
     name: v.name, legal_name: v.legal_name || null, tax_id: v.tax_id || null, email: v.email || null, phone, website: v.website || null,
     address: v.address || null, city: v.city || null, locale: v.locale, brand_color: v.brand_color.toUpperCase(), logo_path: v.logo_path || null,
+    maps_url: v.maps_url || null, review_url: v.review_url || null,
   }).eq("id", merchantId);
   if (error) return { error: "error" };
   revalidatePath("/dashboard", "layout");
