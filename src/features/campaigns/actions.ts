@@ -45,7 +45,9 @@ export async function saveCampaign(campaignId: string | null, _: ActionState, fo
   const supabase = await createClient();
   let id = campaignId;
   if (id) {
-    const { error } = await supabase.from("campaigns").update(row).eq("id", z.uuid().parse(id));
+    const { data: current } = await supabase.from("campaigns").select("status").eq("id", z.uuid().parse(id)).maybeSingle();
+    if (!current || !["draft", "scheduled"].includes(current.status)) return { error: "not_editable" }; // already sent: duplicate it instead
+    const { error } = await supabase.from("campaigns").update(row).eq("id", id);
     if (error) return { error: "generic" };
   } else {
     const { data, error } = await supabase.from("campaigns").insert({ ...row, merchant_id: merchantId, created_by: user.id }).select("id").single();
@@ -54,8 +56,8 @@ export async function saveCampaign(campaignId: string | null, _: ActionState, fo
   }
   if (form.get("intent") === "schedule") {
     const { data, error } = await supabase.rpc("schedule_campaign", { p_campaign_id: id!, p_send_at: row.scheduled_at ?? undefined });
-    if (error) return { error: error.message.includes("subscription_inactive") ? "subscription_inactive" : "generic" };
-    if (!row.scheduled_at || new Date(row.scheduled_at) <= new Date()) { const cid = id!; after(() => processCampaign(cid).then(() => undefined).catch(() => undefined)); } // send now, worker is the fallback
+    if (error) return { error: error.message.includes("subscription_inactive") ? "subscription_inactive" : error.message.includes("not_editable") ? "not_editable" : "generic" };
+    if (!row.scheduled_at || new Date(row.scheduled_at) <= new Date()) { const cid = id!; after(() => processCampaign(cid).then(() => revalidatePath("/dashboard/campaigns")).catch(() => undefined)); } // send now, worker is the fallback
     revalidatePath("/dashboard/campaigns");
     return { ok: true, data: { recipients: (data as { recipients: number }).recipients } };
   }

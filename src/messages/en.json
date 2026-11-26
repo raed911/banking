@@ -1429,10 +1429,12 @@
     "errors": {
       "generic": "Something went wrong.",
       "validation": "Check the fields.",
-      "subscription_inactive": "Subscription inactive: cannot schedule."
+      "subscription_inactive": "Subscription inactive: cannot schedule.",
+      "not_editable": "This campaign was already sent. Use “Duplicate” to send it again."
     },
     "cardDesc": "Shown to every recipient on their card",
-    "walletDesc": "Sends a notification to Google Wallet cards (Android). Google limits notifications per card."
+    "walletDesc": "Notification on your customers' Apple Wallet (iPhone) and Google Wallet (Android) cards.",
+    "duplicate": "Duplicate"
   },
   "integ": {
     "title": "Integrations",

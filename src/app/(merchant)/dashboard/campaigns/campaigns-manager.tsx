@@ -2,7 +2,7 @@
 import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useEffect, useState, useTransition } from "react";
 import { useFormatter, useTranslations } from "next-intl";
-import { Ban, Clock, Mail, Megaphone, Pencil, Plus, Send, Trash2, Users, Wallet } from "lucide-react";
+import { Ban, Clock, Copy, Mail, Megaphone, Pencil, Plus, Send, Trash2, Users, Wallet } from "lucide-react";
 import { audienceCount, cancelCampaign, deleteCampaign, saveCampaign, type Segment } from "@/features/campaigns/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ function CampaignForm({ c, programs, coupons, tags, connected, onDone }: { c: Ca
   const [segment, setSegment] = useState<Segment>(c?.segment ?? { type: "inactive", days: 30 });
   const [later, setLater] = useState(!!c?.scheduled_at);
   const [aud, setAud] = useState<{ eligible: number; segment_total: number; without_consent: number } | null>(null);
-  const [state, action] = useActionState(async (p: Awaited<ReturnType<typeof saveCampaign>>, fd: FormData) => { const r = await saveCampaign(c?.id ?? null, p, fd); if (r?.ok) onDone(); return r; }, null);
+  const [state, action] = useActionState(async (p: Awaited<ReturnType<typeof saveCampaign>>, fd: FormData) => { const r = await saveCampaign(c?.id || null, p, fd); if (r?.ok) onDone(); return r; }, null);
   useEffect(() => {
     let alive = true;
     const timer = setTimeout(() => { audienceCount(segment, channel).then((r) => alive && setAud(r)).catch(() => {}); }, 250);
@@ -91,6 +91,7 @@ export function CampaignsManager({ campaigns, programs, coupons, tags, connected
               {c.status !== "draft" && <div className="flex gap-4 text-center text-sm">{(["targeted", "sent", "failed"] as const).map((k) => <div key={k}><div className="tabular font-semibold">{c.stats[k] ?? 0}</div><div className="text-xs text-fg-muted">{t(`stats.${k}`)}</div></div>)}</div>}
               <div className="flex gap-1">
                 {(c.status === "draft" || c.status === "scheduled") && <Button size="icon" variant="ghost" onClick={() => setEditing(c)} aria-label={t("edit")}><Pencil /></Button>}
+                {["sending", "sent", "canceled", "failed"].includes(c.status) && <Button size="icon" variant="ghost" onClick={() => setEditing({ ...c, id: "", status: "draft", scheduled_at: null, name: `${c.name} (2)` })} aria-label={t("duplicate")} title={t("duplicate")}><Copy /></Button>}
                 {c.status === "scheduled" && <Button size="icon" variant="ghost" disabled={pending} onClick={() => start(() => cancelCampaign(c.id))} aria-label={t("cancel")}><Ban /></Button>}
                 {c.status === "draft" && <Button size="icon" variant="ghost" disabled={pending} onClick={() => start(() => deleteCampaign(c.id))} aria-label={t("delete")}><Trash2 /></Button>}
               </div>
@@ -99,7 +100,7 @@ export function CampaignsManager({ campaigns, programs, coupons, tags, connected
         </div>
       )}
       <Dialog open={editing !== null} onOpenChange={(o) => !o && setEditing(null)}>
-        {editing !== null && <DialogContent title={editing === "new" ? t("new") : t("edit")} className="sm:max-w-xl"><CampaignForm c={editing === "new" ? null : editing} programs={programs} coupons={coupons} tags={tags} connected={connected} onDone={() => setEditing(null)} /></DialogContent>}
+        {editing !== null && <DialogContent title={editing === "new" || !editing.id ? t("new") : t("edit")} className="sm:max-w-xl"><CampaignForm c={editing === "new" ? null : editing} programs={programs} coupons={coupons} tags={tags} connected={connected} onDone={() => setEditing(null)} /></DialogContent>}
       </Dialog>
     </>
   );

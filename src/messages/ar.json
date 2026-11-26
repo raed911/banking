@@ -1429,10 +1429,12 @@
     "errors": {
       "generic": "حدث خطأ.",
       "validation": "تحقق من الحقول.",
-      "subscription_inactive": "الاشتراك غير نشط: لا يمكن الجدولة."
+      "subscription_inactive": "الاشتراك غير نشط: لا يمكن الجدولة.",
+      "not_editable": "تم إرسال هذه الحملة بالفعل. استخدم «تكرار» لإرسالها مجددًا."
     },
     "cardDesc": "يظهر لكل المستلمين داخل بطاقتهم",
-    "walletDesc": "يرسل إشعارًا إلى بطاقات Google Wallet (أندرويد). يحدد Google عدد الإشعارات لكل بطاقة."
+    "walletDesc": "إشعار على بطاقات Apple Wallet (آيفون) وGoogle Wallet (أندرويد) لعملائك.",
+    "duplicate": "تكرار"
   },
   "integ": {
     "title": "التكاملات",

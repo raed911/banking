@@ -1429,10 +1429,12 @@
     "errors": {
       "generic": "Une erreur est survenue.",
       "validation": "Vérifiez les champs.",
-      "subscription_inactive": "Abonnement inactif : impossible de programmer."
+      "subscription_inactive": "Abonnement inactif : impossible de programmer.",
+      "not_editable": "Cette campagne a déjà été envoyée. Utilisez « Dupliquer » pour l'envoyer à nouveau."
     },
     "cardDesc": "Visible par tous les destinataires sur leur carte",
-    "walletDesc": "Envoie une notification sur les cartes Google Wallet (Android). Google limite le nombre de notifications par carte."
+    "walletDesc": "Notification sur les cartes Apple Wallet (iPhone) et Google Wallet (Android) de vos clients.",
+    "duplicate": "Dupliquer"
   },
   "integ": {
     "title": "Intégrations",

@@ -61,6 +61,14 @@ test("card announcement reaches every customer on their card page", async ({ pag
 
     await customer.reload();
     await expect(customer.getByText("-20% sur le cappuccino, Nour ☕")).toBeVisible();
+
+    // a sent campaign can't be edited, but it can be duplicated and sent again
+    await expect(page.getByRole("button", { name: /^(modifier|edit)$/i })).toHaveCount(0);
+    await page.getByRole("button", { name: /dupliquer|duplicate/i }).first().click();
+    await expect(page.locator("#cp-name")).toHaveValue("Promo café (2)");
+    await expect(page.locator("#cp-body")).toHaveValue("-20% sur le cappuccino, {prenom} ☕");
+    await page.getByRole("button", { name: /programmer l'envoi|schedule sending/i }).click();
+    await expect(page.locator("main").getByText("Promo café (2)")).toBeVisible({ timeout: 15_000 });
     await ctx.close();
   } finally {
     await deleteUserAndMerchants(owner.id);
