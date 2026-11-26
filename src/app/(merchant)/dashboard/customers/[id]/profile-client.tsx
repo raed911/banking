@@ -2,10 +2,13 @@
 import { ActionForm } from "@/components/forms/action-form";
 import { useActionState, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { Ban, Copy, ExternalLink, MoreHorizontal, Pencil, Plus, SlidersHorizontal, Ticket, Trash2, Undo2 } from "lucide-react";
+import { Ban, Copy, ExternalLink, Megaphone, MessageSquare, MoreHorizontal, Pencil, Plus, SlidersHorizontal, Ticket, Trash2, Undo2, Wallet } from "lucide-react";
 import { toast } from "sonner";
 import { adjust, applyCoupon, earn, reverseTransaction } from "@/features/loyalty/actions";
 import { deleteCustomer, issueCard, setCardStatus, updateCustomer } from "@/features/customers/actions";
+import { sendCustomerMessage } from "@/features/campaigns/actions";
+import { Textarea } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -93,6 +96,43 @@ export function IssueCard({ customerId, programs }: { customerId: string; progra
         {programs.map((p) => <DropdownMenuItem key={p.id} onSelect={() => start(async () => { const r = await issueCard(customerId, p.id); if (r?.error) toast.error(t(`errors.${r.error}` as "errors.generic")); })}>{p.name}</DropdownMenuItem>)}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+/** One-off message to this customer: Wallet notification (if a Wallet card is installed) or an announcement on the card page. */
+export function MessageCustomer({ customerId, name, hasWallet, consent }: { customerId: string; name: string; hasWallet: boolean; consent: boolean }) {
+  const t = useTranslations("customers.profile.message");
+  const [open, setOpen] = useState(false);
+  const [channel, setChannel] = useState<"wallet" | "card">(hasWallet ? "wallet" : "card");
+  const [body, setBody] = useState("");
+  const [pending, start] = useTransition();
+  return (
+    <>
+      <Button variant="secondary" onClick={() => setOpen(true)}><MessageSquare />{t("button")}</Button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent title={t("title", { name })}>
+          {!consent ? <FormAlert>{t("noConsent")}</FormAlert> : (
+            <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); start(async () => {
+              const r = await sendCustomerMessage(customerId, channel, body);
+              if (!r.ok) { toast.error(t.has(`errors.${r.error}`) ? t(`errors.${r.error}` as "errors.generic") : t("errors.generic")); return; }
+              toast.success(t("sent")); setOpen(false); setBody("");
+            }); }}>
+              <div className="grid grid-cols-2 gap-2" role="radiogroup">
+                {([["wallet", Wallet, hasWallet], ["card", Megaphone, true]] as const).map(([key, Icon, enabled]) => (
+                  <button key={key} type="button" role="radio" aria-checked={channel === key} disabled={!enabled} onClick={() => setChannel(key)}
+                    className={cn("flex items-center gap-2 rounded-xl border p-3 text-start text-sm font-medium transition disabled:opacity-40", channel === key ? "border-ink-900 bg-ink-900 text-white" : "border-border-strong")}>
+                    <Icon className="size-4 shrink-0" />{t(`channels.${key}`)}
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-fg-muted">{channel === "wallet" ? t("walletHint") : hasWallet ? t("cardHint") : t("noWallet")}</p>
+              <Field label={t("label")} htmlFor="msg-body"><Textarea id="msg-body" required minLength={3} maxLength={1000} value={body} onChange={(e) => setBody(e.target.value)} placeholder={t("placeholder")} /></Field>
+              <div className="flex justify-end"><Button type="submit" loading={pending} disabled={body.trim().length < 3}>{t("send")}</Button></div>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 

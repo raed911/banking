@@ -511,6 +511,28 @@
         "pending": "Waiting for visit",
         "completed": "Completed",
         "canceled": "Canceled"
+      },
+      "message": {
+        "button": "Send a message",
+        "title": "Message to {name}",
+        "channels": {
+          "wallet": "Wallet notification",
+          "card": "Card announcement"
+        },
+        "walletHint": "Notification on their phone (Apple / Google Wallet).",
+        "cardHint": "Shown when they open their card, no notification.",
+        "noWallet": "This customer hasn't added the card to Apple / Google Wallet: the message will show when they open their card.",
+        "label": "Message",
+        "placeholder": "Hi {prenom}, your order is ready ☕",
+        "send": "Send",
+        "sent": "Message sent",
+        "noConsent": "This customer hasn't agreed to receive messages. You can update their consent on their profile if they gave it to you.",
+        "errors": {
+          "generic": "Something went wrong.",
+          "validation": "Message too short.",
+          "no_recipient": "This customer can't receive this message (consent or Wallet card missing).",
+          "subscription_inactive": "Subscription inactive."
+        }
       }
     },
     "errors": {
@@ -1391,7 +1413,8 @@
       "new": "New customers (…)",
       "birthday_month": "Birthday this month",
       "tag": "With tag…",
-      "program": "Members of program…"
+      "program": "Members of program…",
+      "customer": "One customer"
     },
     "days": "Days",
     "tag": "Tag",

@@ -511,6 +511,28 @@
         "pending": "En attente de visite",
         "completed": "Validé",
         "canceled": "Annulé"
+      },
+      "message": {
+        "button": "Envoyer un message",
+        "title": "Message à {name}",
+        "channels": {
+          "wallet": "Notification Wallet",
+          "card": "Annonce sur la carte"
+        },
+        "walletHint": "Notification sur son téléphone (Apple / Google Wallet).",
+        "cardHint": "Visible quand il ouvre sa carte, sans notification.",
+        "noWallet": "Ce client n'a pas ajouté sa carte à Apple / Google Wallet : le message s'affichera quand il ouvre sa carte.",
+        "label": "Message",
+        "placeholder": "Bonjour {prenom}, votre commande est prête ☕",
+        "send": "Envoyer",
+        "sent": "Message envoyé",
+        "noConsent": "Ce client n'a pas accepté de recevoir des messages. Vous pouvez modifier son accord dans sa fiche s'il vous l'a donné.",
+        "errors": {
+          "generic": "Une erreur est survenue.",
+          "validation": "Message trop court.",
+          "no_recipient": "Ce client ne peut pas recevoir ce message (accord ou carte Wallet manquants).",
+          "subscription_inactive": "Abonnement inactif."
+        }
       }
     },
     "errors": {
@@ -1391,7 +1413,8 @@
       "new": "Nouveaux clients (…)",
       "birthday_month": "Anniversaire ce mois-ci",
       "tag": "Avec l'étiquette…",
-      "program": "Membres du programme…"
+      "program": "Membres du programme…",
+      "customer": "Un client"
     },
     "days": "Jours",
     "tag": "Étiquette",

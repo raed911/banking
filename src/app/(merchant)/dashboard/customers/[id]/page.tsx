@@ -10,7 +10,7 @@ import { publicEnv } from "@/lib/env";
 import { can } from "@/lib/permissions";
 import { createClient } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
-import { CardActions, DeleteCustomer, EditCustomer, IssueCard, ReverseButton } from "./profile-client";
+import { CardActions, DeleteCustomer, EditCustomer, IssueCard, MessageCustomer, ReverseButton } from "./profile-client";
 
 export default async function CustomerPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -29,6 +29,8 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
     supabase.from("referrals").select("id, status, created_at, referrer_customer_id, referred_customer_id, referrer:customers!referrals_referrer_customer_id_fkey(id, first_name, last_name), referred:customers!referrals_referred_customer_id_fkey(id, first_name, last_name)")
       .or(`referrer_customer_id.eq.${id},referred_customer_id.eq.${id}`).order("created_at", { ascending: false }).limit(50),
   ]);
+  const { count: walletCount } = await supabase.from("wallet_passes").select("id", { count: "exact", head: true }).in("card_id", (cards ?? []).map((k) => k.id)).is("removed_at", null);
+  const hasWallet = (walletCount ?? 0) > 0;
   const invitedBy = referrals?.find((r) => r.referred_customer_id === id) ?? null;
   const invited = referrals?.filter((r) => r.referrer_customer_id === id) ?? [];
   const reversed = new Set((tx ?? []).map((x) => x.reversed_transaction_id).filter(Boolean));
@@ -48,7 +50,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
             <p className="text-sm text-fg-muted">{t("profile.since")} {format.dateTime(new Date(c.created_at), { dateStyle: "long" })}</p>
           </div>
         </div>
-        <div className="flex gap-2">{manage && <EditCustomer customer={c} />}{manage && <DeleteCustomer id={c.id} />}</div>
+        <div className="flex flex-wrap gap-2">{can(permissions, "campaigns.manage") && <MessageCustomer customerId={c.id} name={c.first_name} hasWallet={hasWallet} consent={c.marketing_consent} />}{manage && <EditCustomer customer={c} />}{manage && <DeleteCustomer id={c.id} />}</div>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">

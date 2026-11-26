@@ -69,6 +69,16 @@ test("card announcement reaches every customer on their card page", async ({ pag
     await expect(page.locator("#cp-body")).toHaveValue("-20% sur le cappuccino, {prenom} ☕");
     await page.getByRole("button", { name: /programmer l'envoi|schedule sending/i }).click();
     await expect(page.locator("main").getByText("Promo café (2)")).toBeVisible({ timeout: 15_000 });
+
+    // one-off message to a single customer, from the profile (no Wallet card → announcement on the card page)
+    await page.goto("/dashboard/customers");
+    await page.locator("main").getByText("Nour").first().click();
+    await page.getByRole("button", { name: /envoyer un message|send a message/i }).click();
+    await expect(page.getByRole("radio", { name: /wallet/i })).toBeDisabled();
+    await page.locator("#msg-body").fill("Nour, votre commande est prête ☕");
+    await page.locator("[role=dialog] button[type=submit]").click();
+    await expect(page.getByText(/message envoyé|message sent/i)).toBeVisible();
+    await expect(async () => { await customer.reload(); await expect(customer.getByText("Nour, votre commande est prête ☕")).toBeVisible({ timeout: 1000 }); }).toPass({ timeout: 20_000 });
     await ctx.close();
   } finally {
     await deleteUserAndMerchants(owner.id);

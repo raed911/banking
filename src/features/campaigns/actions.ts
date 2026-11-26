@@ -8,19 +8,21 @@ import { createClient } from "@/lib/supabase/server";
 import type { ActionState } from "@/lib/action";
 
 const segmentSchema = z.object({
-  type: z.enum(["all", "inactive", "active", "new", "birthday_month", "tag", "program"]),
+  type: z.enum(["all", "inactive", "active", "new", "birthday_month", "tag", "program", "customer"]),
   days: z.coerce.number().int().min(1).max(730).optional(),
   tag: z.string().trim().max(40).optional(),
   program_id: z.uuid().optional(),
+  customer_id: z.uuid().optional(),
 });
 export type Segment = z.infer<typeof segmentSchema>;
 
 function segmentFrom(form: FormData): Segment | null {
-  const raw = { type: form.get("segment_type"), days: form.get("segment_days") || undefined, tag: form.get("segment_tag") || undefined, program_id: form.get("segment_program") || undefined };
+  const raw = { type: form.get("segment_type"), days: form.get("segment_days") || undefined, tag: form.get("segment_tag") || undefined, program_id: form.get("segment_program") || undefined, customer_id: form.get("segment_customer") || undefined };
   const p = segmentSchema.safeParse(raw);
   if (!p.success) return null;
   if (p.data.type === "tag" && !p.data.tag) return null;
   if (p.data.type === "program" && !p.data.program_id) return null;
+  if (p.data.type === "customer" && !p.data.customer_id) return null;
   return p.data;
 }
 
@@ -77,4 +79,27 @@ export async function deleteCampaign(id: string) {
   const supabase = await createClient();
   await supabase.from("campaigns").delete().eq("id", z.uuid().parse(id));
   revalidatePath("/dashboard/campaigns");
+}
+
+/** One-off message to a single customer, from their profile: a one-recipient campaign sent right away (same consent rules). */
+export async function sendCustomerMessage(customerId: string, channel: "wallet" | "card", body: string): Promise<{ ok: true; recipients: number } | { ok: false; error: string }> {
+  const { merchantId, user } = await requireMerchant("campaigns.manage");
+  const p = z.object({ id: z.uuid(), channel: z.enum(["wallet", "card"]), body: z.string().trim().min(3).max(1000) }).safeParse({ id: customerId, channel, body });
+  if (!p.success) return { ok: false, error: "validation" };
+  const supabase = await createClient();
+  const { data: cust } = await supabase.from("customers").select("first_name, last_name").eq("id", p.data.id).eq("merchant_id", merchantId).maybeSingle();
+  if (!cust) return { ok: false, error: "generic" };
+  const segment = { type: "customer" as const, customer_id: p.data.id };
+  const { data: aud } = await supabase.rpc("campaign_audience_count", { p_merchant_id: merchantId, p_segment: segment, p_channel: p.data.channel });
+  if (!(aud as { eligible: number } | null)?.eligible) return { ok: false, error: "no_recipient" }; // no consent, or no Wallet card for a Wallet message
+  const { data: c, error } = await supabase.from("campaigns").insert({
+    merchant_id: merchantId, created_by: user.id, name: `Message · ${cust.first_name} ${cust.last_name ?? ""}`.trim(), channel: p.data.channel,
+    segment, content: { body: p.data.body }, scheduled_at: new Date().toISOString(),
+  }).select("id").single();
+  if (error || !c) return { ok: false, error: "generic" };
+  const { data, error: e2 } = await supabase.rpc("schedule_campaign", { p_campaign_id: c.id });
+  if (e2) return { ok: false, error: e2.message.includes("subscription_inactive") ? "subscription_inactive" : "generic" };
+  const recipients = (data as { recipients: number }).recipients;
+  after(() => processCampaign(c.id).then(() => revalidatePath("/dashboard/campaigns")).catch(() => undefined));
+  return { ok: true, recipients };
 }
