@@ -623,8 +623,10 @@ export type Database = {
           merchant_id: string
           notes: string | null
           phone: string | null
+          purchases_count: number
           source: string
           tags: string[]
+          total_spent_millimes: number
           total_visits: number
           updated_at: string
         }
@@ -645,8 +647,10 @@ export type Database = {
           merchant_id: string
           notes?: string | null
           phone?: string | null
+          purchases_count?: number
           source?: string
           tags?: string[]
+          total_spent_millimes?: number
           total_visits?: number
           updated_at?: string
         }
@@ -667,8 +671,10 @@ export type Database = {
           merchant_id?: string
           notes?: string | null
           phone?: string | null
+          purchases_count?: number
           source?: string
           tags?: string[]
+          total_spent_millimes?: number
           total_visits?: number
           updated_at?: string
         }

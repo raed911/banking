@@ -434,7 +434,9 @@
       "generic": "Something went wrong. Please try again."
     },
     "couponNoCard": "Coupon without card",
-    "couponNoCardHint": "For a customer without a loyalty card. The per-customer limit can't be checked without a card."
+    "couponNoCardHint": "For a customer without a loyalty card. The per-customer limit can't be checked without a card.",
+    "amountPaid": "Amount paid (optional)",
+    "amountRecorded": "{amount} TND recorded"
   },
   "customers": {
     "title": "Customers",
@@ -450,7 +452,8 @@
       "cards": "Cards",
       "visits": "Visits",
       "lastVisit": "Last visit",
-      "joined": "Joined"
+      "joined": "Joined",
+      "spent": "Spent"
     },
     "never": "Never",
     "prev": "Previous",
@@ -533,7 +536,9 @@
           "no_recipient": "This customer can't receive this message (consent or Wallet card missing).",
           "subscription_inactive": "Subscription inactive."
         }
-      }
+      },
+      "spent": "Total spent",
+      "avgBasket": "Average basket"
     },
     "errors": {
       "duplicate": "A customer already exists with this phone or email.",
@@ -542,6 +547,12 @@
       "generic": "Something went wrong.",
       "forbidden": "Permission denied.",
       "already_has_card": "This customer already has a card for this program."
+    },
+    "sort": {
+      "label": "Sort",
+      "recent": "Most recent",
+      "spent": "Top spenders",
+      "visits": "Most visits"
     }
   },
   "admin": {

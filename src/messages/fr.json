@@ -434,7 +434,9 @@
       "generic": "Une erreur est survenue. Réessayez."
     },
     "couponNoCard": "Coupon sans carte",
-    "couponNoCardHint": "Pour un client sans carte de fidélité. La limite « par client » ne peut pas être vérifiée sans carte."
+    "couponNoCardHint": "Pour un client sans carte de fidélité. La limite « par client » ne peut pas être vérifiée sans carte.",
+    "amountPaid": "Montant payé (facultatif)",
+    "amountRecorded": "{amount} TND enregistrés"
   },
   "customers": {
     "title": "Clients",
@@ -450,7 +452,8 @@
       "cards": "Cartes",
       "visits": "Passages",
       "lastVisit": "Dernier passage",
-      "joined": "Inscrit le"
+      "joined": "Inscrit le",
+      "spent": "Dépensé"
     },
     "never": "Jamais",
     "prev": "Précédent",
@@ -533,7 +536,9 @@
           "no_recipient": "Ce client ne peut pas recevoir ce message (accord ou carte Wallet manquants).",
           "subscription_inactive": "Abonnement inactif."
         }
-      }
+      },
+      "spent": "Total dépensé",
+      "avgBasket": "Panier moyen"
     },
     "errors": {
       "duplicate": "Un client existe déjà avec ce téléphone ou cet email.",
@@ -542,6 +547,12 @@
       "generic": "Une erreur est survenue.",
       "forbidden": "Permission refusée.",
       "already_has_card": "Ce client a déjà une carte pour ce programme."
+    },
+    "sort": {
+      "label": "Trier",
+      "recent": "Plus récents",
+      "spent": "Plus gros clients",
+      "visits": "Plus de visites"
     }
   },
   "admin": {

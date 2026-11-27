@@ -49,8 +49,11 @@ test("full loop: program → customer sign-up → scan → stamps → reward", a
     await page.getByRole("button", { name: /rechercher|search/i }).click();
     await expect(page.getByRole("heading", { name: "Sami" })).toBeVisible();
     const stamp = page.getByRole("button", { name: /\+1 (tampon|stamp)/i });
+    await page.locator("#scan-amount").fill("45,5");
     await stamp.click();
     await expect(page.getByText(/\+1 ajouté|\+1 added/)).toBeVisible();
+    await expect(page.getByText(/45\.500 TND/)).toBeVisible();
+    await expect(page.locator("#scan-amount")).toHaveValue("");
     await stamp.click();
     await page.waitForTimeout(800);
     await page.getByRole("button", { name: /^(utiliser|redeem)$/i }).click();
@@ -72,9 +75,11 @@ test("full loop: program → customer sign-up → scan → stamps → reward", a
     // customer card shows history; dashboard shows the customer
     await customer.reload();
     await expect(customer.getByText(/récompense|reward/i).first()).toBeVisible();
-    await page.goto("/dashboard/customers");
+    await page.goto("/dashboard/customers?sort=spent");
+    await expect(page.locator("main li").first()).toContainText(/45,5|45\.5/);
     await page.locator("main").getByText("Sami").click();
     await expect(page.getByText(/Carte test/).first()).toBeVisible();
+    await expect(page.getByText(/Total dépensé|Total spent/)).toBeVisible();
     const profileUrl = page.url();
 
     // coupon: create it, apply it from the customer profile, then once without a card in the scanner

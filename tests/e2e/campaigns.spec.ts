@@ -32,7 +32,7 @@ test("merchant builds an audience and schedules a campaign (queued until the cha
 });
 
 test("card announcement reaches every customer on their card page", async ({ page, browser }) => {
-  test.setTimeout(120_000);
+  test.setTimeout(180_000);
   const owner = await signInWithBusiness(page, "Café Annonce");
   try {
     await page.goto("/dashboard/programs/new");

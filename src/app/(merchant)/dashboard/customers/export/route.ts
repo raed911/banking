@@ -8,12 +8,12 @@ export async function GET() {
   const supabase = await createClient();
   const rows: Record<string, unknown>[] = [];
   for (let from = 0; ; from += 1000) {
-    const { data } = await supabase.from("customers").select("first_name, last_name, phone, email, birthday, marketing_consent, total_visits, last_visit_at, created_at, tags").eq("merchant_id", merchantId).is("deleted_at", null).order("created_at").range(from, from + 999);
+    const { data } = await supabase.from("customers").select("first_name, last_name, phone, email, birthday, marketing_consent, total_visits, total_spent_millimes, purchases_count, last_visit_at, created_at, tags").eq("merchant_id", merchantId).is("deleted_at", null).order("created_at").range(from, from + 999);
     if (!data?.length) break;
-    rows.push(...data);
+    rows.push(...data.map(({ total_spent_millimes, ...r }) => ({ ...r, total_spent_tnd: (total_spent_millimes / 1000).toFixed(3) })));
     if (data.length < 1000) break;
   }
-  const cols = ["first_name", "last_name", "phone", "email", "birthday", "marketing_consent", "total_visits", "last_visit_at", "created_at", "tags"];
+  const cols = ["first_name", "last_name", "phone", "email", "birthday", "marketing_consent", "total_visits", "total_spent_tnd", "purchases_count", "last_visit_at", "created_at", "tags"];
   const esc = (v: unknown) => {
     let s = Array.isArray(v) ? v.join("|") : v == null ? "" : String(v);
     if (/^[=+\-@]/.test(s)) s = `'${s}`; // prevent CSV formula injection

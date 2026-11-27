@@ -197,9 +197,18 @@ export function Scanner({ merchantName, locations, permissions }: { merchantName
                 <Button size="xl" disabled={!pointsPreview} loading={pending} onClick={() => run(() => earn(card.id, crypto.randomUUID(), { purchaseTnd: Number(purchase.replace(",", ".")), locationId }), (d) => ({ tone: "success", text: t("success.earn", { amount: Number(d.amount) }) }))}>{t("addPoints")}</Button>
               </div>
             ) : (
-              <Button size="xl" variant="accent" className="h-16 w-full text-lg" loading={pending} onClick={() => run(() => earn(card.id, crypto.randomUUID(), { amount: 1, locationId }), (d) => ({ tone: "success", text: t("success.earn", { amount: Number(d.amount) }) }))}>
-                <ScanLine className="!size-5" />{card.program.type === "visits" ? t("addVisit") : t("addStamp")}
-              </Button>
+              <div className="space-y-2">
+                <div className="relative">
+                  <Input id="scan-amount" value={purchase} onChange={(e) => setPurchase(e.target.value.replace(/[^\d.,]/g, ""))} inputMode="decimal" placeholder={t("amountPaid")} aria-label={t("amountPaid")} className="h-12 pe-14 text-lg" dir="ltr" />
+                  <span className="pointer-events-none absolute end-4 top-1/2 -translate-y-1/2 text-sm font-medium text-fg-muted">TND</span>
+                </div>
+                <Button size="xl" variant="accent" className="h-16 w-full text-lg" loading={pending} onClick={() => {
+                  const paid = Number(purchase.replace(",", "."));
+                  run(() => earn(card.id, crypto.randomUUID(), { amount: 1, locationId, ...(paid > 0 ? { purchaseTnd: paid } : {}) }), (d) => { setPurchase(""); return { tone: "success", text: t("success.earn", { amount: Number(d.amount) }), sub: paid > 0 ? t("amountRecorded", { amount: paid.toFixed(3) }) : undefined }; });
+                }}>
+                  <ScanLine className="!size-5" />{card.program.type === "visits" ? t("addVisit") : t("addStamp")}
+                </Button>
+              </div>
             ))}
 
             {can(permissions, "rewards.redeem") && (
